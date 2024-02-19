@@ -1,0 +1,25 @@
+---
+title: "100-references"
+output: html_document
+date: "2024-02-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+We are looking at analyzing RADseq data from Siphateles spp.    
+
+There are several possible reference genomes from Siphateles under construction with the CCGP. Existing public genomes with divergence time from Siphateles:     
+
+
+_Chrosomus eos_ 33 mya.  GCA_036326025.1 is chromosomal-level.    
+_Gila orcutti_ 12.1 mya GCA_026230005.1 506 contigs, 179 scaffolds with N50 of 50.5 Mb, 1.3 Gb total.   
+_Gila robusta_ 12.1 mya contig level assembly.    
+_Pimephales promelas_ 43 mya GCF_016745375.1 1.1 Gb scaffolded assembly
+
+Some options for reference genomes.    
