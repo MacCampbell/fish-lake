@@ -19,7 +19,10 @@ There are several possible reference genomes from Siphateles under construction 
 
 _Chrosomus eos_ 33 mya.  GCA_036326025.1 is chromosomal-level.    
 _Gila orcutti_ 12.1 mya GCA_026230005.1 506 contigs, 179 scaffolds with N50 of 50.5 Mb, 1.3 Gb total.   
-_Gila robusta_ 12.1 mya contig level assembly.    
+_Gila robusta_ 12.1 mya GCA_030770095.1 2,618 contigs,  level assembly.    
 _Pimephales promelas_ 43 mya GCF_016745375.1 1.1 Gb scaffolded assembly
 
-Some options for reference genomes.    
+Some options for reference genomes, here is a study using a variety of references https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6356778/.    
+
+
+_Gila orcutti_ 12.1 mya GCA_026230005.1 506 contigs, 179 scaffolds with N50 of 50.5 Mb, 1.3 Gb total.   
