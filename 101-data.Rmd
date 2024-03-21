@@ -8,6 +8,10 @@ date: "2024-03-21"
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
 ```
 
+```{r}
+library(tidyverse)
+```
+
 ## Received data on 03212024
 
 2024-03-16	DTSA884	bcl2fastq2	NOVASEQX25B	NovaSeqX 25B: 300 (PE150)    
@@ -20,5 +24,39 @@ wget -r -nd http://slimsdata.genomecenter.ucdavis.edu/Data/tt02drsvtz/Un_DTSA886
 wget -r -nd http://slimsdata.genomecenter.ucdavis.edu/Data/t44zqcghth/Un_DTSA886/Project_AFSP_TUI_CHUB_RAD_L2/ .
 ```
 
+
+Checking checksums!!!     
+
+We have two options, combine plates and demulti, or, demulti then combine plates. The combine first approach is by far the easiest I'd wager.
+
+```{r}
+cat lane-1/PLATE_1_S1_L006_R1_001.fastq.gz lane-2/PLATE_1_S1_L007_R1_001.fastq.gz > plate-1/plate-1-R1.fastq.gz
+gunzip plate-1/plate-1-R1.fastq.gz
+
+cat lane-1/PLATE_1_S1_L006_R2_001.fastq.gz lane-2/PLATE_1_S1_L007_R2_001.fastq.gz > plate-1/plate-1-R2.fastq.gz
+gunzip plate-1/plate-1-R2.fastq.gz
+```
+
+Should automate a bash script to make subdir, cat and gunzip. Script should be able to include prefixes, so 'data/raw/combined' as a prefix should be fine with renamed samples moved to 'data/raw/split'       
+
+```{r}
+seqfiles<-read_tsv("meta/sequence-files.tsv")
+seqfiles %>% mutate(Path=paste0("data/raw/",Lane,"/",File)) %>%
+  group_by(Plate, Direction) %>% mutate(Files=paste0(Path, collapse = " ")) %>%
+  select(Files) %>% mutate(Command=paste0("cat ", Files, " > ", "data/raw/combined/",
+                                          Plate,"-",Direction,".fastq.gz;",
+                                           " gunzip ", "data/raw/combined/",
+                                          Plate,"-",Direction,".fastq.gz;")) %>%
+  ungroup() %>% select(Command) %>%
+  write_tsv("101.1-combine-plates.sh", col_names = FALSE)
+```
+
+can run with module load parallel    
+
+
+Demultiplexing    
+
+
+(base) maccamp@farm:~/fish-lake/data/raw/plate-1$ grep ^GGACAAGCTA plate-1-R1.fastq | wc
 
 
