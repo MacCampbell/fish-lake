@@ -47,10 +47,10 @@ seqfiles %>% mutate(Path=paste0("data/raw/",Lane,"/",File)) %>%
                                           Plate,"-",Direction,".fastq.gz;",
                                            " gunzip ", "data/raw/combined/",
                                           Plate,"-",Direction,".fastq.gz;")) %>%
-  ungroup() %>% select(Command) %>%
+  ungroup() %>% select(Command) %>% unique() %>%
   write_tsv("101.1-combine-plates.sh", col_names = FALSE)
 ```
-
+Generates 30 commands, 15 plates times two directions.    
 can run with module load parallel    
 
 
@@ -74,3 +74,13 @@ module load parallel
 srun -p high -t 10:00:00 --nodes=1 --tasks-per-node=1 --cpus-per-task=8 parallel -j 8 < 101.1-combine-plates.sh
 ```
 Is running, will check back later.    
+Myabe a problem with 14, both forward/reverse are fine.    
+
+Symlink to split dir
+
+in `/home/maccamp/fish-lake/data/raw/split`     
+```{sh, eval=FALSE}
+ln -s ~/fish-lake/scripts/*.* .
+bash 1-set-up-wellsplit.sh
+sbatch 2-run-wellsplit.sh file-list.txt
+```
