@@ -1,0 +1,24 @@
+---
+title: "101-data"
+output: html_document
+date: "2024-03-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+## Received data on 03212024
+
+2024-03-16	DTSA884	bcl2fastq2	NOVASEQX25B	NovaSeqX 25B: 300 (PE150)    
+
+there are two lanes, putting in data/raw/lane-1 data/raw/lane-2    
+
+```{sh, eval=FALSE}
+wget -r -nd http://slimsdata.genomecenter.ucdavis.edu/Data/tt02drsvtz/Un_DTSA886/Project_AFSP_TUI_CHUB_RAD_L1/ .
+
+wget -r -nd http://slimsdata.genomecenter.ucdavis.edu/Data/t44zqcghth/Un_DTSA886/Project_AFSP_TUI_CHUB_RAD_L2/ .
+```
+
+
+
