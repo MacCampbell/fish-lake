@@ -57,6 +57,13 @@ can run with module load parallel
 Demultiplexing    
 
 
-(base) maccamp@farm:~/fish-lake/data/raw/plate-1$ grep ^GGACAAGCTA plate-1-R1.fastq | wc
+Check barcode presence: grep ^GGAAACATCGTGCAGG plate-1-R1.fastq --color
 
+in `~/fish-lake/data/raw/plate-1`     
+```{sh, eval=FALSE}
+ln -s ~/fish-lake/scripts/*.* .
+bash 1-set-up-wellsplit.sh
+sbatch 2-run-wellsplit.sh file-list.txt
+```
 
+Appears to work.   
