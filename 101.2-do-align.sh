@@ -8,7 +8,6 @@
 #Trying GCA_026230005.1 Gila orcutti
 
 #bash ../../101.2-do-align.sh to-align.txt /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz
-
 list=$1
 ref=$2
 
