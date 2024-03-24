@@ -98,3 +98,9 @@ ln -s ~/fish-lake/scripts/*.* .
 bash 1-set-up-wellsplit.sh
 sbatch 2-run-wellsplit.sh file-list.txt
 ```
+
+
+This takes up a large space. Can compress.  Or not, whatever.     
+
+
+
