@@ -102,5 +102,7 @@ sbatch 2-run-wellsplit.sh file-list.txt
 
 This takes up a large space. Can compress.  Or not, whatever.     
 
+trying to align to the gila-orcuttii genome with plate 9 first.    
 
-
+in `~/fish-lake/data/align` 
+`bash ../../101.2-do-align.sh to-align9.txt /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz`
