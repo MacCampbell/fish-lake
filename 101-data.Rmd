@@ -106,3 +106,24 @@ trying to align to the gila-orcuttii genome with plate 9 first.
 
 in `~/fish-lake/data/align` 
 `bash ../../101.2-do-align.sh to-align9.txt /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz`
+
+Checking basic alignment success in first two plate 9 samples.    
+
+over 99.3% in both!    
+
+```{r}
+aligns<-read_csv("outputs/101/plate-9.tsv", col_names=c("Sample","Reads","Dedup","Coverage"))
+subals<-aligns %>% filter(Dedup>5e5) %>% mutate(Path=paste0("data/align/",Sample,".sort.flt.bam"))
+```
+
+Basic covariance matrix.
+
+```{sh, eval=FALSE}
+srun -p high -t 12:00:00 --mem=32G --nodes=1 $HOME/angsd/angsd -P 12  \
+-bam bamlists/plate-9.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 77 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
+-out outputs/101/plate-9-ibs-90 >outputs/101/plate-9-ibs-90.out 2> outputs/101/plate-9-ibs-90.err &
+```
+
