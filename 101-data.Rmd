@@ -115,11 +115,23 @@ over 99.3% in both!
 aligns<-read_csv("outputs/101/plate-9.tsv", col_names=c("Sample","Reads","Dedup","Coverage"))
 subals<-aligns %>% filter(Dedup>5e5) %>% mutate(Path=paste0("data/align/",Sample,".sort.flt.bam"))
 subals %>% select(Path) %>% write_tsv("bamlists/plate-9.bamlist", col_names = FALSE)
+median(subals$Dedup)
+#conversion
+subals %>% mutate(Conversion=Dedup/Reads) %>% select(Conversion)
 ```
 
 
 ```{r}
-Basic covariance matrix.
+ggplot(subals) +
+  geom_histogram(aes(x=Dedup)) +
+  theme_bw() +
+  ylab("Count\n") +
+  xlab("\nPost PCR Duplication") +
+  theme(panel.grid=element_blank())
+
+```
+
+Basic covariance matrix. Note: Can use -rf to specify certain contigs, all are over 10K, so it seems fine to leave them in. 
 
 ```{sh, eval=FALSE}
 srun -p high -t 12:00:00 --mem=32G --nodes=1 $HOME/angsd/angsd -P 12  \
@@ -128,6 +140,12 @@ srun -p high -t 12:00:00 --mem=32G --nodes=1 $HOME/angsd/angsd -P 12  \
 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
 -out outputs/101/plate-9-ibs-90 >outputs/101/plate-9-ibs-90.out 2> outputs/101/plate-9-ibs-90.err &
+
+#Can generate a covariance matrix like so
+srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/401/60-ibs-90.beagle.gz -K 2 -o outputs/401/60-K2 &
+srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/401/60-ibs-90.beagle.gz -K 3 -o outputs/401/60-K3 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/401/60-ibs-90.beagle.gz -K 4 -o outputs/401/60-K4 &
+
 ```
 
 
@@ -155,8 +173,8 @@ ggplot(covs) +
   theme_bw() +
   theme(panel.grid=element_blank()) +
   scale_fill_viridis_d(option="turbo") +
-  ggtitle("Genome-Wide PCA of L. calcarifer WGS Data") +
+  ggtitle("Genome-Wide PCA of Plate 9") +
   theme(plot.title = element_text(hjust=0.5, face="bold"))
 
-ggsave("outputs/401/lates-c-genome-wide-pca-12.jpeg")
+ggsave("outputs/101/plate-9--pca-12.jpeg")
 ```
