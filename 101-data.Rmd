@@ -114,8 +114,11 @@ over 99.3% in both!
 ```{r}
 aligns<-read_csv("outputs/101/plate-9.tsv", col_names=c("Sample","Reads","Dedup","Coverage"))
 subals<-aligns %>% filter(Dedup>5e5) %>% mutate(Path=paste0("data/align/",Sample,".sort.flt.bam"))
+subals %>% select(Path) %>% write_tsv("bamlists/plate-9.bamlist", col_names = FALSE)
 ```
 
+
+```{r}
 Basic covariance matrix.
 
 ```{sh, eval=FALSE}
@@ -127,3 +130,33 @@ srun -p high -t 12:00:00 --mem=32G --nodes=1 $HOME/angsd/angsd -P 12  \
 -out outputs/101/plate-9-ibs-90 >outputs/101/plate-9-ibs-90.out 2> outputs/101/plate-9-ibs-90.err &
 ```
 
+
+
+```{r}
+m <- as.matrix(read.table("outputs/101/"))
+eig <- eigen(m)
+var<-eig$values/sum(eig$values)
+cumvar<-cumsum(eig$values)/sum(eig$values)
+
+head(var)
+head(cumvar)
+```
+
+
+```{r}
+covs<-eig$vectors[,1:3] %>% as_tibble() %>% bind_cols(subals)
+
+
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V2, fill=Dedup), pch=21, alpha=0.75) +
+  geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of L. calcarifer WGS Data") +
+  theme(plot.title = element_text(hjust=0.5, face="bold"))
+
+ggsave("outputs/401/lates-c-genome-wide-pca-12.jpeg")
+```
