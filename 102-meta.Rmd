@@ -27,6 +27,11 @@ Bind to stats
 (base) maccamp@farm:~/fish-lake/data/align$ wc -l all-align.tsv 
 1428 all-align.tsv
 
+Adding in missing plate fifteen inds.   
+(base) maccamp@farm:~/fish-lake/data/align$ cat *stats > all-align.tsv
+(base) maccamp@farm:~/fish-lake/data/align$ wc -l all-align.tsv 
+1440 all-align.tsv
+
 ```{r}
 stats<-read_csv("outputs/102/all-align.tsv", col_names=c("Ind","Reads","Dedup","Coverage"))
 m<-meta %>% left_join(stats, by=c("Ind"="Ind"))
@@ -53,6 +58,7 @@ Are these samples sequenced on plate15 but renamed something else??
 plate-15_RA_GGGATAGACATGCAGG.fastq exists as well as .sh command and RB. I wonder if somehow they failed.
 
 can kick off like this:     
+(now done)
 ```{sh, eval=FALSE}
 sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGATAGACATGCAGG.sh
 sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGCCACATATGCAGG.sh
