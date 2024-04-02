@@ -43,8 +43,32 @@ ggplot(m) +
 ```
 
 
+## Are we missing any samples?
 
-Plate 9
+```{r}
+m[is.na(m$Coverage),] %>% filter(PlateNumber=="15") %>% select(Ind, GVL_Code,Reads, Dedup,Coverage)
+```
+
+Are these samples sequenced on plate15 but renamed something else??
+plate-15_RA_GGGATAGACATGCAGG.fastq exists as well as .sh command and RB. I wonder if somehow they failed.
+
+can kick off like this:     
+```{sh, eval=FALSE}
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGATAGACATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGCCACATATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGCGAGTAATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGCTAACGATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGCTCGGTATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGGAGAACATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGGTGCGAATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGAGTTAGCTGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGACTAGTATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGATGAATCTGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGAGCTGAATGCAGG.sh
+sbatch -p med -t 2-10:00:00 --mem=8G plate-15-GGGCCAAGACTGCAGG.sh
+```
+
+## Plate 9
 ```{r}
 aligns<-read_csv("outputs/101/plate-9.tsv", col_names=c("Sample","Reads","Dedup","Coverage"))
 subals<-aligns %>% filter(Dedup>5e5) %>% select(-Reads, -Dedup, -Coverage) %>% mutate(Path=paste0("data/align/",Sample,".sort.flt.bam")) %>% left_join(m, by=c("Sample"="Ind"))
