@@ -46,7 +46,7 @@ ggplot(m) +
 ## Are we missing any samples?
 
 ```{r}
-m[is.na(m$Coverage),] %>% filter(PlateNumber=="15") %>% select(Ind, GVL_Code,Reads, Dedup,Coverage)
+m[is.na(m$Coverage),] %>% select(Ind, GVL_Code,Reads, Dedup,Coverage)
 ```
 
 Are these samples sequenced on plate15 but renamed something else??
