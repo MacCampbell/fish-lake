@@ -1,0 +1,104 @@
+---
+title: "102-meta"
+output: html_document
+date: "2024-04-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+Checking out meta, samples are named like this
+'plate-15-GGGTCTGTCATGCAGG'
+
+```{r}
+meta<-read_csv("meta/Compiled_TuiChubData_ForMac04022024.csv")
+meta$PlateNumber<-gsub("TuiChub_RADseq_Plate|_\\w","",meta$PlateName)
+meta<-meta %>% mutate(Ind=paste0("plate-",PlateNumber,"-GG",`Sample/Well Barcode (RAD Adaptor Seq)`,"TGCAGG")) %>% relocate(Ind)
+meta %>% filter(Ind=="plate-1-GGAAACATCGTGCAGG")
+```
+
+Bind to stats
+(base) maccamp@farm:~/fish-lake/data/align$ cat *stats > all-align.tsv
+(base) maccamp@farm:~/fish-lake/data/align$ wc -l all-align.tsv 
+1428 all-align.tsv
+
+```{r}
+stats<-read_csv("outputs/102/all-align.tsv", col_names=c("Ind","Reads","Dedup","Coverage"))
+m<-meta %>% left_join(stats, by=c("Ind"="Ind"))
+```
+
+```{r}
+ggplot(m) +
+  geom_histogram(aes(x=Dedup, fill=PlateNumber)) +
+  theme_bw() +
+  ylab("Count\n") +
+  xlab("\nPost PCR Duplication") +
+  theme(panel.grid=element_blank()) +
+  scale_fill_viridis_d(option="H")
+```
+
+
+
+Plate 9
+```{r}
+aligns<-read_csv("outputs/101/plate-9.tsv", col_names=c("Sample","Reads","Dedup","Coverage"))
+subals<-aligns %>% filter(Dedup>5e5) %>% select(-Reads, -Dedup, -Coverage) %>% mutate(Path=paste0("data/align/",Sample,".sort.flt.bam")) %>% left_join(m, by=c("Sample"="Ind"))
+subals %>% select(Path) %>% write_tsv("bamlists/plate-9.bamlist", col_names = FALSE)
+median(subals$Dedup)
+#conversion
+subals %>% mutate(Conversion=Dedup/Reads) %>% select(Conversion)
+```
+
+
+```{r}
+ggplot(subals) +
+  geom_histogram(aes(x=Dedup)) +
+  theme_bw() +
+  ylab("Count\n") +
+  xlab("\nPost PCR Duplication") +
+  theme(panel.grid=element_blank())
+
+```
+
+
+
+```{r}
+m <- as.matrix(read.table("outputs/101/plate-9-ibs-90.covMat"))
+eig <- eigen(m)
+var<-eig$values/sum(eig$values)
+cumvar<-cumsum(eig$values)/sum(eig$values)
+
+head(var)
+head(cumvar)
+```
+
+
+```{r}
+covs<-eig$vectors[,1:3] %>% as_tibble() %>% bind_cols(subals)
+#text1
+
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V2, fill=Vicinity, shape=Vicinity), cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of Plate 9") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) +
+  scale_shape_manual(values=c(21,23,24,25))
+
+ggsave("outputs/102/plate-9-pca-12.jpeg")
+```
+
+
+```{r}
+covs %>% group_by(Vicinity) %>% summarize(Count=n())
+```
