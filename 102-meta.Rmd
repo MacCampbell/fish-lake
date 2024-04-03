@@ -35,6 +35,8 @@ Adding in missing plate fifteen inds.
 ```{r}
 stats<-read_csv("outputs/102/all-align.tsv", col_names=c("Ind","Reads","Dedup","Coverage"))
 m<-meta %>% left_join(stats, by=c("Ind"="Ind"))
+
+write_csv(m, file="meta/04032023.csv")
 ```
 
 ```{r}

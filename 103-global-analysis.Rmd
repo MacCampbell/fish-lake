@@ -18,3 +18,42 @@ We need to be identify key lineages.
 
 We also need to account for heterogeneity in coverage by downsampling to a certain threshold.   
 
+
+Our key lineages are Eremichthys, Siphateles.
+
+May not have euchila, from Hubbs and Miller (1972), Fish Creek Spring, Fish Creek Valley, White Pine Co., NV (synonym of newarkensis)
+species:   
+mohavensis (no subs)
+isolatata (no subs)
+newarkensis (newarkensis, euchila)
+thalassinus (thalassinus, vaccaceps)
+bicolor (bicolor, columbianus, eurysoma, 'Silver Lake Valley')
+obesus (obesus, snyderi, oregonensis, pectinifer)
+'toikona'?
+
+```{r}
+m<-read_csv("meta/04032023-edited.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam"))
+m
+```
+
+```{r}
+m5<-m %>% filter(Dedup>5e5)
+m5 %>% select(Path) %>% write_tsv("bamlists/test1124.bamlist", col_names = FALSE)
+m5 %>% group_by(Species) %>% summarize(Count=n())
+```
+
+We should be able to sort these rapidly into
+(1) Eremichthys
+(2) Siphateles 
+
+1124 samples
+
+```{sh, eval=FALSE}
+srun -p bigmemhigh -t 36:00:00 --mem=128G --nodes=1 $HOME/angsd/angsd -P 12  \
+-bam bamlists/test1124.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 1012 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
+-out outputs/103/test1124-ibs-90 >outputs/103/test1124-ibs-90.out 2> outputs/104/test1124-ibs-90.err &
+```
+
