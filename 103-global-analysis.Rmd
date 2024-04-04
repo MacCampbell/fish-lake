@@ -65,3 +65,63 @@ srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks=1 --cpus-per-task=12  
 
 ```
 
+
+May have to split into regions and separate jobs here for SNP calling.     
+```{r}
+m %>% filter(Dedup > 1e6) %>% group_by(Species) %>% summarize(Count=n())
+```
+
+Downsample.
+
+```{r}
+ggplot(m) +
+  geom_histogram(aes(x=Dedup)) +
+  theme_bw() +
+  ylab("Count\n") +
+  xlab("\nPost PCR Duplication") +
+  theme(panel.grid=element_blank())
+
+```
+
+```{r}
+mean(m$Dedup)
+median(m$Dedup)
+```
+
+```{r}
+m %>% filter(Dedup>1e6) %>% summarize(Mean=mean(Dedup), Median=median(Dedup))
+```
+Downsample to 2e6 reads, 543 ind downsampled.
+
+What I think may work is to:
+
+(1) use >1e6 inds for SNP calls, define major groups
+(2) use >5e5 inds for GLs, for pop gen analyses (e.g. with doIbs)
+
+
+
+```{r}
+down<-m %>%  mutate(Frac=2e6/Dedup)  %>% 
+  mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
+                     Path))
+
+downsample<-down %>% filter(Dedup > 2e6 ) %>%
+  mutate(ReductionCommand = paste0("samtools view -bs ",Frac, " ", Path," > ",
+                                   Path2)) 
+
+write_csv(downsample$ReductionCommand %>% as_tibble(), "103.1-downsample.sh", col_names = FALSE)
+
+write_csv(down, "meta/downsampled-paths-meta.csv")
+```
+
+544
+Downsampling    
+```{sh, eval=FALSE}
+module load parallel
+srun -p high -t 04:00:00 --nodes=1 parallel -j 10 < 103.1-downsample.sh > outputs/103/downsample.stdout 2> outputs/103/downsample.stderr
+```
+
+```{r}
+million<-down %>% filter(Dedup>1e6)
+million %>% group_by(Species) %>% summarize(Count=n(), MeanReadCounts=mean(Dedup))
+```
