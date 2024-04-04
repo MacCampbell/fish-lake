@@ -123,5 +123,36 @@ srun -p high -t 04:00:00 --nodes=1 parallel -j 10 < 103.1-downsample.sh > output
 
 ```{r}
 million<-down %>% filter(Dedup>1e6)
+million %>% select(Path2) %>% write_tsv("bamlists/test921.bamlist", col_names = FALSE)
+million %>% select(GVL_Code) %>% write_tsv("bamlists/test921.names", col_names = FALSE)
 million %>% group_by(Species) %>% summarize(Count=n(), MeanReadCounts=mean(Dedup))
 ```
+
+
+Ok, now we can do some snp calls and see what shakes out.   
+95% threshold.       
+```{sh, eval=FALSE}
+srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 24 \
+-minInd 875 -bam bamlists/test921.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-out outputs/103/snps-921  \
+-minMaf 0.05 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/103/snps-921.out 2> outputs/103/snps-921.err &
+```
+
+Creating a vcf
+
+```{sh, eval=FALSE}
+plink --tped snps-921.tped --tfam snps-921.tfam  --out plink-binary --recode --allow-extra-chr --noweb
+plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
+bgzip plink.vcf 
+tabix plink.vcf.gz
+
+#renaming vcf with GVL_Code
+bcftools reheader --samples bamlists/test921.names -o outputs/103/renamed.vcf.gz outputs/103/plink.vcf.gz
+
+bcftools +prune -l 0.20 -w 10000 outputs/103/renamed.vcf.gz > outputs/103/pruned.vcf
+bcftools +prune -l 0.30 -w 10000 outputs/103/renamed.vcf.gz > outputs/103/pruned-03.vcf
+```
+
+
+THen we can try making a nexus file and a NJ tree/network. 
