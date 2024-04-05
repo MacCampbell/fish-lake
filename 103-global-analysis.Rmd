@@ -10,6 +10,11 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 ```{r}
 library(tidyverse)
+library(phytools)
+library(phangorn)
+library(ape)
+library(ggtree)
+library(tanggle)
 ```
 
 We can try to generate a phylogenetic network of all our samples.   
@@ -126,7 +131,10 @@ ggplot(covs) +
   theme(plot.title = element_text(hjust=0.5, face="bold")) 
 ```
 
-May have to split into regions and separate jobs here for SNP calling.     
+May have to split into regions and separate jobs here for SNP calling.    
+```{r}
+m<-read_csv("meta/04032023-edited.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam"))
+```
 ```{r}
 m %>% filter(Dedup > 1e6) %>% group_by(Species) %>% summarize(Count=n())
 ```
@@ -152,6 +160,8 @@ median(m$Dedup)
 m %>% filter(Dedup>1e6) %>% summarize(Mean=mean(Dedup), Median=median(Dedup))
 ```
 Downsample to 2e6 reads, 543 ind downsampled.
+
+
 
 What I think may work is to:
 
@@ -182,7 +192,7 @@ srun -p high -t 04:00:00 --nodes=1 parallel -j 10 < 103.1-downsample.sh > output
 ```
 
 ```{r}
-million<-down %>% filter(Dedup>1e6)
+million<-down %>% filter(Dedup>1e6) %>% mutate(Sample=paste0(1:n(),"_",1))
 million %>% select(Path2) %>% write_tsv("bamlists/test921.bamlist", col_names = FALSE)
 million %>% select(GVL_Code) %>% write_tsv("bamlists/test921.names", col_names = FALSE)
 million %>% group_by(Species) %>% summarize(Count=n(), MeanReadCounts=mean(Dedup))
@@ -197,9 +207,18 @@ srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-
 -out outputs/103/snps-921  \
 -minMaf 0.05 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/103/snps-921.out 2> outputs/103/snps-921.err &
+
+#Reducing MAF to .01
+srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 24 \
+-minInd 875 -bam bamlists/test921.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-out outputs/103/snps-921-01  \
+-minMaf 0.01 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/103/snps-921-01.out 2> outputs/103/snps-921-01.err &
+
 ```
 
 Creating a vcf
+	-> Number of sites retained after filtering: 38682 
 
 ```{sh, eval=FALSE}
 plink --tped snps-921.tped --tfam snps-921.tfam  --out plink-binary --recode --allow-extra-chr --noweb
@@ -209,10 +228,61 @@ tabix plink.vcf.gz
 
 #renaming vcf with GVL_Code
 bcftools reheader --samples bamlists/test921.names -o outputs/103/renamed.vcf.gz outputs/103/plink.vcf.gz
+#Need to get +prune module on farm
 
 bcftools +prune -l 0.20 -w 10000 outputs/103/renamed.vcf.gz > outputs/103/pruned.vcf
 bcftools +prune -l 0.30 -w 10000 outputs/103/renamed.vcf.gz > outputs/103/pruned-03.vcf
 ```
 
 With a phylogeny, can place locations and verify 'species' groupings.    
-Then we can try making a nexus file and a NJ tree/network, then a ML tree search one.  
+Then we can try making a nexus file and a NJ tree/network, then a ML tree search one. 
+
+bcftools chokes on renamed.vcf.gz file
+
+```{sh, eval=FALSE}
+bcftools +prune -l 0.20 -w 10000 outputs/103/plink.vcf.gz > outputs/103/pruned.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i pruned.vcf 
+seqConverter.pl -dpruned.min4.phy -on
+```
+
+
+```{r}
+dat<-read.dna(file="outputs/103/pruned.min4.phy")
+write.nexus.data(dat, file="outputs/103/pruned.nex")
+```
+
+Let's make a network in SplitsTree
+
+```{r}
+net<-read.nexus.networx("outputs/103/pruned.min4.network")
+```
+
+```{r}
+g<-ggsplitnet(net)  
+g$data<-left_join(g$data, million, by=c("label"="Sample")) 
+
+n<-g + 
+  geom_tippoint(aes(fill=Species), cex=3, pch=21, alpha=0.75) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22)))
+
+n
+
+ggsave("outputs/103/network.pdf")
+```
+```{r}
+df<-relocate(million, Sample) %>% rename(label=Sample)
+
+t<-read.nexus(file = "outputs/103/nj.tre")
+t<-midpoint_root(t) 
+ggtree(t) %<+% df +
+  
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=1200), size=1) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+  xlim(0,1500)
+
+ggsave("outputs/103/nj-tree.pdf", height=30, width = 8)
+```
