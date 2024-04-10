@@ -10,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 ```{r}
 library(tidyverse)
+library(poppr)
+library(vcfR)
 library(phytools)
 library(phangorn)
 library(ape)
@@ -232,29 +234,121 @@ bcftools reheader --samples bamlists/test921.names -o outputs/103/renamed.vcf.gz
 
 bcftools +prune -l 0.20 -w 10000 outputs/103/renamed.vcf.gz > outputs/103/pruned.vcf
 bcftools +prune -l 0.30 -w 10000 outputs/103/renamed.vcf.gz > outputs/103/pruned-03.vcf
+
+
+plink --tped snps-921-01.tped --tfam snps-921-01.tfam  --out plink-binary-01 --recode --allow-extra-chr --noweb
+plink --ped plink-binary-01.ped --map plink-binary-01.map --recode vcf --allow-extra-chr -out plink-01
+bgzip plink-01.vcf 
+tabix plink-01.vcf.gz
+
+bcftools reheader --samples bamlists/test921.names -o outputs/103/renamed-01.vcf.gz outputs/103/plink-01.vcf.gz
+bcftools +prune -l 0.20 -w 10000 outputs/103/plink-01.vcf.gz > outputs/103/pruned-01.vcf
+
 ```
+
+172988 variants and 921 people pass filters and QC @ MAF 0.01
+Newark chokes up the thing, so can rename then select one population of Newark fish.
 
 With a phylogeny, can place locations and verify 'species' groupings.    
 Then we can try making a nexus file and a NJ tree/network, then a ML tree search one. 
 
 bcftools chokes on renamed.vcf.gz file
 
+```{r}
+million %>% select(Sample) %>% write_tsv(file = "bamlists/test921.samples",
+                                            col_names = FALSE)
+
+```
+
+```{r}
+million %>% filter(Species=="newarkensis") %>% group_by(`Tributary/Collection Location`) %>% summarize(Count=n())
+million %>% filter(Species=="mohavensis") %>% group_by(`Tributary/Collection Location`) %>% summarize(Count=n())
+nn4<-million %>% filter(Species=="newarkensis") %>% filter(`Tributary/Collection Location`=="NN4")
+morning<-million %>% filter(Species=="mohavensis") %>% filter(`Tributary/Collection Location`=="Morningstar Mine")
+
+reducedNew<-million %>% filter(Species != "newarkensis") %>% filter(Species != "mohavensis")
+reducedNew<-bind_rows(reducedNew,nn4,morning)
+reducedNew %>% select(Sample) %>% write_tsv(file = "bamlists/test921-reducedNew.samples",
+                                            col_names = FALSE)
+```
+
+```{r}
+## Now, to filter out small population sizes
+min5<-million %>% group_by(`Tributary/Collection Location`) %>% mutate(Count=n()) %>% filter(Count >= 5) %>% sample_n(weight = Dedup, size = 5)
+min5 %>% ungroup() %>% select(Sample)  %>% write_tsv(file = "bamlists/test921-min5.samples",
+                                            col_names = FALSE)
+
+#adding more isolatus
+iso<-million %>% filter(Species=="isolatus")  %>% sample_n(weight = Dedup, size = 10)
+mins<-million %>% filter(Species !="isolatus") %>% filter(`Tributary/Collection Location` != "3/8 Mile Spring") %>% group_by(`Tributary/Collection Location`) %>% mutate(Count=n()) %>% filter(Count >= 5) %>% sample_n(weight = Dedup, size = 5)
+
+min2<-million  %>% filter(`Tributary/Collection Location` != "3/8 Mile Spring") %>% group_by(`Tributary/Collection Location`) %>% mutate(Count=n()) %>% filter(Count >= 2) %>% filter(Count < 5)
+
+min2<-bind_rows(min2, mins, iso)
+min2 %>% ungroup() %>% select(Sample)  %>% write_tsv(file = "bamlists/test921-min2.samples",
+                                            col_names = FALSE)
+
+```
+
 ```{sh, eval=FALSE}
+#on my mac
 bcftools +prune -l 0.20 -w 10000 outputs/103/plink.vcf.gz > outputs/103/pruned.vcf
 ~/github/mccloud-rrt/vcf2phylip.py -i pruned.vcf 
 seqConverter.pl -dpruned.min4.phy -on
+
+# on u mac 
+#local version
+bcftools  view -S bamlists/test921.samples outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/103/pruned-01.vcf
+
+
+#local version
+bcftools  view -S bamlists/test921-reducedNew.samples outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/103/pruned-reducedNew-01.vcf
+
+#min5 version
+
+bcftools  view -S bamlists/test921-min5.samples outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/103/pruned-reducedNew-min5-01.vcf
+
+#min2 version
+
+bcftools  view -S bamlists/test921-min2.samples outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/103/pruned-reducedNew-min2-01.vcf
+
+
+NDA_SUBDIR=osx-64 conda create -n py2 python=2.7 
+conda activate py2
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-01.vcf 
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-reducedNew-01.vcf 
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-reducedNew-min5-01.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-reducedNew-min2-01.vcf
+
 ```
 
-
+921 16048 in pruned-01.min4.py.varsites.phy
+514 8385 in pruned-reducedNew-01.min4.phy
+165 15506 in pruned-reducedNew-min5-01.min4.phy
+299 22441  in pruned-reducedNew-min2-01.min4.phy
 ```{r}
-dat<-read.dna(file="outputs/103/pruned.min4.phy")
-write.nexus.data(dat, file="outputs/103/pruned.nex")
+
+dat<-read.dna(file="outputs/103/pruned-01.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/103/pruned-01.nex")
+
+dat<-read.dna(file="outputs/103/pruned-reducedNew-01.min4.phy")
+write.nexus.data(dat, file="outputs/103/pruned-reducedNew-01.nex")
+
+dat<-read.dna(file="outputs/103/pruned-reducedNew-min5-01.min4.phy")
+write.nexus.data(dat, file="outputs/103/pruned-reducedNew-min5-01.nex")
+
+dat<-read.dna(file="outputs/103/pruned-reducedNew-min2-01.min4.phy")
+write.nexus.data(dat, file="outputs/103/pruned-reducedNew-min2-01.nex")
+
 ```
 
 Let's make a network in SplitsTree
 
 ```{r}
-net<-read.nexus.networx("outputs/103/pruned.min4.network")
+#net<-read.nexus.networx("outputs/103/pruned-reducedNew-01.networx")
+#net<-read.nexus.networx("outputs/103/pruned-min5-01.network")
+net<-read.nexus.networx("outputs/103/pruned-min2-01.network")
+net<-read.nexus.networx("outputs/103/pruned-01.network")
 ```
 
 ```{r}
@@ -262,27 +356,206 @@ g<-ggsplitnet(net)
 g$data<-left_join(g$data, million, by=c("label"="Sample")) 
 
 n<-g + 
-  geom_tippoint(aes(fill=Species), cex=3, pch=21, alpha=0.75) +
+  geom_tippoint(aes(fill=Species), cex=5, pch=21, alpha=1.0) +
   scale_fill_viridis_d(option="H") +
   guides(fill = guide_legend(override.aes = list(pch = 22)))
 
 n
 
-ggsave("outputs/103/network.pdf")
+ggsave("outputs/103/network.pdf", width=12, height=10)
 ```
+Odd ones include 617_1 634_1
+Odd one is DDP13_13 mohave discovery pond
+```{r}
+million %>% filter(Sample %in% c("617_1","634_1"))
+```
+(base) maccamp@farm:~/fish-lake/data/raw/split$ cat plate-10_RA_GGAACGTGATTGCAGG.fastq | head -n 400 | grep "^@" -A 1 | perl -pe 's/--//g' | perl -pe 's/@/\>/' > ~/temp.fas
+ cat plate-10_RA_GGAACGTGATTGCAGG.fastq | head -n 40000 | grep "^@" -A 1 | perl -pe 's/--//g' | perl -pe 's/@/\>/' > ~/temp.fas
+
+Sample has >= 99.79% alignment success, which is suspicious 
+Using pebble scout.... Maybe can find mtDNA in reference genome? Not in reference genome (megablast of sanger-derived mtDNA doesn't work)
+
+ahhh, so no. 
+
+(base) maccamp@farm:~/fish-lake/data/align$ samtools view -b -f 4 plate-10-GGAACGTGATTGCAGG.sort.bam | samtools fasta > ~/temp.fas
+
+all reads
+ samtools view -b plate-10-GGAACGTGATTGCAGG.sort.bam | samtools fasta > ~/all-temp.fas
+
+Can also align all the reads to siphateles.mtdna, setting this up and seeing what gets retained. 
+
+(base) maccamp@farm:~/fish-lake/data/align-mtdna$ samtools view -F 4 -b plate-12-GGGAATCTGATGCAGG.fastq.sort.bam | samtools fasta
+
+samtools view -F 4 -b plate-12-GGGAATCTGATGCAGG.fastq.sort.bam | samtools fasta >  plate-12-GGGAATCTGATGCAGG.fasta
+
+(base) maccamp@farm:~/genomes/siphateles-mtdna$ blastn -query ~/fish-lake/data/align-mtdna/plate-12-GGGAATCTGATGCAGG.fasta -db siphateles.mtdna -outfmt 6
+
+WORKS
+
+(base) maccamp@farm:~/fish-lake/data/align-mtdna$ samtools view -F 4 -b plate-10-GGAACGTGATTGCAGG.fastq.sort.bam | samtools fasta
+`>LH00444:71:2257TNLT4:6:2116:33167:7598/1
+ACTCGTGATTACGTATAATTTTCTCCCCTTAAAAACACCCGTTATAATAATACCTGTTACCCTAAAACTAGCAGCCCTTATCGTGACAATCATCGGACTTTTAACCGCCATAGAACTTGCAGCCATAACTAATAA
+>LH00444:71:2257TNLT4:6:2221:28077:27111/1
+ACTCGTGATTACGTATAATTTTCTCCCCTTAAAAACACCCGTTATAATAATACCTGTTACCCTAAAACTAGCAGCCCTTATCGTGACAATCATCGGACTTTTAACCGCCATAGAACTTGCAGCCATAACTAATAA
+>LH00444:71:2257TNLT4:7:1172:4318:2373/1
+ACTCGTGATTACGTATAATTTTCTCCCCTTAAAAACACCCGTTATAATAATACCTGTTACCCTAAAACTAGCAGCCCTTATCGTGACAATCATCGGACTTTTAACCGCCATAGAACTTGCAGCCATAACTAATAA
+>LH00444:71:2257TNLT4:6:2116:33167:7598/2
+AGCCTAGTATATTTGAGAAGTGGTGTGTAGAAGTCGTAGGGGTGATTTTAATCTGTTTATTAGTTATGGCTGCAAGTTCTATGGCGGTTAAAAGTCCGATGATTGTCACGATAAGGGCTGCTAGTTTTAGGGTAACAGGTATTATTATAAC
+>LH00444:71:2257TNLT4:6:2221:28077:27111/2
+AGCCTAGTATATTTGAGAAGTGGTGTGTAGAAGTCGTAGGGGTGATTTTAATCTGTTTATTAGTTATGGCTGCAAGTTCTATGGCGGTTAAAAGTCCGATGATTGTCACGATAAGGGCTGCTAGTTTTAGGGTAACAGGTATTATTATAAC
+>LH00444:71:2257TNLT4:7:1172:4318:2373/2
+AGCCTAGTATATTTGAGAAGTGGTGTGTAGAAGTCGTAGGGGTGATTTTAATCTGTTTATTAGTTATGGCTGCAAGTTCTCTGGCGGTTAAAAGTCCGATGATTGTCACGATAAGGGCTGCTAGTTTTAGGGTAACAGGTATTATTATAAC`
+
+93% similar to Gila robusta, G. cypha, G. nigrescens mtdna
+
+830_1, 831_1
+
+```{r}
+million %>% filter(Sample %in% c("830_1","831_1"))
+```
+samtools view -F 4 -b plate-14-GGAAGACGGATGCAGG.fastq.sort.bam | samtools fasta >  plate-14-GGAAGACGGATGCAGG.fasta
+samtools view -F 4 -b plate-14-GGATCCTGTATGCAGG.fastq.sort.bam | samtools fasta >  plate-14-GGATCCTGTATGCAGG.fasta
+
+These seqs are 98-100% similar to Pogonichthys macrolepidotus!!!!
+>LH00444:71:2257TNLT4:6:1202:25463:2191/2
+GGGGCTTCTCAGTAGACAACGCAACACTAACGCGATTCTTCGCCTTCCACTTCCTATTCCCCTTCGTTATCGCCGGCGCAACCGTCCTACACTCAGCTGAGCGACGGCCCCCCCCGGGTCTCAGCCAGGGGTCCTGCATCCGTCTTCCAGA
+>LH00444:71:2257TNLT4:7:1118:46486:18104/2
+GGGGCTTCTCAGTAGACAACGCAACACTAACGCGATTCTTCGCCTTCCACTTCCTATTCCCCTTCGTTATCGCCGGCGCAACCGTCCTACACTCAGCTGAGCGACGGCCCCCCCCGGGTCTCAGCCAGGGGTCCTGCATCCGTCTTCCAGA
+>LH00444:71:2257TNLT4:6:1202:25463:2191/1
+ACCCCTGGCTGAGACCCGGGGGGGGCCGTCGCTCAGCTGAGTGTAGGACGGTTGCGCCGGCGATAACGAAGGGGAATAGGAAGTGGAAGGCGAAGAATCGCGTTAGTGTTGCGTTGTCTACTGAGAAGCCCCAGA
+>LH00444:71:2257TNLT4:7:1118:46486:18104/1
+ACCCCTGGCTGAGACCCGGGGGGGGCCGTCGCTCAGCTGAGTGTAGGACGGTTGCGCCGGCGATAACGAAGGGGAATAGGAAGTGGAAGGCGAAGAATCGCGTTAGTGTTGCGTTGTCTACTGAGAAGCCCCAGA
+>LH00444:71:2257TNLT4:6:1256:20640:24043/1
+CACGCGCATTTTCATTTTGAGTTCATCAACATTAAACGAAGGTAGGAAATGTGTGCGTTGACCACTGTTGTAATGATTCTGGTGGAAGTTTTGCACTTGATTGAGTAATATGTAATTCTTAAGTTATGTCTTAGA
+>LH00444:71:2257TNLT4:6:1256:20640:24043/2
+
+How about 780_1, 781_1
+
+```{r}
+million %>% filter(Sample %in% c("780_1","781_1"))
+```
+
+
+plate-12-GGAGTGGTCATGCAGG
+samtools view -F 4 -b plate-12-GGAGTGGTCATGCAGG.fastq.sort.bam | samtools fasta >  plate-12-GGAGTGGTCATGCAGG.fasta
+
+These are 100% identical to Siphateles boraxobius/alvordensis
+LH00444:71:2257TNLT4:6:2172:29663:8424/2
+LH00444:71:2257TNLT4:6:2172:29671:8438/2
+LH00444:71:2257TNLT4:6:2209:49521:11562/2
+
+
+We should root by 
 ```{r}
 df<-relocate(million, Sample) %>% rename(label=Sample)
 
-t<-read.nexus(file = "outputs/103/nj.tre")
-t<-midpoint_root(t) 
+t<-read.nexus(file = "outputs/103/nj-01.tre")
+#t<-read.tree("outputs/103/pruned-reducedNew-min5-01.min4.phy.varsites.phy.contree")
+#t<-midpoint_root(t) 
+t<-root(t, outgroup = c("617_1","634_1","620_1","632_1","631_1"))
+
 ggtree(t) %<+% df +
   
   geom_tippoint(aes(fill=Species), pch=21) +
-  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=1200), size=1) +
+  geom_tiplab(aes(color=Species, x=3400), size=1) +
   scale_fill_viridis_d(option="H") +
   guides(fill = guide_legend(override.aes = list(pch = 22))) +
   geom_treescale() +
-  xlim(0,1500)
+  scale_color_viridis_d(option="H") +
+ # geom_nodelab() +
+  xlim(0,3600)
 
-ggsave("outputs/103/nj-tree.pdf", height=30, width = 8)
+ggsave("outputs/103/nj-tree-inds.pdf", height=28, width = 10)
+
+ggtree(t) %<+% df +
+  
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=3400), size=1) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+ # geom_nodelab() +
+  xlim(0,3600)
+
+ggsave("outputs/103/nj-tree.pdf", height=28, width = 10)
 ```
+
+```{sh, eval=FALSE}
+iqtree2 -s pruned-01.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+
+iqtree2 -s pruned-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 --redo
+
+iqtree2 -s pruned-reducedNew-min5-01.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 --redo
+iqtree2 -s pruned-reducedNew-min5-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 --redo
+
+
+#relaxing requirements for bootstrap correlation to 0.9 from 0.99 http://www.iqtree.org/doc/Command-Reference
+iqtree2 -s pruned-reducedNew-min2-01.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 --redo
+iqtree2 -s pruned-reducedNew-min2-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -bcor 0.9 --redo
+
+```
+
+165 inds, 4217 snps
+265 6756 snps
+
+
+
+```{r}
+df<-relocate(million, Sample) %>% rename(label=Sample)
+
+t<-read.tree("outputs/103/pruned-reducedNew-min2-01.min4.phy.varsites.phy.contree")
+t<-midpoint_root(t) 
+t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 75)
+
+ggtree(t) %<+% df +
+  
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=.1), size=1) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+ # geom_nodelab() +
+  xlim(0,.15)
+
+ggsave("outputs/103/ml-tree.pdf", height=11, width = 8.5)
+```
+
+
+What about boot?  
+
+Read in SNPs 
+
+```{r}
+vcf<-read.vcfR("outputs/103/pruned-reducedNew-min5-01.vcf")
+obj<-vcfR2genind(vcf)
+obj@pop<-as.factor(min5$Vicinity)
+obj@other<-min5
+```
+
+```{r}
+t1<-aboot(obj, tree = "nj", distance = "nei.dist", sample = 100,
+  cutoff = 50, showtree = TRUE, missing = "mean",
+  strata = obj@other$`Tributary/Collection Location`)
+```
+```{r}
+df2<-min5 %>% group_by(`Tributary/Collection Location`, Species, Vicinity) %>% summarize(Count=n())
+df2
+```
+
+```{r}
+t2<-midpoint_root(t1) 
+ggtree(t2) %<+% df2 +
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",label)), size=1) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() 
+
+ggsave("outputs/103/pop-tree.pdf")
+```
+
+
+## Outgroup data
+Relictus??? 
+
+Let me see about that.  

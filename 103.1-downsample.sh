@@ -170,7 +170,7 @@ samtools view -bs 0.529833746117974 data/align/plate-5-GGGACAGTGCTGCAGG.sort.flt
 samtools view -bs 0.849211825274667 data/align/plate-5-GGACGTATCATGCAGG.sort.flt.bam > data/downsample/plate-5-GGACGTATCATGCAGG.reduced.bam
 samtools view -bs 0.387794629393398 data/align/plate-5-GGCAGCGTTATGCAGG.sort.flt.bam > data/downsample/plate-5-GGCAGCGTTATGCAGG.reduced.bam
 samtools view -bs 0.564011020775346 data/align/plate-5-GGGAATCTGATGCAGG.sort.flt.bam > data/downsample/plate-5-GGGAATCTGATGCAGG.reduced.bam
-samtools view -bs 0.564657202259081 data/align/plate-5-GGAAGAGATCTGCAGG.sort.flt.bam > data/downsample/plate-5-GGAAGAGATCTGCAGG.reduced.bam
+samtools view -bs 0.56465720225908 data/align/plate-5-GGAAGAGATCTGCAGG.sort.flt.bam > data/downsample/plate-5-GGAAGAGATCTGCAGG.reduced.bam
 samtools view -bs 0.301855718400008 data/align/plate-5-GGATTGGCTCTGCAGG.sort.flt.bam > data/downsample/plate-5-GGATTGGCTCTGCAGG.reduced.bam
 samtools view -bs 0.68556260009214 data/align/plate-5-GGCATCAAGTTGCAGG.sort.flt.bam > data/downsample/plate-5-GGCATCAAGTTGCAGG.reduced.bam
 samtools view -bs 0.994772965453027 data/align/plate-5-GGCATACCAATGCAGG.sort.flt.bam > data/downsample/plate-5-GGCATACCAATGCAGG.reduced.bam
@@ -327,7 +327,7 @@ samtools view -bs 0.442830278874582 data/align/plate-9-GGACAAGCTATGCAGG.sort.flt
 samtools view -bs 0.419067047794178 data/align/plate-9-GGAACAACCATGCAGG.sort.flt.bam > data/downsample/plate-9-GGAACAACCATGCAGG.reduced.bam
 samtools view -bs 0.956737296202997 data/align/plate-9-GGAGATCGCATGCAGG.sort.flt.bam > data/downsample/plate-9-GGAGATCGCATGCAGG.reduced.bam
 samtools view -bs 0.445474381213811 data/align/plate-9-GGCCGAAGTATGCAGG.sort.flt.bam > data/downsample/plate-9-GGCCGAAGTATGCAGG.reduced.bam
-samtools view -bs 0.787730002390761 data/align/plate-9-GGGATAGACATGCAGG.sort.flt.bam > data/downsample/plate-9-GGGATAGACATGCAGG.reduced.bam
+samtools view -bs 0.78773000239076 data/align/plate-9-GGGATAGACATGCAGG.sort.flt.bam > data/downsample/plate-9-GGGATAGACATGCAGG.reduced.bam
 samtools view -bs 0.803104803169052 data/align/plate-9-GGAATGTTGCTGCAGG.sort.flt.bam > data/downsample/plate-9-GGAATGTTGCTGCAGG.reduced.bam
 samtools view -bs 0.526470266933587 data/align/plate-9-GGCCATCCTCTGCAGG.sort.flt.bam > data/downsample/plate-9-GGCCATCCTCTGCAGG.reduced.bam
 samtools view -bs 0.502268243387136 data/align/plate-9-GGAACGCTTATGCAGG.sort.flt.bam > data/downsample/plate-9-GGAACGCTTATGCAGG.reduced.bam
