@@ -117,6 +117,8 @@ ggplot(covs) +
   ggtitle("Genome-Wide PCA of 1124 Samples") +
   theme(plot.title = element_text(hjust=0.5, face="bold"))  +
   facet_wrap(.~Species)
+
+ggsave("outputs/103/pca-1124.pdf")
 ```
 Mostly seems to sort out.
 ```{r}
@@ -132,8 +134,33 @@ ggplot(covs) +
   ggtitle("Genome-Wide PCA of 1124 Samples") +
   theme(plot.title = element_text(hjust=0.5, face="bold")) 
 ```
+```{r}
+ones<-covs %>% filter(Species=="obesus") %>% filter(V1 < 0.010)
+twos<-covs %>% filter(Species=="obesus") %>% filter(V2 > 0.005)
+ones
+twos
+```
+
+```{r}
+ggplot(covs %>% filter(Species %in% c("obesus")) %>% filter(!SampleName %in% c(ones$SampleName, twos$SampleName))) +
+  geom_point(aes(x=V1, y=V2, fill=Vicinity), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 1124 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
 
 May have to split into regions and separate jobs here for SNP calling.    
+```{r}
+obesus<-m5 %>% filter(Species %in% c("obesus","toikona","obesus")) %>% filter(!SampleName %in% c(ones$SampleName, twos$SampleName))
+write_csv(obesus, file="meta/obesus-500k-meta.csv")
+```
+
 ```{r}
 m<-read_csv("meta/04032023-edited.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam"))
 ```
@@ -457,7 +484,7 @@ t<-root(t, outgroup = c("617_1","634_1","620_1","632_1","631_1"))
 ggtree(t) %<+% df +
   
   geom_tippoint(aes(fill=Species), pch=21) +
-  geom_tiplab(aes(color=Species, x=3400), size=1) +
+  geom_tiplab(aes(color=Species, x=3400), size=.75) +
   scale_fill_viridis_d(option="H") +
   guides(fill = guide_legend(override.aes = list(pch = 22))) +
   geom_treescale() +
@@ -470,9 +497,10 @@ ggsave("outputs/103/nj-tree-inds.pdf", height=28, width = 10)
 ggtree(t) %<+% df +
   
   geom_tippoint(aes(fill=Species), pch=21) +
-  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=3400), size=1) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), color=Species, x=3400), size=.75) +
   scale_fill_viridis_d(option="H") +
   guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  scale_color_viridis_d(option="H") +
   geom_treescale() +
  # geom_nodelab() +
   xlim(0,3600)
@@ -481,9 +509,11 @@ ggsave("outputs/103/nj-tree.pdf", height=28, width = 10)
 ```
 
 ```{sh, eval=FALSE}
+#relaxing requirements for bootstrap correlation to 0.9 from 0.99 http://www.iqtree.org/doc/Command-Reference
+#WARNING: bootstrap analysis did not converge. You should rerun with higher number of iterations (-nm option)
+#Should run with nm for longer
 iqtree2 -s pruned-01.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
-
-iqtree2 -s pruned-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 --redo
+iqtree2 -s pruned-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
 
 iqtree2 -s pruned-reducedNew-min5-01.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 --redo
 iqtree2 -s pruned-reducedNew-min5-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 --redo
@@ -497,27 +527,29 @@ iqtree2 -s pruned-reducedNew-min2-01.min4.phy.varsites.phy -T AUTO -st DNA -m GT
 
 165 inds, 4217 snps
 265 6756 snps
+921 inds 16048 sites
 
-
+checked missing data with remove-missing.pl and didn't pull any out.  
 
 ```{r}
 df<-relocate(million, Sample) %>% rename(label=Sample)
-
-t<-read.tree("outputs/103/pruned-reducedNew-min2-01.min4.phy.varsites.phy.contree")
-t<-midpoint_root(t) 
-t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 75)
+ogs<-c("617_1","620_1","631_1","632_1","634_1")
+t<-read.tree("outputs/103/pruned-01.min4.phy.varsites.phy.contree.bak")
+#t<-midpoint_root(t) 
+t<-root(t, ogs)
+t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 50)
 
 ggtree(t) %<+% df +
   
   geom_tippoint(aes(fill=Species), pch=21) +
-  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=.1), size=1) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=.11), size=.75) +
   scale_fill_viridis_d(option="H") +
   guides(fill = guide_legend(override.aes = list(pch = 22))) +
   geom_treescale() +
  # geom_nodelab() +
   xlim(0,.15)
 
-ggsave("outputs/103/ml-tree.pdf", height=11, width = 8.5)
+ggsave("outputs/103/ml-tree.pdf", height=24, width = 8.5)
 ```
 
 

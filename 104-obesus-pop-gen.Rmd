@@ -1,0 +1,47 @@
+---
+title: "104-obesus-pop-gen"
+output: html_document
+date: "2024-04-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message=FALSE)
+```
+
+The Fish Lake Valley fish appear to be the most divergent 'obesus' (not considering snyderi,toikona subspp.).   
+
+```{r}
+library(tidyverse)
+```
+
+Meta
+
+```{r}
+mo5<-read_csv("meta/obesus-500k-meta.csv")
+mo5 %>% group_by(Species, Vicinity) %>% summarize(Count=n())
+```
+
+381 inds   
+
+```{r}
+mo5 %>% select(Path) %>% write_csv("bamlists/mo5.bamlist", col_names = FALSE)
+```
+
+at 90% thresh 
+```{sh, eval=FALSE}
+srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/mo5.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 343 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
+-out outputs/104/mo5-ibs-90 >outputs/104/mo5-ibs-90.out 2> outputs/103/mo5-ibs-90.err &
+
+srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 2 -o outputs/104/mo5-K2 &
+srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 3 -o outputs/104/mo5-K3 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 4 -o outputs/104/mo5-K4 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 5 -o outputs/104/mo5-K5 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 6 -o outputs/104/mo5-K6 &
+
+```
+
+```
