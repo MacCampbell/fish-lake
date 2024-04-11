@@ -17,7 +17,8 @@ library(tidyverse)
 Meta
 
 ```{r}
-mo5<-read_csv("meta/obesus-500k-meta.csv")
+mo5<-read_csv("meta/obesus-500k-meta.csv") %>% mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
+                     Path))
 mo5 %>% group_by(Species, Vicinity) %>% summarize(Count=n())
 ```
 
@@ -25,6 +26,8 @@ mo5 %>% group_by(Species, Vicinity) %>% summarize(Count=n())
 
 ```{r}
 mo5 %>% select(Path) %>% write_csv("bamlists/mo5.bamlist", col_names = FALSE)
+mo5 %>% select(Path2) %>% write_csv("bamlists/mo5-downsample.bamlist", col_names = FALSE)
+
 ```
 
 at 90% thresh 
@@ -34,7 +37,14 @@ srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-
 -minInd 343 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
--out outputs/104/mo5-ibs-90 >outputs/104/mo5-ibs-90.out 2> outputs/103/mo5-ibs-90.err &
+-out outputs/104/mo5-ibs-90 >outputs/104/mo5-ibs-90.out 2> outputs/104/mo5-ibs-90.err &
+
+srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/mo5-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 343 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
+-out outputs/104/mo5-ibs-90-down >outputs/104/mo5-ibs-90-down.out 2> outputs/104/mo5-ibs-90-down.err &
 
 srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 2 -o outputs/104/mo5-K2 &
 srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 3 -o outputs/104/mo5-K3 &
