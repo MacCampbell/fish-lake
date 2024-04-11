@@ -16,6 +16,8 @@ library(tidyverse)
 
 Meta
 
+Downsampled Paths are at 2e6.   
+
 ```{r}
 mo5<-read_csv("meta/obesus-500k-meta.csv") %>% mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
                      Path))
@@ -46,6 +48,13 @@ srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-
 -doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
 -out outputs/104/mo5-ibs-90-down >outputs/104/mo5-ibs-90-down.out 2> outputs/104/mo5-ibs-90-down.err &
 
+srun -p high -t 10:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/mo5-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 343 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
+-out outputs/104/mo5-ibs-90-high >outputs/104/mo5-ibs-90-high.out 2> outputs/104/mo5-ibs-90-high.err &
+
 srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 2 -o outputs/104/mo5-K2 &
 srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 3 -o outputs/104/mo5-K3 &
 srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/mo5-ibs-90.beagle.gz -K 4 -o outputs/104/mo5-K4 &
@@ -54,4 +63,31 @@ srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -li
 
 ```
 
+```{r}
+m <- as.matrix(read.table("outputs/104/mo5-ibs-90-high.covMat"))
+eig <- eigen(m)
+var<-eig$values/sum(eig$values)
+cumvar<-cumsum(eig$values)/sum(eig$values)
+
+head(var)
+head(cumvar)
 ```
+
+
+```{r}
+covs<-eig$vectors[,1:3] %>% as_tibble() %>% bind_cols(mo5)
+
+
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V2, fill=Species), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of obesus lineages") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+

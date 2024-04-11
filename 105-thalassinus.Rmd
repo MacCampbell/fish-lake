@@ -1,0 +1,36 @@
+---
+title: "105-thalassinus"
+output: html_document
+date: "2024-04-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+mt<-read_csv("meta/04032023-edited.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam"))  %>% mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
+                     Path)) %>%
+  filter(Species%in% c("columbianus","thalassinus","eurysomas")) %>% filter(!`Tributary/Collection Location` %in% c("Bitner Ranch","Rock Creek","Horse Canyon","Thousand Creek Gorge","Cowhead Lake"))
+
+mt2<-mt %>% filter(Dedup > 2e5)
+mt2 %>% group_by(Species,`Tributary/Collection Location`) %>% summarize(Count=n())
+mt2 %>% select(Path2) %>% write_csv(col_names = FALSE, "bamlists/thal2.bamlist")
+```
+
+Cowhead Lake is something else entirely
+
+100 inds
+
+```{sh, eval=FALSE}
+srun -p high -t 10:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/thal2.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 90 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
+-out outputs/105/mt2-ibs-90 >outputs/105/mt2-ibs-90.out 2> outputs/104/mt2-ibs-90.err &
+```
