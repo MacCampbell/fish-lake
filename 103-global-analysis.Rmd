@@ -157,7 +157,7 @@ ggplot(covs %>% filter(Species %in% c("obesus")) %>% filter(!SampleName %in% c(o
 
 May have to split into regions and separate jobs here for SNP calling.    
 ```{r}
-obesus<-m5 %>% filter(Species %in% c("obesus","toikona","obesus")) %>% filter(!SampleName %in% c(ones$SampleName, twos$SampleName))
+obesus<-m5 %>% filter(Species %in% c("obesus","toikona","snyderi")) %>% filter(!SampleName %in% c(ones$SampleName, twos$SampleName))
 write_csv(obesus, file="meta/obesus-500k-meta.csv")
 ```
 
@@ -511,7 +511,7 @@ ggsave("outputs/103/nj-tree.pdf", height=28, width = 10)
 ```{sh, eval=FALSE}
 #relaxing requirements for bootstrap correlation to 0.9 from 0.99 http://www.iqtree.org/doc/Command-Reference
 #WARNING: bootstrap analysis did not converge. You should rerun with higher number of iterations (-nm option)
-#Should run with nm for longer
+#Should run with nm for longer, this  converged!
 iqtree2 -s pruned-01.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
 iqtree2 -s pruned-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
 
@@ -534,7 +534,7 @@ checked missing data with remove-missing.pl and didn't pull any out.
 ```{r}
 df<-relocate(million, Sample) %>% rename(label=Sample)
 ogs<-c("617_1","620_1","631_1","632_1","634_1")
-t<-read.tree("outputs/103/pruned-01.min4.phy.varsites.phy.contree.bak")
+t<-read.tree("outputs/103/pruned-01.min4.phy.varsites.phy.contree")
 #t<-midpoint_root(t) 
 t<-root(t, ogs)
 t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 50)
