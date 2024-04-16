@@ -1,0 +1,229 @@
+---
+title: "103.2-downsampled-phylo"
+output: html_document
+date: "2024-04-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(poppr)
+library(vcfR)
+library(phytools)
+library(phangorn)
+library(ape)
+library(ggtree)
+library(tanggle)
+```
+
+
+Get 921 samples with genotype calls filtered for read counts
+```{r}
+m1<-read_csv("meta/04152023.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam")) %>% 
+   mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
+                     Path)) %>% filter(Dedup>1e6) %>% mutate(Sample=paste0(1:n(),"_",1))
+m1
+```
+
+# Rooted Phylogeny
+
+## Outgroups
+
+```{r}
+gila<-m1 %>% filter(Sample %in% c("634_1","617_1"))
+alvo<-m1 %>% filter(Species =="alvordensis")
+unk<-m1 %>% filter(Species =="UNK")
+ogsdf<-bind_rows(gila, alvo, unk)
+nodownsample<-m1 %>% filter(Species %in% c("bicolor","thalassinus", "isolatus"))
+#get one pop of newarkensis, mohavensis
+# NN4 has 20 inds, can consider adding in an other location, NV12?
+new<-m1 %>% filter(`Tributary/Collection Location` %in% c("NN4","NV12","Tui Slough", "Camp Cady")) %>% filter(Sample != "237_1")
+```
+
+Camp Cady hybrid?
+## Ingroup
+
+```{r}
+ob<-m1 %>% filter(Species=="obesus") %>% filter(!Vicinity %in% c("June Lake","Akali Lake")) %>%
+  filter(!`Tributary/Collection Location` %in% c("Twin Lakes","Convict Lake")) %>% filter(Sample != "335_1")
+ob %>% group_by(Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n())
+```
+
+
+## Combine
+
+557 inds
+582 with NV12
+```{r}
+phylo<-bind_rows(gila, alvo, unk, nodownsample,new,ob)
+write_csv(phylo %>% select(Sample), file="outputs/103/582.names", col_names=FALSE)
+```
+
+```{sh, eval=FALSE}
+bcftools  view -S outputs/103/582.names outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/103/582-01.vcf
+
+bcftools  view -S outputs/103/582.names outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.30 -w 10000 > outputs/103/582-01-p3.vcf
+
+conda activate py2
+~/github/mccloud-rrt/vcf2phylip.py -i 582-01.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i 582-01-p3.vcf
+
+conda deactivate
+
+iqtree2 -s 582-01.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s 582-01-p3.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+
+iqtree2 -s 582-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+iqtree2 -s 582-01-p3.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
+```
+
+523 11387 in varsites file.
+543 11256 in varsites file
+557 11108 in varsites file 
+557 p3 16236 in varsites file
+582 11217
+582 p3 16737
+
+```{r}
+dat<-read.dna(file="outputs/103/582-01.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/103/582-01.nex")
+
+dat<-read.dna(file="outputs/103/582-01-p3.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/103/582-01-p3.nex")
+```
+
+
+## Network
+
+```{r}
+net<-read.nexus.networx("outputs/103/582-network.nex")
+#net<-read.nexus.networx("outputs/103/582-p3-network.nex")
+```
+
+```{r}
+g<-ggsplitnet(net)  
+g$data<-left_join(g$data, phylo, by=c("label"="Sample")) 
+
+n<-g + 
+  geom_tippoint(aes(fill=Species), cex=5, pch=21, alpha=1.0) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22)))
+
+n
+
+ggsave("outputs/103/582-network.pdf", width=12, height=10)
+```
+
+```{r}
+g2<-ggsplitnet(net)  
+phylo2<-phylo
+phylo2$Species<-factor(phylo2$Species, levels=c("G. orcuttii","alvordensis","thalassinus","bicolor","isolatus","newarkensis","mohavensis","obesus"))
+g2$data<-left_join(g2$data, phylo2, by=c("label"="Sample")) 
+
+n2<-g2 + 
+  geom_tippoint(aes(shape=Species, fill=Subspecies), cex=5, alpha=1.0) +
+  scale_fill_viridis_d(option="magma", na.value="grey50") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  scale_shape_manual(values=c(24,24,24,22,22,22,22,21))
+
+n2
+
+ggsave("outputs/103/582-obesus-subs-network.pdf", width=12, height=10)
+
+```
+
+```{r}
+df<-relocate(phylo, Sample) %>% rename(label=Sample)
+
+t<-read.nexus(file = "outputs/103/nj-582.tre")
+#t<-read.tree("outputs/103/pruned-reducedNew-min5-01.min4.phy.varsites.phy.contree")
+#t<-midpoint_root(t) 
+
+ggtree(t) %<+% df +
+  
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(color=Species, x=3400), size=.75) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+  scale_color_viridis_d(option="H") +
+ # geom_nodelab() +
+  xlim(0,3600)
+
+ggsave("outputs/103/nj-582-tree-inds.pdf", height=28, width = 10)
+```
+
+ml tree
+
+```{r}
+#t<-read.tree("outputs/103/582-01-p3.min4.phy.varsites.phy.contree")
+t<-read.tree("outputs/103/582-01.min4.phy.varsites.phy.contree")
+#t<-read.tree("outputs/103/557-01.min4.phy.varsites.phy.contree")
+ogs<-ogsdf$Sample
+
+#t<-midpoint_root(t) 
+t<-root(t, ogs)
+t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 50)
+
+ggtree(t) %<+% df +
+  
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=.2), size=.75) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+ # geom_nodelab() +
+  xlim(0,.3) 
+
+ggsave("outputs/103/582-ml-tree.pdf", height=20, width=8.5)
+```
+
+
+## Set up for SVD Quartets
+
+Using 
+582-01.min4.phy.varsites.phy
+
+Need to drop 3/8 Mile spring, and combine one flowing wells fish? Flowing_Well_#7 : 391T,
+
+```{r}
+block<-phylo
+block$`Tributary/Collection Location`<-gsub(" ","_",block$`Tributary/Collection Location`)
+block$`Tributary/Collection Location`<-gsub("/","_",block$`Tributary/Collection Location`)
+block$`Tributary/Collection Location`<-gsub("\\(|\\)|'|,","",block$`Tributary/Collection Location`)
+
+block$Num<-gsub("_1","T",block$Sample)
+block2<-block %>% group_by(`Tributary/Collection Location`) %>% summarize(Inds=paste0(Num, collapse="\t")) %>% 
+  mutate(String=paste0(`Tributary/Collection Location`, " : ", Inds, ",")) %>%
+  select(String) 
+
+block2 %>% write_tsv("outputs/103/svdq-block.tsv", col_names = FALSE)
+block<-block %>% group_by(Species, Subspecies, Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n()) %>% relocate(`Tributary/Collection Location`)
+block
+```
+
+
+```{r}
+s<-read.nexus("outputs/103/svdq.tre")
+s<-consensus(s, p=0.5)
+s<-root(s, c("Desert_Discovery_Pond","Cowhead_Lake","Thousand_Creek_Gorge"))
+
+ggtree(s, branch.length = 'none') %<+% block +
+  geom_tippoint(aes(shape=Species, fill=Subspecies, size=Count)) + 
+  geom_nodelab() + 
+  geom_tiplab(size=4, offset = 0.5) +
+  xlim(0,20) +
+  scale_fill_viridis_d(option="magma", na.value="grey50") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  scale_shape_manual(values=c(25,23,25,23,24,22,21,23,25))
+
+
+
+ggsave("outputs/103/svdq-test.pdf", width=11, height = 8.5)
+
+```

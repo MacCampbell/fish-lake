@@ -36,6 +36,7 @@ srun -p high -t 10:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task
 -doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
 -out outputs/105/mt2-ibs-90 >outputs/105/mt2-ibs-90.out 2> outputs/105/mt2-ibs-90.err &
 
+#-minMaf .01 not set
 srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/105/mt2-ibs-90.beagle.gz -K 2 -o outputs/105/mt2-K2 &
 srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/105/mt2-ibs-90.beagle.gz -K 3 -o outputs/105/mt2-K3 &
 srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/105/mt2-ibs-90.beagle.gz -K 4 -o outputs/105/mt2-K4 &

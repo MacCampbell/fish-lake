@@ -472,7 +472,16 @@ LH00444:71:2257TNLT4:6:2172:29671:8438/2
 LH00444:71:2257TNLT4:6:2209:49521:11562/2
 
 
-We should root by 
+Get some more weirdos 
+```{r}
+million %>% filter(Sample %in% c("335_1","42_1"))
+```
+
+plate-2-GGCGAACTTATGCAGG
+
+samtools view -F 4 -b plate-2-GGCGAACTTATGCAGG.fastq.sort.bam | samtools fasta >  plate-2-GGCGAACTTATGCAGG.fasta
+Pulled 0 reads, drop.
+ 
 ```{r}
 df<-relocate(million, Sample) %>% rename(label=Sample)
 
@@ -551,7 +560,20 @@ ggtree(t) %<+% df +
 
 ggsave("outputs/103/ml-tree.pdf", height=24, width = 8.5)
 ```
+```{r}
+ggtree(t) %<+% df +
+  
+  geom_tippoint(aes(fill=Species), pch=21) +
+  geom_tiplab(aes(x=.11, color=Species), size=.75) +
+  scale_fill_viridis_d(option="H") +
+  scale_color_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+ # geom_nodelab() +
+  xlim(0,.15)
 
+ggsave("outputs/103/ml-tree-inds.pdf", height=24, width = 8.5)
+```
 
 What about boot?  
 
