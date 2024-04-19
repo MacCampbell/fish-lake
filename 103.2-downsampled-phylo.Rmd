@@ -29,6 +29,10 @@ m1<-read_csv("meta/04152023.csv") %>% mutate(Path=paste0("data/align/",Ind,".sor
 m1
 ```
 
+```{r}
+m1 %>% group_by(Species) %>% summarize(Count=n())
+```
+
 # Rooted Phylogeny
 
 ## Outgroups

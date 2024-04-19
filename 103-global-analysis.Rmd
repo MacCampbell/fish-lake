@@ -543,21 +543,7 @@ checked missing data with remove-missing.pl and didn't pull any out.
 ```{r}
 df<-relocate(million, Sample) %>% rename(label=Sample)
 ogs<-c("617_1","620_1","631_1","632_1","634_1")
-t<-read.tree("outputs/103/pruned-01.min4.phy.varsites.phy.contree")
-#t<-midpoint_root(t) 
-t<-root(t, ogs)
-t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 50)
-
-ggtree(t) %<+% df +
-  
-  geom_tippoint(aes(fill=Species), pch=21) +
-  geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=.11), size=.75) +
-  scale_fill_viridis_d(option="H") +
-  guides(fill = guide_legend(override.aes = list(pch = 22))) +
-  geom_treescale() +
- # geom_nodelab() +
-  xlim(0,.15)
-
+s
 ggsave("outputs/103/ml-tree.pdf", height=24, width = 8.5)
 ```
 ```{r}
