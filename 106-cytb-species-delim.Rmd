@@ -1,0 +1,130 @@
+---
+title: "106-cytb-species-delim"
+output: html_document
+date: "2024-05-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(ape)
+library(pegas)
+library(ggtree)
+library(phytools)
+library(phylotools)
+library(viridis)
+```
+
+Redoing cytb analysis with outgroups. Including Chrosomus and Orthodon
+`>OR002152.1:14388-15526 Chrosomus erythrogaster mitochondrion, complete genome
+ATGGCAAGCCTACGAAAAACCCACCCACTAATGAAAATCGCTAATGACGCATTAGTTGACCTCCCGACACCATCTAACAT
+TTCCGCACTCTGAAACTTTGGATCCCTCCTAGGATTATGTTTAATTACCCAAATCCTAACAGGATTATTTTTAGCCATAC
+ACTATACCTCTGATATCTCAACTGCATTTTCATCAGTTACTCACATCTGCCGGGACGTTAACTACGGCTGACTTATTCGA
+AACCTACATGCCAACGGTGCATCATTCTTCTTCATCTGCATTTATATGCACATCGCCCGAGGCCTGTACTACGGGTCATA
+CCTCTATAAAGAAACCTGAAACATTGGCGTAGTACTACTTCTATTAGTTATAATAACGGCCTTCGTCGGTTACGTCCTAC
+CATGAGGCCAAATGTCTTTTTGAGGCGCCACAGTAATTACAAATTTACTCTCAGCAGTACCCTACATAGGTGACACCCTC
+GTGCAATGAATCTGGGGAGGCTTCTCAGTAGACAACGCAACACTCACACGATTTTTCGCCTTCCACTTCCTACTACCCTT
+CGTAATTGCCGGCGCAACCGTCCTCCACCTGCTATTTCTCCACGAAACCGGCTCGAACAACCCGGCCGGGCTAAACTCTG
+ATGCAGATAAAATCTCTTTTCATCCATACTTTTCATACAAAGACCTTCTTGGTTTCGTACTAATATTATTTGCCCTCACG
+TCATTAGCATTATTTTCTCCCAACTTATTGGGTGACCCAGAGAATTTTACCCCTGCAAATCCCCTAGTAACACCCCCACA
+TATTCAACCTGAATGATATTTCTTATTTGCCTATGCCATTCTCCGTTCCATCCCAAACAAACTAGGTGGGGTCCTTGCAC
+TACTATTCAGCATTCTTGTGCTACTAGTAGTACCAATTTTACACACCTCGAAACAACGAGGACTTACTTTCCGCCCTATG
+ACCCAATTCCTATTCTGAACCCTAGTAGCAGATATACTTATCTTAACATGAATTGGCGGTATACCTGTAGAACACCCATA
+TATTATTATTGGCCAAGTAGCATCAATTCTATATTTTGCACTTTTCCTCATTCTTGTCCCACTAGCGGGATGAGTAGAAA
+ATAAGGCATTAAAATGAGC`
+
+`>AF452073.1 Orthodon microlepidotus cytochrome b (cytb) gene, partial cds; mitochondrial gene for mitochondrial product
+ATGGCAAGCCTACGAAAAACCCACCCACTAATAAAAATCGCTAACGATGCGCTAGTCGACCTTCCAACAC
+CGTCCAATATTTCAGCACTATGAAATTTTGGCTCCCTCCTAGGATTATGTTTAATTACCCAAATTCTAAC
+AGGGTTATTTTTAGCCATACACTACACCTCCGATATCTCGACCGCATTTTCATCAGTGACTCACATCTGC
+CGAGACGTTAACTATGGCTGACTTATCCGAAGCCTACATGCCAACGGAGCATCATTTTTCTTCATCTGCA
+TTTATATACACATTGCCCGGGGCCTATATTATGGGTCATACCTTCATAAAGAAACCTGAAACATTGGCGT
+AGTCCTACTTCTTTTAGTTATAATGACCGCATTCGTTGGCTATGTACTTCCGTGAGGCCAAATATCTTTT
+TGAGGCGCCACAGTAATTACAAATCTGCTATCCGCAGTCCCTTACATAGGAGACACCCTTGTTCAGTGAA
+TCTGAGGAGGCTTCTCAGTAGACAACGCAACACTGACACGATTCTTCGCCTTCCACTTCCTACTACCGTT
+TGTCATCGCCGGCGCGACCATCCTACACTTACTGTTCTTACACGAAACCGGGTCAAACAACCCGGCCGGA
+CTGAACTCTGATGCGGATAAAATTTCTTTTCATCCATACTTCTCATACAAAGACCTTCTTGGCTTCGTAC
+TAATATTACTAGCCCTCACTTCACTAGCATTGTTTTCACCCAACCTGCTAGGTGACTCAGAAAATTTTAT
+TCCGGCAAACCCCTTAGTCACCCCTCCACATATTCAGCCTGAATGATATTTCCTATTTGCCTACGCCATT
+CTACGATCTATCCCTAACAAACTAGGAGGGGTCCTCGCACTACTATTTAGCATTCTAGTGCTATTGGTTG
+TGCCAATCTTACATACCTCAAAACAACGAGGATTAACTTTCCGTCCCATGACCCAATTTCTATTCTGAAC
+CCTAGTAGCAGATATACCCATTTTGACATGAATCGGCGGCATACCCGTAGAACACCCTTATATTATTATT
+GGCCAAGCCGCATCAATCCTATACTTCGCACTATTTCTTATTCTAGTCCCACTAGCTGGGTGAGTAGAAA
+ATAAAGCGTTGAAATGAGCT`
+
+
+Get the ingroup and do some species delimitation, using mafft v 7.  
+`mafft accessions-with-extras.fas > accessions-with-extras.afas`
+`iqtree2 -T AUTO -m GTR+G -s accessions-with-extras.afas -bb 10000 -redo`
+`iqtree2 -T AUTO -m MFP -s accessions-with-extras.afas -bb 10000 -redo`
+
+```{r}
+meta<-read_tsv("outputs/106/annotations-with-extas.tsv")
+
+meta<-meta %>% separate(Fish, into=c("Genus","Species", "subspecies","ID"), remove = FALSE)
+
+bicolor<-meta %>% filter(Species=="bicolor")
+ogs<-meta %>% filter(Species!="bicolor")
+```
+
+
+https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html
+
+Threshold dist P2 0.011930 supports six species
+Threshold dist P3 0.016382 supports five species
+Threshold Dist P1 (subset 52, 0.000878)
+```{r}
+species<-read_csv("cytb-species-delim/accessions-with-extras-no-ogs.afas.Partition_5.csv",
+                  col_names = c("Tip","Subset"))
+m2<-left_join(meta, species)
+m2$Subset<-as.factor(m2$Subset)
+```
+
+```{r}
+#tree<-midpoint.root(read.tree("outputs/106/accessions-with-extras.afas.contree"))
+tree<-read.tree("outputs/106/accessions-with-extras.afas.contree")
+u<-as.polytomy(tree, feature='node.label', fun=function(x) as.numeric(x) < 25)
+
+v<-ggtree(u) %<+% m2 
+
+v 
+```
+
+```{r}
+tips<-v$data %>% filter(isTip==TRUE)
+write_csv(tips, file="outputs/106/tips.csv")
+v + 
+  geom_text(data=v$data, aes(x=.2, y=y, label=Location, color=Subset), size=2) +
+
+  geom_tiplab(aes(label=Fish), size=2) +
+  xlim(0,.25) +
+  scale_colour_viridis_d(option="H") +
+  theme(legend.position = "none")
+
+ggsave("outputs/106/cyt-b-tree-with-delimitations.pdf", width=8.5, height=11)
+```
+```{r}
+v + geom_point(aes(color=Subset), x=0.13, pch=15) +
+  scale_colour_viridis_d(option="H") +
+  theme(legend.position = "none") +
+  xlim(0, 0.2)
+
+ggsave("outputs/106/cyt-b-tree-with-delimitations-no-tips.pdf", width=8.5, height=8)
+
+```
+
+
+We can use:
+
+Siphateles mohavensis
+S. isolatus
+S. newarkensis (newarkensis newarkensis, newarkensis euchila)
+See page 40 of harris 2000
+S. thalassinus
+S. bicolor (OS-16665) -(bicolor, bicolor, bicolor subsp. silver lake valley,  bicolor colubmianus, bicolor eurysoma).
+S. obesus (what we have genomic data for)
+  Includes "oregonensis" from Abert Lake (XL Springs) OS 16774, "snyderi" from Owens Basin, Owens River (OS15747), "pectinifer" BB48,49 from Lahontan Basin

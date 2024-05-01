@@ -1,0 +1,92 @@
+---
+title: "107-snp-phylogeny"
+output: html_document
+date: "2024-05-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+Let's design a phylogeny with some downsampled tips.
+
+Outgroups
+G. orcuttii
+S. alvordensis
+Pmacrolepidotus
+
+Ingroups
+isolatus
+newarkensis (NN4, NV12 combined)
+thalassinus vaccaceps (separate)
+thalassinus  (combined locs)
+bicolor columbianus Kueney County
+bicolor eurysomas (Combined locs)
+mohavensis Camp Cady, Tui Slough 
+for toikona let's use Mule Spring / Cottonwood Pond combined
+for snyderi let's use Sotcher Lake, NE Pond, SW Pond, SE Pond combined
+for obesus 
+Fish Lake Valley Lida Pond,
+Fish Lake Valley McNett Ranch
+Little Fish Lake Valley
+Hot Creek Valley/Railroad Valley
+
+Combined Lahontan lineage
+Walker Lake/Rose Creek 
+Eagle Lake 
+Carson Desert, Little Soda Lake
+Upper Humboldt
+
+```{r}
+pm<-read_csv("meta/05012024.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam")) %>% 
+   mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
+                     Path)) %>% filter(Dedup>1e6) %>%  mutate(Sample=paste0(1:n(),"_",1))
+nrow(pm)
+```
+
+
+```{r}
+pm %>% group_by(Species) %>% summarize(Count=n())
+```
+
+# Rooted Phylogeny
+
+## Outgroups
+
+```{r}
+gila<-pm %>% filter(Sample %in% c("634_1","617_1"))
+alvo<-pm %>% filter(Species =="alvordensis")
+pogo<-pm %>% filter(Species =="P. macrolepidotus")
+ogsdf<-bind_rows(gila, alvo, pogo)
+nodownsample<-pm %>% filter(Species %in% c("bicolor","thalassinus", "isolatus"))
+#get pops newarkensis, mohavensis
+# NN4 has 20 inds, can consider adding in an other location, NV12?
+new<-m1 %>% filter(`Tributary/Collection Location` %in% c("NN4","NV12","Tui Slough", "Camp Cady")) %>% filter(Sample != "237_1")
+```
+
+## Ingroup
+
+```{r}
+toikona<-pm %>% filter(Subspecies=="toikona")
+snyderi<-pm %>% filter(Subspecies=="snyderi") %>% filter(`Tributary/Collection Location` %in% c("Sotcher Lake","Sotcher Lake Outlet, Reds Meadow Creek",
+                                                                                                "NE Pond (White Mountain Research Center)","SE Pond (White Mountain Research Center)","SW Pond (White Mountain Research Center)"))
+```
+
+```{r}
+fishlake<-pm %>% filter(Species=="obesus") %>% filter(`Tributary/Collection Location` %in% c("McNett Ranch","Lida Pond","Little Fish Lake"))
+railroad<-pm %>% filter(Species=="obesus") %>% filter(Vicinity %in% c("Railroad Valley", "Hot Creek Valley"))
+lahontan<-pm %>% filter(Species=="obesus") %>% filter(`Tributary/Collection Location` %in% c("Upper Humboldt River","Rose Creek Reservoir","Little Soda Lake",
+                                                                                             "Eagle Lake"))
+obesus<-bind_rows(toikona, snyderi, fishlake, railroad, lahontan)
+```
+
+Combined Lahontan lineage
+Walker Lake/Rose Creek 
+Eagle Lake 
+Upper Humboldt
+Little Soda Lake
+
+```{r}
+phylo<-bind_rows(gila, alvo, pogo, nodownsample,new,toikona, snyderi, fishlake, railroad, lahontan) %>% mutate(Sample=paste0(1:n(),"_",1))
+write_csv(phylo %>% select(Sample), file="outputs/107/438.names", col_names=FALSE)
+```
