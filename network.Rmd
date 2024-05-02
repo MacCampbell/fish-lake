@@ -98,7 +98,15 @@ ciout <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
 
 
 # Starting tree
-creating a net0 tree 
+creating a net0 tree hmmm, can do with SVDquartets
+
+
+
+
+
+
+
+
 
 On farm
 
@@ -108,7 +116,14 @@ using CSV, DataFrames;
 
 CF=readTableCF("/home/maccamp/fish-lake/network/network-nq3-btsp.csv");    
 
+using PhyloPlots;    
+treefile = joinpath("/home/maccamp/fish-lake/network/tree.tre");
+tree = readTopology(treefile);     
+plot(tree, :R, showEdgeLength=true);
+
+T=readTopologyLevel1(treefile);    
+
 # Using snaq!
-net0 = snaq!(CF, hmax=0, filename="/home/maccamp/fish-lake/network/net0-start", seed=1234);      
-writeTopology(net0, "/home/maccamp/fish-lake/network/net0-start.tre")
+net0 = snaq!(T,CF, hmax=0, filename="/home/maccamp/fish-lake/outputs/107/net0-start", seed=1234);      
+writeTopology(net0, "/home/maccamp/fish-lake/outputs/107/net0-start.tre")
 ```
