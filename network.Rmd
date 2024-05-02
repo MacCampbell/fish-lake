@@ -1,0 +1,114 @@
+---
+title: "network"
+output: html_document
+date: "2024-05-01"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+Copying network from Gadopsis paper and then modifying for Tui Chub
+
+```{r}
+library(tidyverse)
+library(tanggle)
+library(ape)
+```
+
+module load julia/1.10.2
+
+Adding dependencies on farm
+
+```{sh, eval=FALSE}
+using Pkg
+Pkg.add("PhyloNetworks")
+import Pkg; Pkg.add("CSV")
+import Pkg; Pkg.add("DataFrames")
+import Pkg; Pkg.add("PhyloPlots")
+```
+
+## Making concordance factors
+
+Olave and Meyer (2020) present a may to calculate concordance factors from a phylip formatted file for input into PhyloNetworks.  So, let's try that.
+
+First I cloned https://github.com/melisaolave/SNPs2CF.
+Required dependencies.    
+install.packages("foreach")    
+install.packages("doMC")     
+
+```{r, warning=FALSE, message=FALSE}
+source("~/github/SNPs2CF/functions_v1.6.R")
+```
+
+Need an imap file and need a phylip file. The imap file has Traits and Species. Traits is the sequence name and Species is the group.
+Outgroups
+G. orcuttii
+S. alvordensis
+P. macrolepidotus
+
+Ingroups
+isolatus
+newarkensis (NN4, NV12 combined)
+thalassinus vaccaceps (separate)
+thalassinus  (combined locs)
+bicolor columbianus Kueney County
+bicolor eurysomas (Combined locs)
+mohavensis Camp Cady, Tui Slough 
+for toikona let's use Mule Spring / Cottonwood Pond combined
+for snyderi let's use Sotcher Lake, NE Pond, SW Pond, SE Pond combined
+for obesus 
+Fish Lake Valley Lida Pond,
+Fish Lake Valley McNett Ranch
+Little Fish Lake Valley
+Hot Creek Valley/Railroad Valley
+
+Combined Lahontan lineage
+Walker Lake/Rose Creek 
+Eagle Lake 
+Carson Desert, Little Soda Lake
+Upper Humboldt
+
+Need an imap file and need a phylip file. The imap file has Traits and Species. Traits is the sequence name and Species is the group.
+
+Made one by hand with 21 species.  
+
+
+```{r, warning=FALSE, message=FALE, eval=FALSE}
+output <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
+                  ImapName="network/438.imap", between.sp.only = TRUE, #max.SNPs = 1000,
+                  n.quartets = 3,
+                  bootstrap=FALSE, outputName="network/network-nq3-btsp.csv",
+                  save.progress=FALSE,
+                  cores = 4);
+```
+Took 1068 seconds with 3 quartets, all snps and 21 species, 3 cores
+
+## Credibility Intervals
+To bootstrap I need to put together CF's with CIs
+
+```{r, warning=FALSE, message=FALE, eval=FALSE}
+ciout <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
+                  ImapName="network/438.imap", between.sp.only = TRUE, max.SNPs = NULL,
+                  n.quartets = 3, bootstrap=TRUE, boots.rep=1000,
+                  outputName="network/network-nq3-btsp-CI.csv",
+                  save.progress=FALSE,
+                  cores = 4);
+```
+
+
+# Starting tree
+creating a net0 tree 
+
+On farm
+
+```{sh, eval=FALSE}
+using PhyloNetworks;    
+using CSV, DataFrames;     
+
+CF=readTableCF("/home/maccamp/fish-lake/network/network-nq3-btsp.csv");    
+
+# Using snaq!
+net0 = snaq!(CF, hmax=0, filename="/home/maccamp/fish-lake/network/net0-start", seed=1234);      
+writeTopology(net0, "/home/maccamp/fish-lake/network/net0-start.tre")
+```
