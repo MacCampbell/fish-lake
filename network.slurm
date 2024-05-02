@@ -8,8 +8,8 @@
 #SBATCH --time=24:05:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=maccampbell@ucdavis.edu
-#SBATCH --output=outputs/network/net.out # File to which STDOUT will be written
-#SBATCH --error=outputs/network/net.err # File to which STDERR will be written
+#SBATCH --output=outputs/107/network/net.out # File to which STDOUT will be written
+#SBATCH --error=outputs/107/network/net.err # File to which STDERR will be written
 
 
 module load julia/1.10.2
