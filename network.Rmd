@@ -16,7 +16,8 @@ library(tanggle)
 library(ape)
 ```
 
-module load julia/1.10.2
+module load julia/1.10.2, had trouble with RCall, using an older version of julia, module load julia/1.9.0
+
 
 Adding dependencies on farm
 
@@ -26,7 +27,19 @@ Pkg.add("PhyloNetworks")
 import Pkg; Pkg.add("CSV")
 import Pkg; Pkg.add("DataFrames")
 import Pkg; Pkg.add("PhyloPlots")
+import Pkg; Pkg.add("RCall")
 ```
+
+Setting up local R for this
+Pkg.add("Conda")
+using Conda
+Conda.add("R")
+ENV["R_HOME"]="/home/maccamp/.julia/conda/3/lib/R" #location of conda R install
+Pkg.add("RCall")
+using RCall
+
+now works
+
 
 ## Making concordance factors
 
@@ -100,7 +113,8 @@ ciout <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
 # Starting tree
 creating a net0 tree like so, veryfing it works
 
-On farm, verifying the thing will run
+On farm, verifying the thing will run, doesn't load RCall, trying an older version
+
 
 ```{sh, eval=FALSE}
 using PhyloNetworks;    
