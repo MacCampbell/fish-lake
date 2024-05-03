@@ -87,6 +87,8 @@ Need an imap file and need a phylip file. The imap file has Traits and Species. 
 Made one by hand with 20 species.  
 438-lahontan.imap combining Lahontan lineage
 
+To further simplify we can drop to one outgroup (alvordensis?), then combine bicolor, thalassinus. This took about 1 hr 20 mins on my lappy. 
+
 ```{r, warning=FALSE, message=FALE, eval=FALSE}
 output <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
                   ImapName="network/438-lahontan.imap", between.sp.only = TRUE, #max.SNPs = 1000,
@@ -95,9 +97,18 @@ output <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
                   save.progress=FALSE,
                   cores = 4);
 ```
-Took 1068 seconds with 3 quartets, all snps and 21 species, 3 cores
+Took 1068 seconds with 3 quartets, all snps and 21 species, 3 cores, 17000 quartets? Downsampling after 24 hrs haven't got a search done.
 
-Reducing to n.quartets=2 and 17 species, sampling 4760 quartets, 221 seconds on 4 cores
+Reducing to n.quartets=2 and 17 species, sampling 4760 quartets, 221 seconds on 4 cores. 
+```{r, warning=FALSE, message=FALE, eval=FALSE}
+output <- SNPs2CF(seqMatrix="network/reduced-ogs.phy",
+                  ImapName="network/reduced-ogs.imap", between.sp.only = TRUE, max.SNPs = 1000,
+                  n.quartets = 2,
+                  bootstrap=FALSE, outputName="network/reduced.csv",
+                  save.progress=FALSE,
+                  cores = 4);
+```
+Produced 2730 quartets
 
 ## Credibility Intervals
 To bootstrap I need to put together CF's with CIs
@@ -110,7 +121,32 @@ ciout <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
                   save.progress=FALSE,
                   cores = 4);
 ```
+Trialling a bit on the local computer.   
 
+```{sh, eval=FALSE}
+using PhyloNetworks;    
+using CSV, DataFrames;     
+using RCall;
+
+CF=readTableCF("network/reduced.csv");    
+
+using PhyloPlots;    
+treefile = joinpath("network/treduced-ogs.tre");
+tree = readTopology(treefile);     
+plot(tree, :R, showEdgeLength=true);
+
+T=readTopologyLevel1(treefile);    
+
+# Using snaq!
+net0 = snaq!(T,CF, hmax=0, filename="outputs/107/net0-start", seed=1234, runs=1);      
+writeTopology(net0, "outputs/107/net0-start.tre")
+
+net1 = snaq!(net0,CF, hmax=1, filename="outputs/107/net1-start", seed=1234, runs=1);      
+writeTopology(net1, "outputs/107/net1-start.tre")
+
+net2 = snaq!(net1,CF, hmax=1, filename="outputs/107/net2-start", seed=1234, runs=1);      
+writeTopology(net2, "outputs/107/net1-start.tre")
+```
 
 # Starting tree
 creating a net0 tree like so, veryfing it works

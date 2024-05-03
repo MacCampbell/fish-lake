@@ -11,22 +11,23 @@ tree = readTopology(treefile);
 T=readTopologyLevel1(treefile);    
 
 # Using snaq!
-net0 = snaq!(T,CF, hmax=0, filename="/home/maccamp/fish-lake/outputs/107/network/net0", seed=1234);      
+net0 = snaq!(T,CF, hmax=0, filename="/home/maccamp/fish-lake/outputs/107/network/net0", seed=1234, runs=10);      
 writeTopology(net0, "/home/maccamp/fish-lake/outputs/107/network/bestnet-h0.tre")
 
-net1 = snaq!(T,CF, hmax=1, filename="/home/maccamp/fish-lake/outputs/107/network/net1", seed=1234);  
+#can use best net0 as a starting place
+net1 = snaq!(net0,CF, hmax=1, filename="/home/maccamp/fish-lake/outputs/107/network/net1", seed=1234);  
 writeTopology(net1, "/home/maccamp/fish-lake/outputs/107/network/bestnet-h1.tre")
 
-net2 = snaq!(T,CF, hmax=2, filename="/home/maccamp/fish-lake/outputs/107/network/net2", seed=1234);      
+net2 = snaq!(net1,CF, hmax=2, filename="/home/maccamp/fish-lake/outputs/107/network/net2", seed=1234);      
 writeTopology(net2, "/home/maccamp/fish-lake/outputs/107/network/bestnet-h2.tre")
 
-net3 = snaq!(T,CF, hmax=3, filename="/home/maccamp/fish-lake/outputs/107/network/net3", seed=1234);      
+net3 = snaq!(net2,CF, hmax=3, filename="/home/maccamp/fish-lake/outputs/107/network/net3", seed=1234);      
 writeTopology(net3, "/home/maccamp/fish-lake/outputs/107/network/bestnet-h3.tre")
 
-net4 = snaq!(T,CF, hmax=4, filename="/home/maccamp/fish-lake/outputs/107/network/net4", seed=1234);      
+net4 = snaq!(net3,CF, hmax=4, filename="/home/maccamp/fish-lake/outputs/107/network/net4", seed=1234);      
 writeTopology(net4, "/home/maccamp/fish-lake/outputs/107/network/bestnet-h4.tre")
 
-net5 = snaq!(T,CF, hmax=5, filename="/home/maccamp/fish-lake/outputs/107/network/net5", seed=1234);      
+net5 = snaq!(net4,CF, hmax=5, filename="/home/maccamp/fish-lake/outputs/107/network/net5", seed=1234);      
 writeTopology(net5, "/home/maccamp/fish-lake/outputs/107/network/bestnet-h5.tre")
 
 using RCall      

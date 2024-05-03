@@ -204,6 +204,9 @@ ggsave("outputs/107/438-obesus-subs-network.pdf", width=12, height=10)
 ```
 
 ## Explicit Network
+Being done separately
+
+Downsampling 
 
 
 
