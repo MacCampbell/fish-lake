@@ -84,27 +84,29 @@ Upper Humboldt
 
 Need an imap file and need a phylip file. The imap file has Traits and Species. Traits is the sequence name and Species is the group.
 
-Made one by hand with 21 species.  
-
+Made one by hand with 20 species.  
+438-lahontan.imap combining Lahontan lineage
 
 ```{r, warning=FALSE, message=FALE, eval=FALSE}
 output <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
-                  ImapName="network/438.imap", between.sp.only = TRUE, #max.SNPs = 1000,
-                  n.quartets = 3,
-                  bootstrap=FALSE, outputName="network/network-nq3-btsp.csv",
+                  ImapName="network/438-lahontan.imap", between.sp.only = TRUE, #max.SNPs = 1000,
+                  n.quartets = 2,
+                  bootstrap=FALSE, outputName="network/network-nq2-btsp-1000snps.csv",
                   save.progress=FALSE,
                   cores = 4);
 ```
 Took 1068 seconds with 3 quartets, all snps and 21 species, 3 cores
+
+Reducing to n.quartets=2 and 17 species, sampling 4760 quartets, 221 seconds on 4 cores
 
 ## Credibility Intervals
 To bootstrap I need to put together CF's with CIs
 
 ```{r, warning=FALSE, message=FALE, eval=FALSE}
 ciout <- SNPs2CF(seqMatrix="network/438-01.min4.phy",
-                  ImapName="network/438.imap", between.sp.only = TRUE, max.SNPs = NULL,
-                  n.quartets = 3, bootstrap=TRUE, boots.rep=1000,
-                  outputName="network/network-nq3-btsp-CI.csv",
+                  ImapName="network/438-lahontan.imap", between.sp.only = TRUE, max.SNPs = NULL,
+                  n.quartets = 2, bootstrap=TRUE, boots.rep=1000,
+                  outputName="network/network-nq2-btsp-CI-1000snps.csv",
                   save.progress=FALSE,
                   cores = 4);
 ```

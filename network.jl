@@ -1,10 +1,10 @@
 using PhyloNetworks;    
 using CSV, DataFrames;     
 
-CF=readTableCF("/home/maccamp/fish-lake/network/network-nq3-btsp.csv");    
+CF=readTableCF("/home/maccamp/fish-lake/network/network-nq2-btsp-1000snps.csv");    
 
 using PhyloPlots;    
-treefile = joinpath("/home/maccamp/fish-lake/network/tree.tre");
+treefile = joinpath("/home/maccamp/fish-lake/network/tree-lahontan.tre");
 tree = readTopology(treefile);     
 #plot(tree, :R, showEdgeLength=true);
 
@@ -58,7 +58,7 @@ plot(net3, showgamma=true, showedgenumber=true);
 R"dev.off()"; 
 
 scores = [net0.loglik, net1.loglik, net2.loglik, net3.loglik, net4.loglik, net5.loglik]
-hmax = collect(0:4)
+hmax = collect(0:5)
 
 using RCall      
 imagefilename1 = "outputs/fish-lake/outputs/107/network/hscores.pdf"
