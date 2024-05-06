@@ -18,6 +18,8 @@ library(ape)
 
 module load julia/1.10.2, had trouble with RCall, using an older version of julia, module load julia/1.9.0
 
+Definitely a complex run here. Simplification could be by:
+rooting with isolatus, reducing to only 9 tips.
 
 Adding dependencies on farm
 
@@ -138,14 +140,19 @@ plot(tree, :R, showEdgeLength=true);
 T=readTopologyLevel1(treefile);    
 
 # Using snaq!
-net0 = snaq!(T,CF, hmax=0, filename="outputs/107/net0-start", seed=1234, runs=1);      
+net0 = snaq!(T,CF, hmax=0, filename="outputs/107/net0-start", seed=1234, runs=10);      
 writeTopology(net0, "outputs/107/net0-start.tre")
 
-net1 = snaq!(net0,CF, hmax=1, filename="outputs/107/net1-start", seed=1234, runs=1);      
+net1 = snaq!(net0,CF, hmax=1, filename="outputs/107/net1-start", seed=1234, runs=10);      
 writeTopology(net1, "outputs/107/net1-start.tre")
 
-net2 = snaq!(net1,CF, hmax=1, filename="outputs/107/net2-start", seed=1234, runs=1);      
+net2 = snaq!(net1,CF, hmax=1, filename="outputs/107/net2-start", seed=1234, runs=10);      
 writeTopology(net2, "outputs/107/net1-start.tre")
+
+plot(net1, showgamma=true, showedgenumber=true);
+
+plot(net2, showgamma=true, showedgenumber=true);
+
 ```
 
 # Starting tree
