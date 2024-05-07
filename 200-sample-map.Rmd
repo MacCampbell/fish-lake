@@ -1,0 +1,94 @@
+---
+title: "200-sample-map"
+output: html_document
+date: "2024-05-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(raster)
+library(ggspatial)
+library(maps)
+library(ggpubr)
+library(gridExtra)
+library(grid)
+library(ggrepel)
+library(viridis)
+library(polyggon)
+```
+
+
+```{r}
+coords<-read_csv("meta/tui-chub-georeferenced.csv")
+```
+
+```{r}
+ggplot() +
+  geom_point(data=coords, aes(x=Longitude, y=Latitude)) +
+  coord_equal(1.3)
+```
+
+# States
+```{r}
+states<-map_data("state") %>% filter(region %in% c("california","oregon","nevada"))
+
+cali<- map_data("state") %>% filter(region %in% c("california"))
+domain <- c(min(states$long), max(states$long), min(states$lat), max(states$lat))
+
+# here eric implements something and I copy it
+tidy_subset <- function(x, longlat) {
+  x@data$id <- rownames(x@data)
+  x.f <- broom::tidy(x) %>%
+    dplyr::left_join(., x@data, by = "id") %>%
+    dplyr::tbl_df() %>%
+    filter(long > longlat[1],
+           long < longlat[2],
+           lat > longlat[3],
+           lat < longlat[4])
+}
+
+```
+
+
+```{r, eval=FALSE}
+nat.earth<-stack("data/earth/NE2_HR_LC_SR_W_DR/NE2_HR_LC_SR_W_DR.tif")
+
+nat.crop <- crop(nat.earth, y=extent(domain))
+
+rast.table <- data.frame(xyFromCell(nat.crop, 1:ncell(nat.crop)),
+                         getValues(nat.crop/255))
+
+
+rast.table$rgb <- with(rast.table, rgb(NE2_HR_LC_SR_W_DR_1,
+                                       NE2_HR_LC_SR_W_DR_2,
+                                       NE2_HR_LC_SR_W_DR_3,
+                                       1))
+
+save(rast.table, file="data/earth/rast.rda")
+```
+
+```{r}
+load("data/earth/rast.rda")
+ggplot() +
+  geom_raster(data = rast.table, mapping = aes(x = x, y = y), fill = rast.table$rgb, interpolate = TRUE)  +
+  geom_point(data=coords, aes(x=Longitude, y=Latitude), pch=21, alpha=0.75, fill="grey50") +
+  coord_fixed(ratio=1.3, xlim = c(min(states$long), max(cali$long)), ylim=c(min(cali$lat), max(states$lat))) +
+  ylab("Latitude/n") +
+  xlab("\nLongitude") +
+  theme_bw() +
+  theme(panel.grid=element_blank())
+```
+
+
+
+
+## Pleistocene map
+Reheis, Marith, 1999, Extent of Pleistocene Lakes in the Western Great Basin: USGS Miscellaneous Field Studies Map MF-2323, U.S. Geological Survey, Denver, CO
+http://pubs.usgs.gov/mf/1999/mf-2323/
+
+
+

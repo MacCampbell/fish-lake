@@ -1,0 +1,11 @@
+---
+title: "108-treemix"
+output: html_document
+date: "2024-05-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+Using treemix on the 582 dataset 

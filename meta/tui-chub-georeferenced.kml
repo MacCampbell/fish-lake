@@ -1,0 +1,2512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document id="14djcIwPgTPG8jdqSdVjXYJ54eFi3uGdf">
+	<name>Tui Chub Vicinities + Locations</name>
+	<gx:CascadingStyle kml:id="__managed_style_24204523E93085B1AF3E">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_193FC7E2243085B1AF3E">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_5E986C8C643085B1AF36">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.26.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_46D63C92753085B1AF36">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.26.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_3CE1E62FB63085B1AF36">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_46D63C92753085B1AF36</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_5E986C8C643085B1AF36</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_1AB4DE3BB83085B1AF36">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.26.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=424242&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_593FD1DACA3085B1AF3F">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=303f9f&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_3B80C3F57F3085B1AF45">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_4084FC24F23085B1AF45</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_5E3343497E3085B1AF45</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_39C0EF39103085B1AF43">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_4A09496E863085B1AF43</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_5EF6B881223085B1AF43</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_7E1F5E74F73085B1AF41">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=f08b67&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_66BCC55C9B3085B1AF41">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_7E1F5E74F73085B1AF41</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_82DE67B2C13085B1AF41</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_7DE332179F3085B1AF3F">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=17e4fc&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_6BD1DD67553085B1AF3F">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_7DE332179F3085B1AF3F</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_85DB2677703085B1AF3F</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_2EC800BCF13085B1AF45">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=d6a225&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0B317829BB3085B1AF45">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1C634A0CA73085B1AF45</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2EC800BCF13085B1AF45</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_54DFD4D0B23085B1AF40">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=00796b&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_2D9DE45AF13085B1AF40">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=c9138d&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_4D33FE5AA13085B1AF3F">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=303f9f&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_1B897C6ADF3085B1AF40">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=c9138d&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_050A0686973085B1AF40">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1B897C6ADF3085B1AF40</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2D9DE45AF13085B1AF40</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_8828376FE93085B1AF42">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=fbc02d&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_2A4FD9C5003085B1AF31">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=d32f2f&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_7E267507D83085B1AF42">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=fbc02d&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_A21CEC66303085B1AF41">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=a4fb2d&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_26556B51263085B1AF33">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=388e3c&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_2A75B6861E3085B1AF3F">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=f57c00&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_2668F2539D3085B1AF42">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=5f2b07&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_820216D1233085B1AF43">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=ef5350&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_5272C9A6B63085B1AF42">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=2dfbb7&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_155EBDFA623085B1AF3F">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=f57c00&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_56EC034F743085B1AF33">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=7b1fa2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_4BDFBB70613085B1AF33">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=7b1fa2&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_367E9089683085B1AF33">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_4BDFBB70613085B1AF33</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_56EC034F743085B1AF33</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_0AAB15E6E83085B1AF36">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1AB4DE3BB83085B1AF36</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2D5D6EB1113085B1AF36</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_B0352893F33085B1AF40">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=a06de6&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_B894BE33703085B1AF41">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=a4fb2d&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_60478643293085B1AF43">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_79CC4DC3863085B1AF43</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_820216D1233085B1AF43</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_4A09496E863085B1AF43">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=e85353&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_73D9CA9C6B3085B1AF40">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=5d4037&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_950C2812213085B1AF41">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_A21CEC66303085B1AF41</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_B894BE33703085B1AF41</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_121617427E3085B1AF33">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=388e3c&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_9F7912136A3085B1AF40">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_A774F9580E3085B1AF40</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_B0352893F33085B1AF40</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_08A0850E3C3085B1AF43">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_13B06765C83085B1AF43</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_20B38AAC603085B1AF43</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_2D5D6EB1113085B1AF36">
+		<styleUrl>https://earth.google.com/balloon_components/base/1.0.26.0/card_template.kml#main</styleUrl>
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=424242&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_43942A5BEB3085B1AF42">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=2dfbb7&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0FA2E87A233085B1AF42">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_12FDF17E443085B1AF42</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2668F2539D3085B1AF42</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_12FDF17E443085B1AF42">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=5f2b07&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_57A66382983085B1AF41">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=00796b&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_42300DC6D93085B1AF41">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=00796b&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_30BA6DCD323085B1AF41">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_42300DC6D93085B1AF41</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_57A66382983085B1AF41</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_0DAEBB59D03085B1AF32">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=5c6bc0&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_1C634A0CA73085B1AF45">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=d6a225&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_B58658BCB13085B1AF42">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=610b53&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0DC351CFD53085B1AF3E">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_193FC7E2243085B1AF3E</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_24204523E93085B1AF3E</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_39B66219983085B1AF3F">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_4D33FE5AA13085B1AF3F</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_593FD1DACA3085B1AF3F</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_43A2D4DCA13085B1AF40">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=00796b&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_1CF8A6845B3085B1AF41">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=ab47bc&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_3B7754D8493085B1AF42">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_43942A5BEB3085B1AF42</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_5272C9A6B63085B1AF42</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_9747AB8A973085B1AF42">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_A396D7A8953085B1AF42</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_B58658BCB13085B1AF42</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_A396D7A8953085B1AF42">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=610b53&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_6D86F2FEC03085B1AF42">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_7E267507D83085B1AF42</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_8828376FE93085B1AF42</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_85DB2677703085B1AF3F">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=17e4fc&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_20B38AAC603085B1AF43">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=ffa726&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_79CC4DC3863085B1AF43">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=ef5350&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_13B06765C83085B1AF43">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=ffa726&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_78B6F578813085B1AF31">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=5c6bc0&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_6351AEFB233085B1AF40">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_73D9CA9C6B3085B1AF40</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_8C61C195AB3085B1AF40</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_0349CAA6CF3085B1AF33">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_121617427E3085B1AF33</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_26556B51263085B1AF33</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_2E2E6FA9E23085B1AF41">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=ab47bc&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_5E3343497E3085B1AF45">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=e88926&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_00BFE401ED3085B1AF41">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_1CF8A6845B3085B1AF41</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2E2E6FA9E23085B1AF41</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_4084FC24F23085B1AF45">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=e88926&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_0AF897FD7D3085B1AF31">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_12ED0AA8F23085B1AF31</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2A4FD9C5003085B1AF31</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_0E0BB507B03085B1AF3F">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_155EBDFA623085B1AF3F</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_2A75B6861E3085B1AF3F</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="__managed_style_6483E610BB3085B1AF31">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_78B6F578813085B1AF31</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_0DAEBB59D03085B1AF32</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_5EF6B881223085B1AF43">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=e85353&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_A774F9580E3085B1AF40">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=a06de6&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_82DE67B2C13085B1AF41">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=f08b67&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<gx:CascadingStyle kml:id="__managed_style_8C61C195AB3085B1AF40">
+		<Style>
+			<IconStyle>
+				<scale>1.2</scale>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=5d4037&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>6</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<StyleMap id="__managed_style_3B5472AA0F3085B1AF40">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#__managed_style_43A2D4DCA13085B1AF40</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#__managed_style_54DFD4D0B23085B1AF40</styleUrl>
+		</Pair>
+	</StyleMap>
+	<gx:CascadingStyle kml:id="__managed_style_12ED0AA8F23085B1AF31">
+		<Style>
+			<IconStyle>
+				<Icon>
+					<href>https://earth.google.com/earth/rpc/cc/icon?color=d32f2f&amp;id=2000&amp;scale=4</href>
+				</Icon>
+				<hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+			</IconStyle>
+			<LabelStyle>
+			</LabelStyle>
+			<LineStyle>
+				<color>ff2dc0fb</color>
+				<width>4</width>
+			</LineStyle>
+			<PolyStyle>
+				<color>40ffffff</color>
+			</PolyStyle>
+			<BalloonStyle>
+				<gx:displayMode>card</gx:displayMode>
+			</BalloonStyle>
+		</Style>
+	</gx:CascadingStyle>
+	<Placemark id="062A4106C02A1523E444">
+		<name>Little Soda Lake</name>
+		<gx:mid>/g/1tdg8114</gx:mid>
+		<gx:fid>0x80988f0b33aadf61:0x27e4ddbb327c56ba</gx:fid>
+		<LookAt>
+			<longitude>-118.883175</longitude>
+			<latitude>39.5149058</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>377.5280551080353</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0AF897FD7D3085B1AF31</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-118.8833457,39.5147149,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="075D5219452A1524728E">
+		<name>Pyramid Lake</name>
+		<gx:mid>/m/020jd5</gx:mid>
+		<gx:fid>0x809edba7ebf62edd:0x907086ff61503068</gx:fid>
+		<LookAt>
+			<longitude>-119.556508</longitude>
+			<latitude>40.02298485000001</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>71208.99829990086</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_9F7912136A3085B1AF40</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-119.5624295,40.0628068,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="025DCBBE182A1524D934">
+		<name>Stillwater National Wildlife Refuge</name>
+		<gx:mid>/m/0809yrh</gx:mid>
+		<gx:fid>0x80a27d6d1c2eff1f:0x2b9bbcef6ef2e5c3</gx:fid>
+		<LookAt>
+			<longitude>-118.5187248</longitude>
+			<latitude>39.51931080000001</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>792.6923855351426</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_6483E610BB3085B1AF31</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-118.5187248,39.5193108,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0954FBBF502A15255F93">
+		<name>Walker Lake</name>
+		<gx:mid>/m/0376_b</gx:mid>
+		<gx:fid>0x8097fd205f6a0cb1:0x3a944f9e1216b6f1</gx:fid>
+		<LookAt>
+			<longitude>-118.72124425</longitude>
+			<latitude>38.6952955</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>36287.73923585503</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_00BFE401ED3085B1AF41</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-118.7041157940861,38.66301226677631,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0B04BA4D832A152602D3">
+		<name>Dixie Valley</name>
+		<gx:mid>/m/0g0nff</gx:mid>
+		<gx:fid>0x80a257310da4488b:0xbe53fa9e54e98423</gx:fid>
+		<LookAt>
+			<longitude>-118.0806866</longitude>
+			<latitude>39.68769475</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4062.427875982878</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_9747AB8A973085B1AF42</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-118.0806866,39.6876953,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0CDF7E43962A1526D3B1">
+		<name>Little Fish Lake</name>
+		<gx:mid>/g/1vnrl89_</gx:mid>
+		<gx:fid>0x80bbb26148a8ea11:0x34652f8b60b4bc69</gx:fid>
+		<LookAt>
+			<longitude>-116.4717774</longitude>
+			<latitude>38.61814674999999</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>1762.364354433856</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_30BA6DCD323085B1AF41</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-116.4710228,38.6180569,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="07CA6C3FEE2A15282E04">
+		<name>Hot Creek Valley</name>
+		<gx:mid>/g/1tffv5rm</gx:mid>
+		<gx:fid>0x80b989b31419b7ef:0x697a56f4dfb4ec7</gx:fid>
+		<LookAt>
+			<longitude>-116.1814389</longitude>
+			<latitude>38.20687665000001</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4174.062109051429</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_08A0850E3C3085B1AF43</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-116.1814389,38.2068772,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="00ADFDCEE52A1529F876">
+		<name>Big Smoky Valley</name>
+		<gx:mid>/g/1tgjlk2m</gx:mid>
+		<gx:fid>0x80bc2f4f8e9bd5b7:0x334af64ebba158e0</gx:fid>
+		<LookAt>
+			<longitude>-117.7509314</longitude>
+			<latitude>37.9332636</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4194.410883969333</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_6351AEFB233085B1AF40</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-117.7509314,37.9332641,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="00D962A3992A152E9889">
+		<name>Fish Lake Valley</name>
+		<gx:mid>/m/0ds7kcb</gx:mid>
+		<gx:fid>0x80bdd5e7adb36a7f:0x74c50b285bf09343</gx:fid>
+		<LookAt>
+			<longitude>-118.0092709</longitude>
+			<latitude>37.79659655</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4204.541461018106</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0349CAA6CF3085B1AF33</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-118.0092709,37.7965971,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="088CD5B04B2A152F58BD">
+		<name>Independence Valley</name>
+		<gx:mid>/g/1xfsn_kw</gx:mid>
+		<gx:fid>0x80aec33b761cf603:0xf958bf71325aa147</gx:fid>
+		<LookAt>
+			<longitude>-114.6975361</longitude>
+			<latitude>40.80048455</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>3976.941799162345</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_367E9089683085B1AF33</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-114.6975361,40.8004851,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0480618CA02A152FB7ED">
+		<name>Humboldt River</name>
+		<gx:mid>/m/033ptv</gx:mid>
+		<gx:fid>0x80a8d741009ce729:0x15d551bab9408e10</gx:fid>
+		<LookAt>
+			<longitude>-115.8978008</longitude>
+			<latitude>40.8582507</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>281318.7512022599</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0349CAA6CF3085B1AF33</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-115.8277937,40.7993736,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="037AC8C9F32A1531F803">
+		<name>Newark Valley</name>
+		<gx:mid>/m/0ds687f</gx:mid>
+		<gx:fid>0x80baaa85b40ad955:0x87aefc3edd31e84a</gx:fid>
+		<LookAt>
+			<longitude>-115.6719903</longitude>
+			<latitude>39.57048505</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4071.354149046114</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0E0BB507B03085B1AF3F</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-115.6719903,39.5704856,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="037911B8F62A1543243C">
+		<name>Goose Lake</name>
+		<gx:mid>/m/085ymt</gx:mid>
+		<gx:fid>0x54cbd370ff8be417:0x2468d4e03aa5d3fc</gx:fid>
+		<LookAt>
+			<longitude>-120.4168117</longitude>
+			<latitude>41.92999</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>69179.56792126558</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_3B7754D8493085B1AF42</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-120.4236161,41.9520566,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0C6DCA95212A1543A204">
+		<name>Eagle Lake</name>
+		<gx:mid>/m/02rtd4b</gx:mid>
+		<gx:fid>0x809d864d1f93cd77:0x159eb3357fcb9dde</gx:fid>
+		<LookAt>
+			<longitude>-120.7461619</longitude>
+			<latitude>40.6383096</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>35281.34201484432</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_60478643293085B1AF43</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-120.7588905129131,40.60150329910328,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0E84A7FE942A1545F524">
+		<name>Cow Head Lake</name>
+		<gx:mid>/g/1td17l0h</gx:mid>
+		<gx:fid>0x54ca3ca7202468e7:0x1ba8cb6081bba58f</gx:fid>
+		<LookAt>
+			<longitude>-120.0321695</longitude>
+			<latitude>41.9193344</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>3889.694462579879</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0FA2E87A233085B1AF42</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-120.0321695,41.9193349,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="09A1740F982A1547343A">
+		<name>Warner Springs</name>
+		<gx:mid>/m/04f1wpw</gx:mid>
+		<gx:fid>0x80dbb8476925dc81:0x50d928e1212bd3a8</gx:fid>
+		<LookAt>
+			<longitude>-116.6481007</longitude>
+			<latitude>33.28190834999999</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>9717.027063554462</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_950C2812213085B1AF41</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-116.6494394,33.2769753,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="064C4C86622C12617492">
+		<name>Lake Tahoe</name>
+		<LookAt>
+			<longitude>-120.0036255802175</longitude>
+			<latitude>38.99842777982558</latitude>
+			<altitude>1933.295297829431</altitude>
+			<heading>0.5745424885030898</heading>
+			<tilt>0.210905771576523</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>56874.28951674141</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_6D86F2FEC03085B1AF42</styleUrl>
+		<Point>
+			<coordinates>-120.0533355357523,39.02933484275139,1935.896377707268</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="06456DF95F2C1264B0D6">
+		<name>Twin Lakes</name>
+		<LookAt>
+			<longitude>-119.333647660067</longitude>
+			<latitude>38.16081892130614</latitude>
+			<altitude>2162.029641934607</altitude>
+			<heading>0.5745223906502762</heading>
+			<tilt>0.2096822570311924</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>19575.93985569896</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_050A0686973085B1AF40</styleUrl>
+		<Point>
+			<coordinates>-119.3483863601871,38.15293339952041,2185.090028179383</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0DD950D9962C1267FF20">
+		<name>Big Sage Reservoir</name>
+		<LookAt>
+			<longitude>-120.6453357815484</longitude>
+			<latitude>41.61407214749708</latitude>
+			<altitude>1489.319810284301</altitude>
+			<heading>-3.043846268487048</heading>
+			<tilt>0.1551095133885534</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>20041.6694247094</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_3B5472AA0F3085B1AF40</styleUrl>
+		<Point>
+			<coordinates>-120.6404733421551,41.59569914218063,1493.609045928453</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0A42DF59482C128413AD">
+		<name>China Lake</name>
+		<LookAt>
+			<longitude>-117.5827552539659</longitude>
+			<latitude>35.72311565367986</latitude>
+			<altitude>790.6159400412549</altitude>
+			<heading>5.638184739855498</heading>
+			<tilt>0.2141744229647699</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>252080.5496586487</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0B317829BB3085B1AF45</styleUrl>
+		<Point>
+			<coordinates>-117.6559746556751,35.64917496311935,781.7155707094256</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0ADAC14EAB2C128C1CB7">
+		<name>Mojave River</name>
+		<gx:mid>/m/01kbkb</gx:mid>
+		<gx:fid>0x80c3593bc57f4f81:0x929b10d7811b294c</gx:fid>
+		<LookAt>
+			<longitude>-117.24115595</longitude>
+			<latitude>34.34838174999999</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>4452.347928450097</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_6BD1DD67553085B1AF3F</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-117.2411365,34.3482926,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="02DEC70A142C128FA750">
+		<name>Owens River</name>
+		<gx:mid>/m/038z4x</gx:mid>
+		<gx:fid>0x80be39a0d6711293:0x2f8f5d0ff53fdcd7</gx:fid>
+		<LookAt>
+			<longitude>-118.3694903</longitude>
+			<latitude>37.26509609999999</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>74003.84484454444</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_66BCC55C9B3085B1AF41</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-118.3104015,37.27134849999999,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="016A6255472C12917210">
+		<name>June Lake</name>
+		<LookAt>
+			<longitude>-119.0915867058017</longitude>
+			<latitude>37.7896845575723</latitude>
+			<altitude>2513.776137787531</altitude>
+			<heading>-34.13848226421556</heading>
+			<tilt>0.1161836867267509</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>12975.19096318866</range>
+			<altitudeMode>absolute</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_39C0EF39103085B1AF43</styleUrl>
+		<Point>
+			<coordinates>-119.0768861626542,37.78553163217082,2322.832805538859</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="093E0E435E2C129A3B9A">
+		<name>Camp Cady</name>
+		<gx:mid>/m/0138gj7x</gx:mid>
+		<gx:fid>0x80c4571db1413d71:0xf6180c96f050626c</gx:fid>
+		<LookAt>
+			<longitude>-116.599289</longitude>
+			<latitude>34.945083</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>847.3297879847287</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_6483E610BB3085B1AF31</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-116.599289,34.945083,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0537F8009A2C12AF22D3">
+		<name>Hutton Spring</name>
+		<gx:mid>/g/1wfcnwf5</gx:mid>
+		<gx:fid>0x54b7be36abf21cd3:0xbf0caf6b4822ddf3</gx:fid>
+		<LookAt>
+			<longitude>-120.0524629</longitude>
+			<latitude>42.98904</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>3805.136364247927</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_0AF897FD7D3085B1AF31</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-120.0524629,42.9890405,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="013D3776592C12C33465">
+		<name>Honey Creek</name>
+		<gx:mid>/g/11bw7kdcrd</gx:mid>
+		<gx:fid>0x54c9df7573a7df45:0x86c01666409e8299</gx:fid>
+		<LookAt>
+			<longitude>-120.07076805</longitude>
+			<latitude>42.4034203</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>34331.89098257515</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_367E9089683085B1AF33</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-120.1009035,42.4261798,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="033DD94DE72C12CB946A">
+		<name>Railroad Valley</name>
+		<styleUrl>#__managed_style_3B80C3F57F3085B1AF45</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.700314,38.4080658,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0A1EF32FBD2C12D5A04E">
+		<name>Sheldon National Wildlife Refuge</name>
+		<gx:mid>/m/04crgct</gx:mid>
+		<gx:fid>0x54b587aaaf3d20dd:0x6b13142c6570c2bd</gx:fid>
+		<LookAt>
+			<longitude>-119.23217425</longitude>
+			<latitude>41.8186979</latitude>
+			<altitude>0</altitude>
+			<heading>0</heading>
+			<tilt>0</tilt>
+			<gx:fovy>35</gx:fovy>
+			<range>763.3505679919559</range>
+			<altitudeMode>relativeToGround</altitudeMode>
+		</LookAt>
+		<styleUrl>#__managed_style_39B66219983085B1AF3F</styleUrl>
+		<Point>
+			<altitudeMode>relativeToGround</altitudeMode>
+			<coordinates>-119.2325049,41.8188353,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="048A11C2BD2C12E06055">
+		<name>Soldier Meadows 2023</name>
+		<description><![CDATA[<div>Collector: Brad Bauman<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_0AAB15E6E83085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.1886902,41.353489,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="06909493A9302D2E43C3">
+		<name>McNett Ranch 2021</name>
+		<description><![CDATA[<div>Collector: Kevin Guadalupe<br></div><div>NDOW 2021 Fish Lake Valley Field Trip Report. Tui Chub &gt;200mm observed<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.008606,37.844262,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="03BE4CFAB6302D31D5F0">
+		<name>Flowing Well #7 2021</name>
+		<description><![CDATA[<div>Collector: Kevin Guadalupe<br></div><div>An introduced population of unknown origin<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.700268,38.40810099999999,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="02C2DDEF60302D36CB0B">
+		<name>Lida Pond 2022</name>
+		<description><![CDATA[<div>Collector: Kevin Guadalupe<br></div><div>Possibly an introduced pond, goldfish also observed.&nbsp;</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-117.495857,37.457106,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="04C1AFEFE9302D394DC3">
+		<name>Twin Springs Slough 2022</name>
+		<description><![CDATA[<div>Collector: Kevin Guadalupe<br></div><div>Some evidence they are closely related to Railroad Valley Tui Chub according to Andy Martin 2010<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-116.165593,38.196883,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="072E5F0363302D3CD846">
+		<name>Pine Creek 2022</name>
+		<description><![CDATA[<div>Collector: Jeff Petersen<br></div><div>NDOW&nbsp;<br></div><div>n = 12</div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-116.132218,40.41379,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0408D236BC302D41931C">
+		<name>Pine Creek 2022</name>
+		<description><![CDATA[<div>Collector: Jeff Petersen<br></div><div>NDOW<br></div><div>n = 18</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-116.125434,40.38064,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0FC089BE43302D4447AD">
+		<name>Independence Valley - Warm Springs 2022</name>
+		<description><![CDATA[<div>Collector: Jeff Petersen<br></div><div>NDOW</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-114.749007,40.954508,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0DEED3B1FD302D473BFC">
+		<name>Upper Humboldt River 2022</name>
+		<description><![CDATA[<div>Collector: Jeff Petersen<br></div><div>NDOW<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.027072,41.156362,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="01B3CD72E7302D4A9946">
+		<name>Bitner Ranch BLM 2022</name>
+		<description><![CDATA[<div>Collector: Brad Bauman<br></div><div>NDOW<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<coordinates>-119.468646,41.736806,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="01B4FE61B3302D4CBDC3">
+		<name>Andys Place 2022</name>
+		<description><![CDATA[<div>Collector: Brad Bauman&nbsp;<br></div><div>NDOW</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.384542,41.791495,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0BAF4E1A0B302D4E45BC">
+		<name>Horse Canyon 2022</name>
+		<description><![CDATA[<div>Collector: Brad Bauman&nbsp;<br></div><div>NDOW</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.324447,41.786279,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="063553E66E302D589C3C">
+		<name>New. Valley NV1 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.742096,39.817629,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="07B6D3082B302D5C829B">
+		<name>New. Valley NV2 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.739299,39.83578,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0B24F1D1BD302D61F937">
+		<name>New. Valley NN3 North 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.756567,39.785494,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="077AE3F140302D6B3832">
+		<name>New. Valley NN3 Middle 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.756441,39.784024,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0D92CAA539302D7001F0">
+		<name>New. Valley NN4 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.691891,39.722661,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="09290ABEF1302D72CBDA">
+		<name>New. Valley NV5 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.748941,39.804846,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="046CF64676306018E514">
+		<name>New. Valley NV6 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell <br></div><div>9/22/2022<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.751431,39.799575,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="06B3B462713060273144">
+		<name>New. Valley NF6 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.756132,39.790157,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="069B1B26D230602D6881">
+		<name>New. Valley NV7 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.751748,39.789101,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="097AA753F5306048F92D">
+		<name>New. Valley NV9 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.769445,39.735123,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="02B9C1EF4030604BEBA2">
+		<name>New. Valley NV12 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.770039,39.649787,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0ACA08256A30604E048B">
+		<name>New. Valley NV16 2022 </name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.612743,39.81492,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0066F08E5F3060569DF5">
+		<name>New. Valley NV17 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.664894,39.782449,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="070D00FA323060912947">
+		<name>New. Valley NV18 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.680971,39.758135,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0807762949306095A967">
+		<name>New. Valley NV19 2022</name>
+		<description><![CDATA[<div>Collector: Heath Korell</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-115.681941,39.753164,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0A9CBEB99C3060D8F6E5">
+		<name>Hutton Spring 2007</name>
+		<description><![CDATA[<div>Collector: Paul Scheerer<br></div><div>These were the coordinates given, but it looks dried out based on google earth. Still in the Hutton Spring vicinity though.&nbsp;<br></div><div><br></div><div>2007 Population Estimate, Minnow Trap sampling technique, caudal fin clips, lead sampler: Paul Scheerer ODFW, samples arrived with some still submerged in EtOH but many with dried out EtOH<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-120.051505,42.986807,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="00BF7789673060DB8EEB">
+		<name>3/8 Mile Spring 2007</name>
+		<description><![CDATA[<div>Collector: Paul Scheerer<br></div><div>2007 Population Estimate, Minnow Trap sampling technique, caudal fin clips, lead sampler: Paul Scheerer ODFW, samples arrived with some still submerged in EtOH but many with dried out EtOH.<br></div><div><br></div><div>Again, this spot looks dried out on google earth but is in the vicinity of a water body.</div><div><br></div><div><table width="1012" style="border-collapse: collapse; width: 759pt;"><colgroup><col width="1012" style="width: 759pt;"></colgroup></table><div><br></div></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-120.046012,42.983442,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0217364C2E3060DF8C53">
+		<name>Bitner Ranch 2023</name>
+		<description><![CDATA[<div>Collector: Brad Bauman</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.468634,41.736807,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0701DBD5CF3060E39DA8">
+		<name>Andys Place 2023</name>
+		<description><![CDATA[<div>Collector: Brad Bauman</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.384582,41.791584,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0FD9E1E7203060E92A44">
+		<name>Lake Tuendae 2011</name>
+		<description><![CDATA[<div>Curator: Lea Koerber from CDFW Archive<br></div><div><br></div><div>Zone 11S UTM E 581603 UTM N 3889296; MTC translocated from Lake Tuendae to Morningstar Mine; length unknown<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-116.104185,35.143247,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0AFBC216BE306A7B3BBF">
+		<name>Lake Tuendae 2015</name>
+		<description><![CDATA[<div>From Lea Koerber at the CDFW archive.&nbsp;<br></div><div><br></div><div>Zone 11S UTM E 581603 UTM N 3889296; UTMs approximate<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-116.104185,35.143247,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0594DD8523306A7F191A">
+		<name>WMRC Cottonwood Pond 2010</name>
+		<description><![CDATA[<div>White Mountain Research Center - Cottonwood Pond<br></div><div>Collector:&nbsp;Lea Koerber (CDFW Archive)<br></div><div><br></div><div>(I am not sure which pond is actually cottonwood pond, these were just the coordinates listed - serra perry 5/2/2024)</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.327574,37.360603,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0DC668C832306A839399">
+		<name>Convict Lake 2010</name>
+		<description><![CDATA[<div>Introgressed (this is the note that we have on our inventory sheet - serra 5/1/2024)</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.858016,37.589206,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0253E25FEC306A895C16">
+		<name>Mule Spring 2010</name>
+		<description><![CDATA[<div>Collector: Lea Koerber at the CDFW archive<br></div><div><br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.201554,37.106101,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0726375063306B53D499">
+		<name>Little Hot Creek Pond 2015</name>
+		<description><![CDATA[<div>Collector: Lea Koerber with the CDFW archive</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.839076,37.68926,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0DF4BC6D96306B596157">
+		<name>WMRC Northeast Pond 2017</name>
+		<description><![CDATA[<div>Collector: Lea Koerber with the CDFW Archive<br></div><div>White Mountain Research Center - Northeast Pond 2017&nbsp;<br></div><div>Collected during translocation of NE pond.&nbsp;<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.329313,37.360592,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0AB2E2FC9D306FBE0075">
+		<name>WMRC Southeast Pond 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber with the CDFW Archive<br></div><div><br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.329355,37.36042,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0D987C135D306FC55663">
+		<name>WMRC Southwest Pond 2022 </name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.329593,37.360445,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="09E6049ECF306FCAC1D9">
+		<name>Upper Owens Gorge 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive&nbsp;<br></div><div>Elevation: 6,598ft<br></div><div><br></div><div>(It seems like one sample was collected here - serra perry 5/2/2024)<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.658674,37.584624,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="00B47FB5A0306FF3F063">
+		<name>Upper Owens Gorge 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive&nbsp;<br></div><div>Elevation: 6,608ft<br></div><div><br></div><div>(3 samples were collected here - serra perry 5/2/2024)<br></div><div><br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.653409,37.583662,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="04E07CE991306FF84D9D">
+		<name>Mule Spring &amp; Upper Mule Spring 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive<br></div><div><br></div><div>Many of these mule spring samples were collected during a mark recapture effort. Some were labeled as "YOY mort".&nbsp;<br></div><div><br></div><div>Mule Spring &amp; Upper Mule Spring for 2022 had the same coordinates.</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.201554,37.106101,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0D765E3535306FFB1B80">
+		<name>Little Hot Creek Pond 1 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.837409,37.689259,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0AD36AF5E7306FFDCBA9">
+		<name>Little Hot Creek Pond 2 2022</name>
+		<styleUrl>#__managed_style_0DC351CFD53085B1AF3E</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.837296,37.688837,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0F8DE119193070003D36">
+		<name>Little Hot Creek Pond 4 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.836855,37.688862,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0FFE98138D30700193E8">
+		<name>Little Hot Creek Main Pond 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive<br></div><div>n = 1<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.838983,37.689604,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0788619CC430700469E2">
+		<name>Little Hot Creek Main Pond 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber<br></div><div>n = 1<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.838653,37.689591,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="098E9B4BFD30700F947D">
+		<name>Upper Owens Gorge 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber CDFW Archive<br></div><div>Total Length: 165 mm</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.662965,37.584555,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="057D5C9C2B30708DC3B9">
+		<name>Upper Owens Gorge 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.658263,37.584991,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0E2A0324DF307094F224">
+		<name>Sotcher Lake 1998</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.073533,37.626638,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="01B7892881307095EE9E">
+		<name>Sotcher Lake 2022</name>
+		<description><![CDATA[<div>Collector: Lea Koerber, CDFW Archive<br></div><div>Net 2<br></div><div>dorsal rays also collected for aging</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.073667,37.62860999999999,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0F7CB5DD86307099BB1D">
+		<name>Topaz Lake 2023</name>
+		<description><![CDATA[<div>Collector is only listed as "1305"</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-119.535448,38.664783,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0D28772D5830709B5BA6">
+		<name>Thousand Creek Gorge 2023</name>
+		<description><![CDATA[<div>Collector: Brad Bauman</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.951995,41.887276,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="0FFE0CDDD830709C0424">
+		<name>Turley Pond 2023</name>
+		<description><![CDATA[<div>Collector is only listed as "1305"</div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.086547,39.677736,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark id="072084608C30709D7673">
+		<name>Rose Creek Reservoir, Walker Lake Origin 2023</name>
+		<description><![CDATA[<div>Collector: listed as 1305<br></div>]]></description>
+		<styleUrl>#__managed_style_3CE1E62FB63085B1AF36</styleUrl>
+		<Point>
+			<extrude>1</extrude>
+			<coordinates>-118.632908,38.589864,0</coordinates>
+		</Point>
+	</Placemark>
+</Document>
+</kml>
