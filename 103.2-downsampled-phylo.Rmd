@@ -40,7 +40,7 @@ m1 %>% group_by(Species) %>% summarize(Count=n())
 ```{r}
 gila<-m1 %>% filter(Sample %in% c("634_1","617_1"))
 alvo<-m1 %>% filter(Species =="alvordensis")
-unk<-m1 %>% filter(Species =="UNK")
+unk<-m1 %>% filter(Species =="P. macrolepidotus")
 ogsdf<-bind_rows(gila, alvo, unk)
 nodownsample<-m1 %>% filter(Species %in% c("bicolor","thalassinus", "isolatus"))
 #get one pop of newarkensis, mohavensis
@@ -52,7 +52,7 @@ Camp Cady hybrid?
 ## Ingroup
 
 ```{r}
-ob<-m1 %>% filter(Species=="obesus") %>% filter(!Vicinity %in% c("June Lake","Akali Lake")) %>%
+ob<-m1 %>% filter(Species=="obesus") %>% filter(!Vicinity %in% c("June Lake","Alkali Lake")) %>%
   filter(!`Tributary/Collection Location` %in% c("Twin Lakes","Convict Lake")) %>% filter(Sample != "335_1")
 ob %>% group_by(Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n())
 ```
@@ -64,7 +64,8 @@ ob %>% group_by(Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n
 582 with NV12
 ```{r}
 phylo<-bind_rows(gila, alvo, unk, nodownsample,new,ob)
-write_csv(phylo %>% select(Sample), file="outputs/103/582.names", col_names=FALSE)
+write_csv(phylo, file="meta/phylo-582.csv")
+write_csv(phylo %>% dplyr::select(Sample), file="outputs/103/582.names", col_names=FALSE)
 ```
 
 ```{sh, eval=FALSE}

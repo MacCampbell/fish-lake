@@ -1,0 +1,55 @@
+---
+title: "treemix"
+output: html_document
+date: "2024-05-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+```
+
+Get pops for treemix
+
+```{r}
+treemix<-read_csv("meta/phylo-582.csv") %>% filter(!`Tributary/Collection Location` %in% c("Cowhead Lake","Desert Discovery Pond")) %>%
+  filter(`Tributary/Collection Location` != "3/8 Mile Spring")
+```
+
+573 inds (less G. orcuttii P. macrolepidotus)
+571 inds (less 3/8 spring)
+
+Need a .clst file,
+three fields no header
+FamilyID WithinFamilyID ClusterName
+
+Oh argghhhhh, need some clusters
+
+```{r}
+clst<-treemix %>% mutate(Inter=GVL_Code) %>% mutate(Cluster=paste0(Species,"_",`Tributary/Collection Location`)) 
+clst$Cluster<-gsub(" ","_",clst$Cluster)
+
+clst<-clst %>% filter(!Cluster %in% c("obesus_Little_Hot_Creek_Pond","obesus_Little_Hot_Creek","obesus_Upper_Owens_Gorge","obesus_SE_Pond_(White_Mountain_Research_Center",
+                                      "obesus_SW_Pond_(White_Mountain_Research_Center")) %>% group_by(Cluster) %>% mutate(Count=n())
+clst %>% filter(Count >2) %>% summarize(Count=n())
+
+clst %>% dplyr::select(GVL_Code, Inter, Cluster) %>% write_tsv(file="treemix.clst", col_names = FALSE)
+
+clst %>% write_csv("treemix/treemix-meta.csv")
+write_csv(clst %>% ungroup() %>% dplyr::select(Sample), file="treemix/treemix.names", col_names=FALSE)
+
+```
+
+Can combine some of these (Eagle Lake, Flowing Wells), but I dumped small sizes.
+
+550 individuals
+
+```{sh, eval=FALSE}
+bcftools  view -S treemix/treemix.names outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > treemix/treemix-pruned.vcf
+```
+
+Now I should be able to work this out on the other computer.
