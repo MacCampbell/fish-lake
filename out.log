@@ -1,0 +1,16 @@
+
+VCFtools - 0.1.16
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--gzvcf treemix/treemix-pruned.vcf.gz
+	--max-missing 1
+	--recode
+	--stdout
+
+Using zlib version: 1.2.5
+Warning: Expected at least 2 parts in INFO entry: ID=PR,Number=0,Type=Flag,Description="Provisional reference allele, may not be based on real reference genome">
+After filtering, kept 543 out of 543 Individuals
+Outputting VCF file...
+After filtering, kept 2918 out of a possible 24718 Sites
+Run Time = 10.00 seconds

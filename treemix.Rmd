@@ -36,23 +36,31 @@ clst$Cluster<-gsub(" ","_",clst$Cluster)
 clst<-clst %>% filter(!Cluster %in% c("obesus_Little_Hot_Creek_Pond","obesus_Little_Hot_Creek","obesus_Upper_Owens_Gorge","obesus_SE_Pond_(White_Mountain_Research_Center",
                                       "obesus_SW_Pond_(White_Mountain_Research_Center")) %>% group_by(Cluster) %>% mutate(Count=n())
 clst %>% filter(Count >2) %>% summarize(Count=n())
-
-clst %>% dplyr::select(GVL_Code, Sample, Cluster) %>% write_tsv(file="treemix/treemix.clst", col_names = FALSE)
+clst<-filter(clst, Count > 2)
+clst2<-clst %>% mutate(Intra="1")
+clst2$Sample<-gsub("_1","",clst2$Sample)
+clst2 %>% dplyr::select(Sample, Intra, Cluster) %>% write_tsv(file="treemix/treemix.clst", col_names = FALSE)
 
 clst %>% write_csv("treemix/treemix-meta.csv")
 write_csv(clst %>% ungroup() %>% dplyr::select(Sample), file="treemix/treemix.names", col_names=FALSE)
 
 ```
 
+
+
+
+
 Can combine some of these (Eagle Lake, Flowing Wells), but I dumped small sizes.
 
-550 individuals
+550 individuals, now 543 
 
 ```{sh, eval=FALSE}
 bcftools  view -S treemix/treemix.names outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > treemix/treemix-pruned.vcf
 
 bgzip treemix/treemix-pruned.vcf
 tabix treemix/treemix-pruned.vcf.gz
+
+bcftools  view -S treemix/treemix.names treemix/treemix-pruned.vcf.gz > treemix/treemix-pruned.vcf
 ```
 
 git filter-branch --force --index-filter \
@@ -60,3 +68,81 @@ git filter-branch --force --index-filter \
   --prune-empty --tag-name-filter cat -- --all
   
 Now I should be able to work this out on the other computer.
+
+
+On lappy looking at this tutorial https://speciationgenomics.github.io/Treemix/     
+
+24718 variants, 543 samples No missing version 2918 snps
+```{sh, eval=FALSE}
+vcftools --gzvcf treemix/treemix-pruned.vcf.gz  --max-missing 1 --recode --stdout | gzip > treemix/treemix-no.vcf.gz
+
+
+plink --vcf treemix-no.vcf.gz --recode -out plink --allow-extra-chr --noweb
+plink --file plink --make-bed --out plink --allow-no-sex --allow-extra-chr # drop 0
+plink --bfile plink --freq --missing --within treemix.clst --out plink --allow-no-sex --allow-extra-chr
+gzip plink.frq.strat
+plink2treemix.py plink.frq.strat.gz treemix.frq.gz 
+gunzip -c treemix.frq.gz 
+```
+
+
+First with all snps
+```{sh, eval=FALSE}
+treemix -i treemix.frq.gz -m 0 -o noss-0 -root  alvordensis_Thousand_Creek_Gorge -global  -k 50  -noss > treemix_0_log
+
+cp treemix.frq.gz tui.treemix.frq.gz
+```
+
+
+```{sh, eval=FALSE}
+for i in {0..5}
+do
+ treemix -i tui.treemix.frq.gz -m $i -o tui.$i -root alvordensis_Thousand_Creek_Gorge -bootstrap -k 50 -noss > treemix_${i}_log &
+done
+```
+
+Next with the no missing dataset 
+```{sh, eval=FALSE}
+cp treemix.frq.gz tui-no.treemix.frq.gz
+```
+
+```{sh, eval=FALSE}
+for i in {0..5}
+do
+ treemix -i tui-no.treemix.frq.gz -m $i -o tui-no.$i -root alvordensis_Thousand_Creek_Gorge -bootstrap -k 50 -noss > treemix-no_${i}_log &
+done
+```
+
+```{r}
+library(RColorBrewer)
+library(R.utils)
+source("~/treemix/treemix-1.13/src/plotting_funcs.R")
+```
+
+```{r}
+prefix="treemix/tui."
+
+pdf("treemix/tui.pdf", height=12, width = 8)
+
+par(mfrow=c(3,2))
+for(edge in 0:5){
+  plot_tree(cex=0.8,paste0(prefix,edge))
+  title(paste(edge,"edges"))
+}
+
+dev.off()
+```
+
+```{r}
+prefix="treemix/tui-no."
+
+pdf("treemix/tui-no.pdf", height=12, width = 8)
+
+par(mfrow=c(3,2))
+for(edge in 0:5){
+  plot_tree(cex=0.8,paste0(prefix,edge))
+  title(paste(edge,"edges"))
+}
+
+dev.off()
+```
