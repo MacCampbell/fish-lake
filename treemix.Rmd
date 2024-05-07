@@ -37,7 +37,7 @@ clst<-clst %>% filter(!Cluster %in% c("obesus_Little_Hot_Creek_Pond","obesus_Lit
                                       "obesus_SW_Pond_(White_Mountain_Research_Center")) %>% group_by(Cluster) %>% mutate(Count=n())
 clst %>% filter(Count >2) %>% summarize(Count=n())
 
-clst %>% dplyr::select(GVL_Code, Inter, Cluster) %>% write_tsv(file="treemix.clst", col_names = FALSE)
+clst %>% dplyr::select(GVL_Code, Sample, Cluster) %>% write_tsv(file="treemix/treemix.clst", col_names = FALSE)
 
 clst %>% write_csv("treemix/treemix-meta.csv")
 write_csv(clst %>% ungroup() %>% dplyr::select(Sample), file="treemix/treemix.names", col_names=FALSE)
@@ -50,6 +50,13 @@ Can combine some of these (Eagle Lake, Flowing Wells), but I dumped small sizes.
 
 ```{sh, eval=FALSE}
 bcftools  view -S treemix/treemix.names outputs/103/plink-01.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > treemix/treemix-pruned.vcf
+
+bgzip treemix/treemix-pruned.vcf
+tabix treemix/treemix-pruned.vcf.gz
 ```
 
+git filter-branch --force --index-filter \
+  'git rm --cached --ignore-unmatch treemix/treemix-pruned.vcf' \
+  --prune-empty --tag-name-filter cat -- --all
+  
 Now I should be able to work this out on the other computer.
