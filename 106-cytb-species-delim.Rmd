@@ -78,7 +78,7 @@ Threshold dist P2 0.011930 supports six species
 Threshold dist P3 0.016382 supports five species
 Threshold Dist P1 (subset 52, 0.000878)
 ```{r}
-species<-read_csv("cytb-species-delim/accessions-with-extras-no-ogs.afas.Partition_5.csv",
+species<-read_csv("cytb-species-delim/extra-mohave.afas.Partition_3.csv",
                   col_names = c("Tip","Subset"))
 m2<-left_join(meta, species)
 m2$Subset<-as.factor(m2$Subset)
@@ -111,7 +111,7 @@ ggsave("outputs/106/cyt-b-tree-with-delimitations.pdf", width=8.5, height=11)
 v + geom_point(aes(color=Subset), x=0.13, pch=15) +
   scale_colour_viridis_d(option="H") +
   theme(legend.position = "none") +
-  xlim(0, 0.2)
+  xlim(0, 0.25)
 
 ggsave("outputs/106/cyt-b-tree-with-delimitations-no-tips.pdf", width=8.5, height=8)
 
