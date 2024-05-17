@@ -58,10 +58,16 @@ ATAAAGCGTTGAAATGAGCT`
 
 
 Get the ingroup and do some species delimitation, using mafft v 7.  
+Dropped some of the Ptychocheilus 
+
 `mafft accessions-with-extras.fas > accessions-with-extras.afas`
 `iqtree2 -T AUTO -m GTR+G -s accessions-with-extras.afas -bb 10000 -redo`
 `iqtree2 -T AUTO -m MFP -s accessions-with-extras.afas -bb 10000 -redo`
 
+`mafft reduced-ogs.fas > reduced-ogs.afas`
+`iqtree2 -T AUTO -m GTR+G -s reduced-ogs.afas -bb 10000 -redo`
+Removed AF237737, duplicate sequence with AF237737.1
+`iqtree2 -T AUTO -m MFP -s reduced-ogs.afas -bb 10000 -redo`
 ```{r}
 meta<-read_tsv("outputs/106/annotations-with-extas.tsv")
 
@@ -87,7 +93,9 @@ m2$Subset<-as.factor(m2$Subset)
 ```{r}
 #tree<-midpoint.root(read.tree("outputs/106/accessions-with-extras.afas.contree"))
 tree<-read.tree("outputs/106/accessions-with-extras.afas.contree")
-u<-as.polytomy(tree, feature='node.label', fun=function(x) as.numeric(x) < 25)
+tree<-read.tree("outputs/106/reduced-ogs.afas.contree")
+tree<-midpoint.root(tree)
+u<-as.polytomy(tree, feature='node.label', fun=function(x) as.numeric(x) < 50)
 
 v<-ggtree(u) %<+% m2 
 
@@ -108,12 +116,30 @@ v +
 ggsave("outputs/106/cyt-b-tree-with-delimitations.pdf", width=8.5, height=11)
 ```
 ```{r}
-v + geom_point(aes(color=Subset), x=0.13, pch=15) +
+t<-v
+d <- t$data
+d <- d[!d$isTip,]
+d$label <- as.numeric(d$label)
+d <- d[d$label >= 90,]
+
+e <- t$data
+e <- e[!e$isTip,]
+e$label <- as.numeric(e$label)
+e <- e[e$label < 90,]
+e <- e[e$label >= 75,]
+```
+
+```{r}
+v + geom_point(aes(color=Subset), x=0.14, pch=15) +
+  geom_point(data=e,  fill="white", cex=2, alpha=1, pch=21) +
+  geom_point(data=d,  fill="grey50", cex=2, alpha=1, pch=21) +
+  geom_tiplab(data=v$data %>% filter(Species != "bicolor"), aes(x=x+0.001,label=Fish), size=2) +
   scale_colour_viridis_d(option="H") +
   theme(legend.position = "none") +
   xlim(0, 0.25)
 
 ggsave("outputs/106/cyt-b-tree-with-delimitations-no-tips.pdf", width=8.5, height=8)
+ggsave("outputs/106/cyt-b-tree-with-delimitations-no-tips.jpeg", width=8.5, height=8)
 
 ```
 
@@ -128,3 +154,10 @@ S. thalassinus
 S. bicolor (OS-16665) -(bicolor, bicolor, bicolor subsp. silver lake valley,  bicolor colubmianus, bicolor eurysoma).
 S. obesus (what we have genomic data for)
   Includes "oregonensis" from Abert Lake (XL Springs) OS 16774, "snyderi" from Owens Basin, Owens River (OS15747), "pectinifer" BB48,49 from Lahontan Basin
+
+
+# RAG1
+
+ perl ~/Dropbox/bin/shortenNamesMac.pl revised-western-clade.fas > revised-western-clade-renamed.fas
+mafft revised-western-clade-renamed.fas > revised-western-clade.afas
+iqtree2 -T AUTO -m GTR+G -s revised-western-clade.afas -bb 10000 -redo

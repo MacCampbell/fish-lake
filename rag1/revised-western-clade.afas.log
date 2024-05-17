@@ -1,0 +1,302 @@
+IQ-TREE multicore version 2.2.2.6 COVID-edition for Mac OS X 64-bit built May 27 2023
+Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
+Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams, Ly Trong Nhan.
+
+Host:    macs-mbp.building.sydney.edu.au (SSE4.2, 32 GB RAM)
+Command: iqtree2 -T AUTO -m GTR+G -s revised-western-clade.afas -bb 10000 -redo
+Seed:    967490 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Thu May 16 15:04:40 2024
+Kernel:  SSE2 - auto-detect threads (10 CPU cores detected)
+
+Reading alignment file revised-western-clade.afas ... Fasta format detected
+Reading fasta file: done in 0.00275397 secs using 88.35% CPU
+Alignment most likely contains DNA/RNA sequences
+Constructing alignment: done in 0.00183702 secs using 574.6% CPU
+Alignment has 69 sequences with 1518 columns, 153 distinct patterns
+66 parsimony-informative, 52 singleton sites, 1400 constant sites
+                                      Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 8.70228e-05 secs using 1903% CPU
+   1  JX443333.1.Mylopharodon.conocephalus    1.52%    passed     96.00%
+   2  JX443334.1.Mylopharodon.conocephalus    2.37%    passed     97.16%
+   3  JX443344.1.Gila.seminuda                2.31%    passed     99.86%
+   4  JX443345.1.Gila.seminuda                1.32%    passed     99.96%
+   5  JX443346.1.Gila.seminuda                1.32%    passed     99.91%
+   6  JX443347.1.Gila.elegans                 4.15%    passed     99.84%
+   7  JX443348.1.Gila.elegans                 1.25%    passed     99.94%
+   8  JX443349.1.Gila.purpurea                1.45%    passed     99.99%
+   9  JX443350.1.Gila.purpurea                1.25%    passed     99.99%
+  10  JX443351.1.Gila.ditaenia                1.25%    passed     99.36%
+  11  JX443352.1.Gila.ditaenia                1.25%    passed     99.36%
+  12  JX443353.1.Gila.atraria                 1.38%    passed     99.66%
+  13  JX443354.1.Gila.atraria                 1.91%    passed     99.85%
+  14  JX443355.1.Gila.nigra                   3.03%    passed     98.88%
+  15  JX443356.1.Gila.nigra                   3.75%    passed     99.97%
+  16  JX443357.1.Gila.coerulea                2.70%    passed     99.98%
+  17  JX443358.1.Gila.coerulea                1.98%    passed    100.00%
+  18  JX443359.1.Gila.cypha                   1.38%    passed     99.93%
+  19  JX443360.1.Gila.cypha                   2.31%    passed     99.97%
+  20  JX443361.1.Gila.robusta                 1.25%    passed     99.98%
+  21  JX443362.1.Gila.robusta                 1.32%    passed     99.91%
+  22  JX443363.1.Gila.robusta                 1.32%    passed     99.96%
+  23  JX443364.1.Gila.intermedia              1.32%    passed     99.91%
+  24  JX443365.1.Gila.orcuttii                0.26%    passed     99.84%
+  25  JX443366.1.Gila.orcuttii                0.79%    passed     99.76%
+  26  JX443367.1.Gila.pandora                 1.32%    passed     99.96%
+  27  JX443368.1.Gila.modesta                 0.00%    passed     99.95%
+  28  JX443369.1.Gila.modesta                 1.25%    passed     99.98%
+  29  JX443370.1.Gila.conspersa               1.78%    passed     99.82%
+  30  JX443371.1.Gila.conspersa               1.25%    passed     99.84%
+  31  JX443372.1.Gila.minacae                 1.19%    passed     99.97%
+  32  JX443373.1.Gila.minacae                 0.00%    passed     99.99%
+  33  JX443374.1.Gila.brevicauda              0.00%    passed     99.97%
+  34  JX443375.1.Gila.brevicauda              1.84%    passed     99.96%
+  35  JX443376.1.Gila.nigrescens              1.32%    passed     99.97%
+  36  JX443377.1.Gila.nigrescens              1.32%    passed     99.92%
+  37  JX443378.1.Gila.pulchra                 0.00%    passed     99.99%
+  38  JX443379.1.Gila.pulchra                 1.25%    passed     99.99%
+  39  JX443380.1.Gila.eremica                 0.99%    passed     99.95%
+  40  JX443381.1.Gila.eremica                 1.98%    passed     99.73%
+  41  JX443389.1.Moapa.coriacea               1.32%    passed     98.53%
+  42  JX443390.1.Moapa.coriacea               1.32%    passed     99.48%
+  43  JX443391.1.Ptychocheilus.umpquae        1.32%    passed     99.84%
+  44  JX443392.1.Ptychocheilus.umpquae        1.38%    passed     99.97%
+  45  JX443393.1.Ptychocheilus.oregonensis    1.25%    passed     99.51%
+  46  JX443394.1.Ptychocheilus.oregonensis    1.25%    passed     99.61%
+  47  JX443395.1.Ptychocheilus.grandis        1.45%    passed     99.89%
+  48  JX443396.1.Ptychocheilus.grandis        0.00%    passed    100.00%
+  49  JX443397.1.Ptychocheilus.lucius         1.38%    passed     99.87%
+  50  JX443398.1.Siphateles.alvordensis       1.38%    passed     99.90%
+  51  JX443399.1.Siphateles.boraxobius        2.37%    passed     98.86%
+  52  JX443400.1.Siphateles.bicolor           3.10%    passed     99.96%
+  53  JX443401.1.Siphateles.bicolor           1.32%    passed     99.91%
+  54  JX443402.1.Siphateles.bicolor           1.38%    passed     99.94%
+  55  JX443403.1.Siphateles.bicolor           2.11%    passed     99.88%
+  56  JX443404.1.Siphateles.bicolor           1.38%    passed     99.94%
+  57  JX443405.1.Siphateles.bicolor           1.38%    passed     99.73%
+  58  JX443406.1.Siphateles.bicolor           1.38%    passed    100.00%
+  59  JX443407.1.Siphateles.bicolor           1.38%    passed     99.94%
+  60  JX443408.1.Siphateles.bicolor           1.38%    passed     99.94%
+  61  JX443409.1.Relictus.solitarius          2.37%    passed     99.47%
+  62  JX443410.1.Relictus.solitarius          1.19%    passed     99.72%
+  63  JX443411.1.Relictus.solitarius          1.25%    passed     99.92%
+  64  JX443412.1.Hesperoleucus.symmetricus    1.25%    passed     98.72%
+  65  JX443413.1.Hesperoleucus.symmetricus    1.91%    passed     99.78%
+  66  JX443414.1.Hesperoleucus.symmetricus    2.77%    passed     98.41%
+  67  JX443415.1.Acrocheilus.alutaceus        1.32%    passed     99.92%
+  68  JX443416.1.Eremichthys.acros            1.58%    passed     99.95%
+  69  JX443417.1.Eremichthys.acros            1.38%    passed     99.98%
+****  TOTAL                                   1.51%  0 sequences failed composition chi2 test (p-value<5%; df=3)
+NOTE: JX443352.1.Gila.ditaenia is identical to JX443351.1.Gila.ditaenia but kept for subsequent analysis
+NOTE: JX443364.1.Gila.intermedia is identical to JX443362.1.Gila.robusta but kept for subsequent analysis
+Checking for duplicate sequences: done in 0.000289917 secs using 2528% CPU
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.001 seconds
+Generating 10000 samples for ultrafast bootstrap (seed: 967490)...
+
+NOTE: 7 MB RAM (0 GB) is required!
+Measuring multi-threading efficiency up to 10 CPU cores
+Increase to 10 rounds for branch lengths
+1142 trees examined
+Threads: 1 / Time: 10.002 sec / Speedup: 1.000 / Efficiency: 100% / LogL: -4752
+Threads: 2 / Time: 8.308 sec / Speedup: 1.204 / Efficiency: 60% / LogL: -4752
+Threads: 3 / Time: 6.604 sec / Speedup: 1.514 / Efficiency: 50% / LogL: -4752
+Threads: 4 / Time: 9.239 sec / Speedup: 1.083 / Efficiency: 27% / LogL: -4752
+Determining AUTO threadcount: done in 34.1535 secs using 246% CPU
+BEST NUMBER OF THREADS: 3
+
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -3326.831
+2. Current log-likelihood: -3281.883
+Optimal log-likelihood: -3281.789
+Rate parameters:  A-C: 3.07486  A-G: 5.57827  A-T: 1.85271  C-G: 1.57471  C-T: 7.90981  G-T: 1.00000
+Base frequencies:  A: 0.262  C: 0.234  G: 0.264  T: 0.239
+Gamma shape alpha: 0.041
+Parameters optimization took 2 rounds (0.034 sec)
+Wrote distance file to... 
+Computing ML distances based on estimated model parameters...
+Calculating distance matrix: done in 0.00815892 secs using 391.4% CPU
+Computing ML distances took 0.008282 sec (of wall-clock time) 0.032281 sec (of CPU time)
+Setting up auxiliary I and S matrices: done in 7.70092e-05 secs using 293.5% CPU
+Constructing RapidNJ tree: done in 0.00115395 secs using 301.1% CPU
+Computing RapidNJ tree took 0.001282 sec (of wall-clock time) 0.004716 sec (of CPU time)
+Log-likelihood of RapidNJ tree: -3288.279
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 0.143 second
+Computing log-likelihood of 98 initial trees ... 0.156 seconds
+Current best score: -3270.798
+
+Do NNI search on 20 best initial trees
+Optimizing NNI: done in 0.0608468 secs using 293.9% CPU
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -3270.602
+Optimizing NNI: done in 0.0599279 secs using 296.8% CPU
+Optimizing NNI: done in 0.0614259 secs using 293.4% CPU
+Optimizing NNI: done in 0.0572798 secs using 288.7% CPU
+Optimizing NNI: done in 0.0601289 secs using 291.1% CPU
+Optimizing NNI: done in 0.0582671 secs using 288.4% CPU
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 6: -3269.647
+Optimizing NNI: done in 0.0583289 secs using 297.1% CPU
+Optimizing NNI: done in 0.066823 secs using 297.3% CPU
+Optimizing NNI: done in 0.0595191 secs using 297.5% CPU
+Optimizing NNI: done in 0.05405 secs using 298% CPU
+Iteration 10 / LogL: -3273.185 / Time: 0h:0m:35s
+Optimizing NNI: done in 0.0541999 secs using 298.1% CPU
+Optimizing NNI: done in 0.0436451 secs using 296.7% CPU
+Optimizing NNI: done in 0.0423548 secs using 297.5% CPU
+Optimizing NNI: done in 0.0431061 secs using 297.6% CPU
+Optimizing NNI: done in 0.069849 secs using 297.4% CPU
+Optimizing NNI: done in 0.0696681 secs using 298.1% CPU
+Optimizing NNI: done in 0.0477569 secs using 296.3% CPU
+Optimizing NNI: done in 0.0592639 secs using 296.1% CPU
+Optimizing NNI: done in 0.043011 secs using 296.8% CPU
+Optimizing NNI: done in 0.0702929 secs using 296.9% CPU
+Iteration 20 / LogL: -3271.869 / Time: 0h:0m:35s
+Finish initializing candidate tree set (20)
+Current best tree score: -3269.647 / CPU time: 1.495
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Optimizing NNI: done in 0.0971539 secs using 297.5% CPU
+Optimizing NNI: done in 0.0822821 secs using 298% CPU
+Optimizing NNI: done in 0.089323 secs using 296.4% CPU
+Optimizing NNI: done in 0.0880122 secs using 296.5% CPU
+Optimizing NNI: done in 0.0916829 secs using 297.4% CPU
+Optimizing NNI: done in 0.0771189 secs using 297.3% CPU
+Optimizing NNI: done in 0.04719 secs using 297.6% CPU
+Optimizing NNI: done in 0.060477 secs using 297.2% CPU
+Optimizing NNI: done in 0.0812118 secs using 286% CPU
+Optimizing NNI: done in 0.074693 secs using 297.4% CPU
+Iteration 30 / LogL: -3269.693 / Time: 0h:0m:36s (0h:1m:36s left)
+Optimizing NNI: done in 0.0701079 secs using 297.4% CPU
+Optimizing NNI: done in 0.0779941 secs using 287.7% CPU
+Optimizing NNI: done in 0.099323 secs using 292.4% CPU
+Optimizing NNI: done in 0.080678 secs using 300.6% CPU
+Optimizing NNI: done in 0.0677361 secs using 297.4% CPU
+Optimizing NNI: done in 0.0835121 secs using 297.3% CPU
+Optimizing NNI: done in 0.072216 secs using 297.7% CPU
+Optimizing NNI: done in 0.054173 secs using 297.3% CPU
+Optimizing NNI: done in 0.0851221 secs using 297.3% CPU
+Optimizing NNI: done in 0.0792401 secs using 297.4% CPU
+Iteration 40 / LogL: -3269.697 / Time: 0h:0m:37s (0h:1m:3s left)
+Optimizing NNI: done in 0.08447 secs using 297.8% CPU
+Optimizing NNI: done in 0.0545659 secs using 298.3% CPU
+Optimizing NNI: done in 0.106362 secs using 296.5% CPU
+Optimizing NNI: done in 0.0775759 secs using 297.1% CPU
+Optimizing NNI: done in 0.074064 secs using 296.9% CPU
+Optimizing NNI: done in 0.101844 secs using 297.6% CPU
+Optimizing NNI: done in 0.068152 secs using 297.2% CPU
+Optimizing NNI: done in 0.0952079 secs using 298.8% CPU
+Optimizing NNI: done in 0.0944638 secs using 296.2% CPU
+Optimizing NNI: done in 0.103302 secs using 297.6% CPU
+Iteration 50 / LogL: -3269.692 / Time: 0h:0m:38s (0h:0m:44s left)
+Log-likelihood cutoff on original alignment: -3306.885
+Optimizing NNI: done in 0.099622 secs using 297.3% CPU
+Optimizing NNI: done in 0.101349 secs using 296.8% CPU
+Optimizing NNI: done in 0.112252 secs using 297.7% CPU
+Optimizing NNI: done in 0.093375 secs using 297.3% CPU
+Optimizing NNI: done in 0.108104 secs using 296.7% CPU
+Optimizing NNI: done in 0.0763581 secs using 297.6% CPU
+Optimizing NNI: done in 0.103482 secs using 297.3% CPU
+Optimizing NNI: done in 0.073802 secs using 297.2% CPU
+Optimizing NNI: done in 0.101322 secs using 297.5% CPU
+Optimizing NNI: done in 0.0929601 secs using 297.6% CPU
+Iteration 60 / LogL: -3269.678 / Time: 0h:0m:41s (0h:0m:32s left)
+Optimizing NNI: done in 0.0761001 secs using 297.7% CPU
+Optimizing NNI: done in 0.0889921 secs using 287.5% CPU
+Optimizing NNI: done in 0.082443 secs using 300.2% CPU
+Optimizing NNI: done in 0.0777299 secs using 313.1% CPU
+Optimizing NNI: done in 0.0855269 secs using 297.8% CPU
+Optimizing NNI: done in 0.0813041 secs using 297.2% CPU
+Optimizing NNI: done in 0.085196 secs using 298% CPU
+Optimizing NNI: done in 0.066128 secs using 297.6% CPU
+Optimizing NNI: done in 0.066503 secs using 297.3% CPU
+Optimizing NNI: done in 0.0693052 secs using 297.4% CPU
+Iteration 70 / LogL: -3269.678 / Time: 0h:0m:42s (0h:0m:21s left)
+Optimizing NNI: done in 0.0508099 secs using 297.4% CPU
+Optimizing NNI: done in 0.061882 secs using 297.2% CPU
+Optimizing NNI: done in 0.0723999 secs using 297.7% CPU
+Optimizing NNI: done in 0.0854292 secs using 297.2% CPU
+Optimizing NNI: done in 0.0679579 secs using 297.5% CPU
+Optimizing NNI: done in 0.0841141 secs using 297.2% CPU
+Optimizing NNI: done in 0.086556 secs using 297.7% CPU
+Optimizing NNI: done in 0.0279481 secs using 297.8% CPU
+Optimizing NNI: done in 0.0647922 secs using 297.8% CPU
+Optimizing NNI: done in 0.0596581 secs using 298.1% CPU
+Iteration 80 / LogL: -3303.961 / Time: 0h:0m:43s (0h:0m:14s left)
+Optimizing NNI: done in 0.0858569 secs using 297.8% CPU
+Optimizing NNI: done in 0.105973 secs using 297.6% CPU
+Optimizing NNI: done in 0.0725899 secs using 297.9% CPU
+Optimizing NNI: done in 0.0819252 secs using 297.8% CPU
+Optimizing NNI: done in 0.115567 secs using 298.4% CPU
+Optimizing NNI: done in 0.0826011 secs using 297.5% CPU
+Optimizing NNI: done in 0.0880711 secs using 298.2% CPU
+Optimizing NNI: done in 0.0561829 secs using 298.8% CPU
+Optimizing NNI: done in 0.0666201 secs using 296.7% CPU
+Optimizing NNI: done in 0.071301 secs using 298.6% CPU
+Iteration 90 / LogL: -3270.317 / Time: 0h:0m:44s (0h:0m:7s left)
+Optimizing NNI: done in 0.0793891 secs using 298.8% CPU
+Optimizing NNI: done in 0.0817831 secs using 297.8% CPU
+Optimizing NNI: done in 0.0315862 secs using 298% CPU
+Optimizing NNI: done in 0.0600169 secs using 297% CPU
+Optimizing NNI: done in 0.078578 secs using 297.2% CPU
+Optimizing NNI: done in 0.0852242 secs using 297.6% CPU
+Optimizing NNI: done in 0.0963299 secs using 297.3% CPU
+Optimizing NNI: done in 0.0661051 secs using 297.7% CPU
+Optimizing NNI: done in 0.100418 secs using 297.4% CPU
+Optimizing NNI: done in 0.087306 secs using 297% CPU
+Iteration 100 / LogL: -3276.627 / Time: 0h:0m:45s (0h:0m:2s left)
+Log-likelihood cutoff on original alignment: -3307.030
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 0.996
+Optimizing NNI: done in 0.092186 secs using 298.3% CPU
+Optimizing NNI: done in 0.0651579 secs using 297.4% CPU
+Optimizing NNI: done in 0.0896239 secs using 297.6% CPU
+Optimizing NNI: done in 0.0787599 secs using 297.5% CPU
+Optimizing NNI: done in 0.0714231 secs using 297.8% CPU
+Optimizing NNI: done in 0.0744431 secs using 297.6% CPU
+Optimizing NNI: done in 0.086596 secs using 297.6% CPU
+TREE SEARCH COMPLETED AFTER 107 ITERATIONS / Time: 0h:0m:46s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -3269.647
+Optimal log-likelihood: -3269.647
+Rate parameters:  A-C: 2.71916  A-G: 5.63282  A-T: 1.65170  C-G: 1.42385  C-T: 8.07434  G-T: 1.00000
+Base frequencies:  A: 0.262  C: 0.234  G: 0.264  T: 0.239
+Gamma shape alpha: 0.084
+Parameters optimization took 1 rounds (0.006 sec)
+BEST SCORE FOUND : -3269.647
+Creating bootstrap support values...
+Split supports printed to NEXUS file revised-western-clade.afas.splits.nex
+Total tree length: 0.099
+
+Total number of iterations: 107
+CPU time used for tree search: 34.383 sec (0h:0m:34s)
+Wall-clock time used for tree search: 12.615 sec (0h:0m:12s)
+Total CPU time used: 120.832 sec (0h:2m:0s)
+Total wall-clock time used: 47.853 sec (0h:0m:47s)
+
+Computing bootstrap consensus tree...
+Reading input file revised-western-clade.afas.splits.nex...
+69 taxa and 1162 splits.
+Consensus tree written to revised-western-clade.afas.contree
+Reading input trees file revised-western-clade.afas.contree
+Log-likelihood of consensus tree: -3269.763
+
+Analysis results written to: 
+  IQ-TREE report:                revised-western-clade.afas.iqtree
+  Maximum-likelihood tree:       revised-western-clade.afas.treefile
+  Likelihood distances:          revised-western-clade.afas.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          revised-western-clade.afas.splits.nex
+  Consensus tree:                revised-western-clade.afas.contree
+  Screen log file:               revised-western-clade.afas.log
+
+Date and Time: Thu May 16 15:05:28 2024

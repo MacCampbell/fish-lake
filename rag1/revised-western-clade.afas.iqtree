@@ -1,0 +1,409 @@
+IQ-TREE 2.2.2.6 COVID-edition built May 27 2023
+
+Input file name: revised-western-clade.afas
+Type of analysis: tree reconstruction + ultrafast bootstrap (10000 replicates)
+Random seed number: 967490
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 69 sequences with 1518 nucleotide sites
+Number of constant sites: 1400 (= 92.2266% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 1400 (= 92.2266% of all sites)
+Number of parsimony informative sites: 66
+Number of distinct site patterns: 153
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: GTR+F+G4
+
+Rate parameter R:
+
+  A-C: 2.7192
+  A-G: 5.6328
+  A-T: 1.6517
+  C-G: 1.4238
+  C-T: 8.0743
+  G-T: 1.0000
+
+State frequencies: (empirical counts from alignment)
+
+  pi(A) = 0.2622
+  pi(C) = 0.2343
+  pi(G) = 0.2643
+  pi(T) = 0.2392
+
+Rate matrix Q:
+
+  A   -0.9964    0.2518    0.5884    0.1562
+  C    0.2818    -1.194    0.1487    0.7635
+  G    0.5838    0.1319   -0.8103   0.09456
+  T    0.1712    0.7478    0.1045    -1.023
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 0.08371
+
+ Category  Relative_rate  Proportion
+  1         3.554e-08      0.25
+  2         0.0002805      0.25
+  3         0.05364        0.25
+  4         3.946          0.25
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -3269.6466 (s.e. 101.2520)
+Unconstrained log-likelihood (without tree): -3263.5254
+Number of free parameters (#branches + #model parameters): 144
+Akaike information criterion (AIC) score: 6827.2933
+Corrected Akaike information criterion (AICc) score: 6857.7084
+Bayesian information criterion (BIC) score: 7594.1147
+
+Total tree length (sum of branch lengths): 0.0992
+Sum of internal branch lengths: 0.0413 (41.5734% of tree length)
+
+WARNING: 28 near-zero internal branches (<0.0007) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon 'JX443333.1.Mylopharodon.conocephalus' is drawn at root
+Numbers in parentheses are  ultrafast bootstrap support (%)
+
++**JX443333.1.Mylopharodon.conocephalus
+|
++**JX443334.1.Mylopharodon.conocephalus
+|
+|                                                                  +--JX443344.1.Gila.seminuda
+|                                                               +**| (62)
+|                                                               |  |  +--JX443347.1.Gila.elegans
+|                                                               |  +--| (94)
+|                                                               |     +--JX443348.1.Gila.elegans
+|                                                            +--| (87)
+|                                                            |  |        +------JX443360.1.Gila.cypha
+|                                                            |  |     +**| (23)
+|                                                            |  |     |  +**JX443363.1.Gila.robusta
+|                                                            |  |  +**| (30)
+|                                                            |  |  |  +**JX443361.1.Gila.robusta
+|                                                            |  +--| (87)
+|                                                            |     |  +**JX443362.1.Gila.robusta
+|                                                            |     +--| (96)
+|                                                            |        +**JX443364.1.Gila.intermedia
+|                                                         +--| (97)
+|                                                         |  |  +**JX443345.1.Gila.seminuda
+|                                                         |  +**| (64)
+|                                                         |     |  +**JX443346.1.Gila.seminuda
+|                                                         |     +--| (92)
+|                                                         |        |  +-----------JX443355.1.Gila.nigra
+|                                                         |        +--| (99)
+|                                                         |           +**JX443356.1.Gila.nigra
+|                                                      +**| (26)
+|                                                      |  |           +**JX443351.1.Gila.ditaenia
+|                                                      |  |  +--------| (100)
+|                                                      |  |  |        +**JX443352.1.Gila.ditaenia
+|                                                      |  +**| (16)
+|                                                      |     +--JX443377.1.Gila.nigrescens
+|                                                   +**| (27)
+|                                                   |  |     +**JX443359.1.Gila.cypha
+|                                                   |  |  +**| (50)
+|                                                   |  |  |  +**JX443376.1.Gila.nigrescens
+|                                                   |  +**| (15)
+|                                                   |     |  +**JX443370.1.Gila.conspersa
+|                                                   |     +--| (97)
+|                                                   |        +--JX443371.1.Gila.conspersa
+|                                                +**| (19)
+|                                                |  |        +---JX443367.1.Gila.pandora
+|                                                |  |     +**| (26)
+|                                                |  |     |  +**JX443379.1.Gila.pulchra
+|                                                |  |  +**| (13)
+|                                                |  |  |  +**JX443378.1.Gila.pulchra
+|                                                |  +--| (64)
+|                                                |     |  +--JX443374.1.Gila.brevicauda
+|                                                |     +--| (98)
+|                                                |        +**JX443375.1.Gila.brevicauda
+|                                             +--| (92)
+|                                             |  |  +**JX443368.1.Gila.modesta
+|                                             |  +--| (74)
+|                                             |     +**JX443369.1.Gila.modesta
+|                                          +--| (55)
+|                                          |  |              +--JX443353.1.Gila.atraria
+|                                          |  |           +--| (97)
+|                                          |  |           |  +**JX443354.1.Gila.atraria
+|                                          |  |        +**| (40)
+|                                          |  |        |  |      +**JX443357.1.Gila.coerulea
+|                                          |  |        |  +------| (99)
+|                                          |  |        |         +**JX443358.1.Gila.coerulea
+|                                          |  |     +**| (39)
+|                                          |  |     |  |      +------JX443389.1.Moapa.coriacea
+|                                          |  |     |  +------| (98)
+|                                          |  |     |         +--JX443390.1.Moapa.coriacea
+|                                          |  |  +**| (48)
+|                                          |  |  |  |   +**JX443365.1.Gila.orcuttii
+|                                          |  |  |  +---| (96)
+|                                          |  |  |      +---JX443366.1.Gila.orcuttii
+|                                          |  +**| (39)
+|                                          |     +------JX443415.1.Acrocheilus.alutaceus
+|                                       +**| (46)
+|                                       |  |        +**JX443395.1.Ptychocheilus.grandis
+|                                       |  +--------| (100)
+|                                       |           +**JX443396.1.Ptychocheilus.grandis
+|                                    +**| (50)
+|                                    |  |            +---JX443349.1.Gila.purpurea
+|                                    |  |         +**| (24)
+|                                    |  |         |  +**JX443350.1.Gila.purpurea
+|                                    |  |      +**| (22)
+|                                    |  |      |  +**JX443380.1.Gila.eremica
+|                                    |  |  +---| (96)
+|                                    |  |  |   +--JX443381.1.Gila.eremica
+|                                    |  +--| (63)
+|                                    |     |                  +------JX443409.1.Relictus.solitarius
+|                                    |     +------------------| (100)
+|                                    |                        |  +--JX443410.1.Relictus.solitarius
+|                                    |                        +**| (85)
+|                                    |                           +--JX443411.1.Relictus.solitarius
+|                                 +**| (42)
+|                                 |  +**JX443372.1.Gila.minacae
+|                          +------| (95)
+|                          |      +---JX443373.1.Gila.minacae
+|                       +--| (99)
+|                       |  |           +**JX443398.1.Siphateles.alvordensis
+|                       |  |  +--------| (100)
+|                       |  |  |        +--------JX443399.1.Siphateles.boraxobius
+|                       |  +**| (62)
+|                       |     |      +**JX443416.1.Eremichthys.acros
+|                       |     +------| (100)
+|                       |            +**JX443417.1.Eremichthys.acros
+|                    +**| (70)
+|                    |  |         +--------JX443400.1.Siphateles.bicolor
+|                    |  |      +--| (60)
+|                    |  |      |  +**JX443401.1.Siphateles.bicolor
+|                    |  |   +--| (93)
+|                    |  |   |  |        +--JX443402.1.Siphateles.bicolor
+|                    |  |   |  |     +**| (30)
+|                    |  |   |  |     |  +--JX443404.1.Siphateles.bicolor
+|                    |  |   |  |  +**| (12)
+|                    |  |   |  |  |  |  +--------JX443403.1.Siphateles.bicolor
+|                    |  |   |  |  |  +**| (36)
+|                    |  |   |  |  |     |  +---JX443406.1.Siphateles.bicolor
+|                    |  |   |  |  |     +--| (98)
+|                    |  |   |  |  |        +**JX443407.1.Siphateles.bicolor
+|                    |  |   |  +**| (33)
+|                    |  |   |     +--JX443405.1.Siphateles.bicolor
+|                    |  +---| (97)
+|                    |      +--JX443408.1.Siphateles.bicolor
+|                 +--| (93)
+|                 |  +-------------------------JX443397.1.Ptychocheilus.lucius
+|             +---| (95)
+|             |   |          +**JX443391.1.Ptychocheilus.umpquae
+|             |   |      +---| (100)
+|             |   |      |   +--JX443392.1.Ptychocheilus.umpquae
+|             |   |   +--| (99)
+|             |   |   |  +**JX443394.1.Ptychocheilus.oregonensis
+|             |   +---| (97)
+|             |       +**JX443393.1.Ptychocheilus.oregonensis
++-------------| (100)
+              |          +**JX443412.1.Hesperoleucus.symmetricus
+              |     +----| (97)
+              |     |    +--JX443414.1.Hesperoleucus.symmetricus
+              +-----| (96)
+                    +---JX443413.1.Hesperoleucus.symmetricus
+
+Tree in newick format:
+
+(JX443333.1.Mylopharodon.conocephalus:0.0000010000,JX443334.1.Mylopharodon.conocephalus:0.0000010000,(((((((((((((((((JX443344.1.Gila.seminuda:0.0006807872,(JX443347.1.Gila.elegans:0.0007043242,JX443348.1.Gila.elegans:0.0006736657)94:0.0006721041)62:0.0000010000,(((JX443360.1.Gila.cypha:0.0020545986,JX443363.1.Gila.robusta:0.0000010000)23:0.0000010000,JX443361.1.Gila.robusta:0.0000010000)30:0.0000010000,(JX443362.1.Gila.robusta:0.0000010000,JX443364.1.Gila.intermedia:0.0000010000)96:0.0006732715)87:0.0006718705)87:0.0006719767,(JX443345.1.Gila.seminuda:0.0000010000,(JX443346.1.Gila.seminuda:0.0000010000,(JX443355.1.Gila.nigra:0.0035231728,JX443356.1.Gila.nigra:0.0000010000)99:0.0006959620)92:0.0006733955)64:0.0000010000)97:0.0006724827,((JX443351.1.Gila.ditaenia:0.0000010000,JX443352.1.Gila.ditaenia:0.0000010000)100:0.0027036051,JX443377.1.Gila.nigrescens:0.0006742984)16:0.0000010000)26:0.0000010000,((JX443359.1.Gila.cypha:0.0000010000,JX443376.1.Gila.nigrescens:0.0000010000)50:0.0000010000,(JX443370.1.Gila.conspersa:0.0000010000,JX443371.1.Gila.conspersa:0.0006724703)97:0.0006730180)15:0.0000010000)27:0.0000010000,(((JX443367.1.Gila.pandora:0.0013507869,JX443379.1.Gila.pulchra:0.0000010000)26:0.0000010000,JX443378.1.Gila.pulchra:0.0000010000)13:0.0000010000,(JX443374.1.Gila.brevicauda:0.0006636729,JX443375.1.Gila.brevicauda:0.0000010000)98:0.0006644536)64:0.0006640201)19:0.0000010000,(JX443368.1.Gila.modesta:0.0000010000,JX443369.1.Gila.modesta:0.0000010000)74:0.0006626251)92:0.0006638906,(((((JX443353.1.Gila.atraria:0.0006749878,JX443354.1.Gila.atraria:0.0000010000)97:0.0006742519,(JX443357.1.Gila.coerulea:0.0000010000,JX443358.1.Gila.coerulea:0.0000010000)99:0.0020471229)40:0.0000010000,(JX443389.1.Moapa.coriacea:0.0020387941,JX443390.1.Moapa.coriacea:0.0006670477)98:0.0020420601)39:0.0000010000,(JX443365.1.Gila.orcuttii:0.0000010000,JX443366.1.Gila.orcuttii:0.0013476865)96:0.0013261396)48:0.0006475459,JX443415.1.Acrocheilus.alutaceus:0.0020314987)39:0.0000129020)55:0.0006647133,(JX443395.1.Ptychocheilus.grandis:0.0000010000,JX443396.1.Ptychocheilus.grandis:0.0000010000)100:0.0026681415)46:0.0000010000,((((JX443349.1.Gila.purpurea:0.0013543055,JX443350.1.Gila.purpurea:0.0000010000)24:0.0000010000,JX443380.1.Gila.eremica:0.0000010000)22:0.0000010000,JX443381.1.Gila.eremica:0.0006789213)96:0.0013367175,(JX443409.1.Relictus.solitarius:0.0020652836,(JX443410.1.Relictus.solitarius:0.0006734558,JX443411.1.Relictus.solitarius:0.0006732833)85:0.0000010000)100:0.0054602655)63:0.0006761838)50:0.0000010000,JX443372.1.Gila.minacae:0.0000010000)42:0.0000010000,JX443373.1.Gila.minacae:0.0013261373)95:0.0020214385,((JX443398.1.Siphateles.alvordensis:0.0000010000,JX443399.1.Siphateles.boraxobius:0.0027523621)100:0.0027094180,(JX443416.1.Eremichthys.acros:0.0000010000,JX443417.1.Eremichthys.acros:0.0000010000)100:0.0020301864)62:0.0000010000)99:0.0006715338,(((JX443400.1.Siphateles.bicolor:0.0028008854,JX443401.1.Siphateles.bicolor:0.0000010000)60:0.0006733760,(((JX443402.1.Siphateles.bicolor:0.0006737338,JX443404.1.Siphateles.bicolor:0.0006737450)30:0.0000010000,(JX443403.1.Siphateles.bicolor:0.0027465339,(JX443406.1.Siphateles.bicolor:0.0013547433,JX443407.1.Siphateles.bicolor:0.0000010000)98:0.0006747884)36:0.0000010000)12:0.0000010000,JX443405.1.Siphateles.bicolor:0.0006736818)33:0.0000010000)93:0.0006727632,JX443408.1.Siphateles.bicolor:0.0006773195)97:0.0013505323)70:0.0000010000,JX443397.1.Ptychocheilus.lucius:0.0075395807)93:0.0006703274,(((JX443391.1.Ptychocheilus.umpquae:0.0000010000,JX443392.1.Ptychocheilus.umpquae:0.0006728352)100:0.0013461594,JX443394.1.Ptychocheilus.oregonensis:0.0000010000)99:0.0006711258,JX443393.1.Ptychocheilus.oregonensis:0.0000010000)97:0.0013499629)95:0.0013451108,((JX443412.1.Hesperoleucus.symmetricus:0.0000010000,JX443414.1.Hesperoleucus.symmetricus:0.0006878106)97:0.0016920297,JX443413.1.Hesperoleucus.symmetricus:0.0013669026)96:0.0017081629)100:0.0041044796);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 10000 bootstrap trees
+Log-likelihood of consensus tree: -3269.763221
+Robinson-Foulds distance between ML tree and consensus tree: 16
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--JX443333.1.Mylopharodon.conocephalus
+|
++--JX443334.1.Mylopharodon.conocephalus
+|
+|                                                                     +--JX443344.1.Gila.seminuda
+|                                                                  +--| (62)
+|                                                                  |  |  +--JX443347.1.Gila.elegans
+|                                                                  |  +--| (94)
+|                                                                  |     +--JX443348.1.Gila.elegans
+|                                                               +--| (87)
+|                                                               |  |        +------JX443360.1.Gila.cypha
+|                                                               |  |     +--| (40)
+|                                                               |  |     |  |  +--JX443362.1.Gila.robusta
+|                                                               |  |     |  +--| (96)
+|                                                               |  |     |     +--JX443364.1.Gila.intermedia
+|                                                               |  |  +--| (41)
+|                                                               |  |  |  +--JX443363.1.Gila.robusta
+|                                                               |  +--| (87)
+|                                                               |     +--JX443361.1.Gila.robusta
+|                                                            +--| (97)
+|                                                            |  |  +--JX443345.1.Gila.seminuda
+|                                                            |  +--| (64)
+|                                                            |     |  +--JX443346.1.Gila.seminuda
+|                                                            |     +--| (92)
+|                                                            |        |  +-----------JX443355.1.Gila.nigra
+|                                                            |        +--| (99)
+|                                                            |           +--JX443356.1.Gila.nigra
+|                                                         +--| (40)
+|                                                         |  |        +--JX443351.1.Gila.ditaenia
+|                                                         |  +--------| (100)
+|                                                         |           +--JX443352.1.Gila.ditaenia
+|                                                      +--| (26)
+|                                                      |  +--JX443377.1.Gila.nigrescens
+|                                                   +--| (27)
+|                                                   |  |     +--JX443359.1.Gila.cypha
+|                                                   |  |  +--| (50)
+|                                                   |  |  |  +--JX443376.1.Gila.nigrescens
+|                                                   |  +--| (15)
+|                                                   |     |  +--JX443370.1.Gila.conspersa
+|                                                   |     +--| (97)
+|                                                   |        +--JX443371.1.Gila.conspersa
+|                                                +--| (19)
+|                                                |  |  +---JX443367.1.Gila.pandora
+|                                                |  +--| (64)
+|                                                |     |     +--JX443374.1.Gila.brevicauda
+|                                                |     |  +--| (98)
+|                                                |     |  |  +--JX443375.1.Gila.brevicauda
+|                                                |     +--| (39)
+|                                                |        |  +--JX443378.1.Gila.pulchra
+|                                                |        +--| (33)
+|                                                |           +--JX443379.1.Gila.pulchra
+|                                             +--| (92)
+|                                             |  |  +--JX443368.1.Gila.modesta
+|                                             |  +--| (74)
+|                                             |     +--JX443369.1.Gila.modesta
+|                                          +--| (55)
+|                                          |  |              +--JX443353.1.Gila.atraria
+|                                          |  |           +--| (97)
+|                                          |  |           |  +--JX443354.1.Gila.atraria
+|                                          |  |        +--| (40)
+|                                          |  |        |  |      +--JX443357.1.Gila.coerulea
+|                                          |  |        |  +------| (99)
+|                                          |  |        |         +--JX443358.1.Gila.coerulea
+|                                          |  |     +--| (39)
+|                                          |  |     |  |      +------JX443389.1.Moapa.coriacea
+|                                          |  |     |  +------| (98)
+|                                          |  |     |         +--JX443390.1.Moapa.coriacea
+|                                          |  |  +--| (48)
+|                                          |  |  |  |   +--JX443365.1.Gila.orcuttii
+|                                          |  |  |  +---| (96)
+|                                          |  |  |      +---JX443366.1.Gila.orcuttii
+|                                          |  +--| (39)
+|                                          |     +------JX443415.1.Acrocheilus.alutaceus
+|                                       +--| (46)
+|                                       |  |        +--JX443395.1.Ptychocheilus.grandis
+|                                       |  +--------| (100)
+|                                       |           +--JX443396.1.Ptychocheilus.grandis
+|                                    +--| (50)
+|                                    |  |            +---JX443349.1.Gila.purpurea
+|                                    |  |         +--| (43)
+|                                    |  |         |  +--JX443381.1.Gila.eremica
+|                                    |  |      +--| (58)
+|                                    |  |      |  +--JX443350.1.Gila.purpurea
+|                                    |  |  +---| (96)
+|                                    |  |  |   +--JX443380.1.Gila.eremica
+|                                    |  +--| (63)
+|                                    |     |                  +------JX443409.1.Relictus.solitarius
+|                                    |     +------------------| (100)
+|                                    |                        |  +--JX443410.1.Relictus.solitarius
+|                                    |                        +--| (85)
+|                                    |                           +--JX443411.1.Relictus.solitarius
+|                                 +--| (42)
+|                                 |  +--JX443372.1.Gila.minacae
+|                          +------| (95)
+|                          |      +---JX443373.1.Gila.minacae
+|                       +--| (99)
+|                       |  |           +--JX443398.1.Siphateles.alvordensis
+|                       |  |  +--------| (100)
+|                       |  |  |        +--------JX443399.1.Siphateles.boraxobius
+|                       |  +--| (62)
+|                       |     |      +--JX443416.1.Eremichthys.acros
+|                       |     +------| (100)
+|                       |            +--JX443417.1.Eremichthys.acros
+|                    +--| (70)
+|                    |  |         +--------JX443400.1.Siphateles.bicolor
+|                    |  |      +--| (60)
+|                    |  |      |  +--JX443401.1.Siphateles.bicolor
+|                    |  |   +--| (93)
+|                    |  |   |  |     +--JX443402.1.Siphateles.bicolor
+|                    |  |   |  |  +--| (30)
+|                    |  |   |  |  |  +--JX443404.1.Siphateles.bicolor
+|                    |  |   |  +--| (33)
+|                    |  |   |     |     +--------JX443403.1.Siphateles.bicolor
+|                    |  |   |     |  +--| (36)
+|                    |  |   |     |  |  |  +---JX443406.1.Siphateles.bicolor
+|                    |  |   |     |  |  +--| (98)
+|                    |  |   |     |  |     +--JX443407.1.Siphateles.bicolor
+|                    |  |   |     +--| (18)
+|                    |  |   |        +--JX443405.1.Siphateles.bicolor
+|                    |  +---| (97)
+|                    |      +--JX443408.1.Siphateles.bicolor
+|                 +--| (93)
+|                 |  +-------------------------JX443397.1.Ptychocheilus.lucius
+|             +---| (95)
+|             |   |          +--JX443391.1.Ptychocheilus.umpquae
+|             |   |      +---| (100)
+|             |   |      |   +--JX443392.1.Ptychocheilus.umpquae
+|             |   |   +--| (99)
+|             |   |   |  +--JX443394.1.Ptychocheilus.oregonensis
+|             |   +---| (97)
+|             |       +--JX443393.1.Ptychocheilus.oregonensis
++-------------| (100)
+              |          +--JX443412.1.Hesperoleucus.symmetricus
+              |     +----| (97)
+              |     |    +--JX443414.1.Hesperoleucus.symmetricus
+              +-----| (96)
+                    +---JX443413.1.Hesperoleucus.symmetricus
+
+
+Consensus tree in newick format: 
+
+(JX443333.1.Mylopharodon.conocephalus:0.0000022920,JX443334.1.Mylopharodon.conocephalus:0.0000022920,((((((((((((((((((JX443344.1.Gila.seminuda:0.0006811606,(JX443347.1.Gila.elegans:0.0007037957,JX443348.1.Gila.elegans:0.0006737829)94:0.0006719561)62:0.0000022920,(((JX443360.1.Gila.cypha:0.0020556857,(JX443362.1.Gila.robusta:0.0000022920,JX443364.1.Gila.intermedia:0.0000022920)96:0.0006732713)40:0.0000022920,JX443363.1.Gila.robusta:0.0000022920)41:0.0000022920,JX443361.1.Gila.robusta:0.0000022920)87:0.0006718383)87:0.0006718149,(JX443345.1.Gila.seminuda:0.0000022920,(JX443346.1.Gila.seminuda:0.0000022920,(JX443355.1.Gila.nigra:0.0035249134,JX443356.1.Gila.nigra:0.0000022920)99:0.0006953631)92:0.0006732302)64:0.0000022920)97:0.0006720999,(JX443351.1.Gila.ditaenia:0.0000022920,JX443352.1.Gila.ditaenia:0.0000022920)100:0.0027045183)40:0.0000022920,JX443377.1.Gila.nigrescens:0.0006738451)26:0.0000022920,((JX443359.1.Gila.cypha:0.0000022920,JX443376.1.Gila.nigrescens:0.0000022920)50:0.0000022920,(JX443370.1.Gila.conspersa:0.0000022920,JX443371.1.Gila.conspersa:0.0006720473)97:0.0006726858)15:0.0000022920)27:0.0000022920,(JX443367.1.Gila.pandora:0.0013512048,((JX443374.1.Gila.brevicauda:0.0006633208,JX443375.1.Gila.brevicauda:0.0000022920)98:0.0006641958,(JX443378.1.Gila.pulchra:0.0000022920,JX443379.1.Gila.pulchra:0.0000022920)33:0.0000022920)39:0.0000022920)64:0.0006638048)19:0.0000022920,(JX443368.1.Gila.modesta:0.0000022920,JX443369.1.Gila.modesta:0.0000022920)74:0.0006623102)92:0.0006638515,(((((JX443353.1.Gila.atraria:0.0006744897,JX443354.1.Gila.atraria:0.0000022920)97:0.0006738073,(JX443357.1.Gila.coerulea:0.0000022920,JX443358.1.Gila.coerulea:0.0000022920)99:0.0020479117)40:0.0000022920,(JX443389.1.Moapa.coriacea:0.0020394754,JX443390.1.Moapa.coriacea:0.0006672885)98:0.0020427138)39:0.0000022920,(JX443365.1.Gila.orcuttii:0.0000022920,JX443366.1.Gila.orcuttii:0.0013479980)96:0.0013260141)48:0.0003353255,JX443415.1.Acrocheilus.alutaceus:0.0020316906)39:0.0003249096)55:0.0006646482,(JX443395.1.Ptychocheilus.grandis:0.0000022920,JX443396.1.Ptychocheilus.grandis:0.0000022920)100:0.0026680148)46:0.0000022920,((((JX443349.1.Gila.purpurea:0.0013539291,JX443381.1.Gila.eremica:0.0006797091)43:0.0000022920,JX443350.1.Gila.purpurea:0.0000022920)58:0.0000022920,JX443380.1.Gila.eremica:0.0000022920)96:0.0013372365,(JX443409.1.Relictus.solitarius:0.0020660824,(JX443410.1.Relictus.solitarius:0.0006731905,JX443411.1.Relictus.solitarius:0.0006730900)85:0.0000023004)100:0.0054611640)63:0.0006776589)50:0.0000023004,JX443372.1.Gila.minacae:0.0000022920)42:0.0000022920,JX443373.1.Gila.minacae:0.0013244666)95:0.0020210987,((JX443398.1.Siphateles.alvordensis:0.0000022920,JX443399.1.Siphateles.boraxobius:0.0027526193)100:0.0027098361,(JX443416.1.Eremichthys.acros:0.0000022920,JX443417.1.Eremichthys.acros:0.0000022920)100:0.0020308484)62:0.0000022920)99:0.0006723591,(((JX443400.1.Siphateles.bicolor:0.0028021820,JX443401.1.Siphateles.bicolor:0.0000022920)60:0.0006746903,((JX443402.1.Siphateles.bicolor:0.0006749046,JX443404.1.Siphateles.bicolor:0.0006748938)30:0.0000022920,((JX443403.1.Siphateles.bicolor:0.0027474013,(JX443406.1.Siphateles.bicolor:0.0013553433,JX443407.1.Siphateles.bicolor:0.0000022920)98:0.0006748746)36:0.0000022920,JX443405.1.Siphateles.bicolor:0.0006749349)18:0.0000022920)33:0.0000022920)93:0.0006741552,JX443408.1.Siphateles.bicolor:0.0006776516)97:0.0013508463)70:0.0000022920,JX443397.1.Ptychocheilus.lucius:0.0075406280)93:0.0006703960,(((JX443391.1.Ptychocheilus.umpquae:0.0000022920,JX443392.1.Ptychocheilus.umpquae:0.0006733738)100:0.0013475879,JX443394.1.Ptychocheilus.oregonensis:0.0000022920)99:0.0006716667,JX443393.1.Ptychocheilus.oregonensis:0.0000022920)97:0.0013508872)95:0.0013468496,((JX443412.1.Hesperoleucus.symmetricus:0.0000022920,JX443414.1.Hesperoleucus.symmetricus:0.0006890418)97:0.0016925507,JX443413.1.Hesperoleucus.symmetricus:0.0013678936)96:0.0017087392)100:0.0041050939);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t revised-western-clade.afas.treefile -m "GTR{2.71916,5.63282,1.6517,1.42385,8.07434}+F{0.262221,0.234285,0.264266,0.239228}+G4{0.0837075}" --length 1518
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s revised-western-clade.afas --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s revised-western-clade.afas --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Thu May 16 15:05:28 2024
+Total CPU time used: 120.831892 seconds (0h:2m:0s)
+Total wall-clock time used: 47.89145708 seconds (0h:0m:47s)
+
