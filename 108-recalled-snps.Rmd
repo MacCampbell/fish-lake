@@ -43,6 +43,7 @@ clst2
 ```
 
 ```{r}
+clst2 %>% write_csv("meta/544.csv")
 clst2 %>% dplyr::ungroup() %>% dplyr::select(Sample) %>% write_tsv(file="meta/544.names", col_names=FALSE)
 clst2 %>% dplyr::ungroup() %>% dplyr::select(Path2) %>% write_tsv(file="bamlists/544.bamlist", col_names=FALSE)
 ```
@@ -55,4 +56,37 @@ srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-
 -minMaf 0.01 -minMapQ 10 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/108/snps-544-01.out 2> outputs/108/snps-544-01.err &
 ```
+
+
+Should be able root at Pogonichthys and run a SVDquartets analysis.
+
+Subsequently, we can filter and run a treemix analysis (filter means removing Gila orcuttii and Pognonichthys and filtering with BCFTools)
+
+Convert to VCF and prune
+
+```{sh, eval=FALSE}
+plink --tped snps-544-01.tped --tfam snps-544-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
+plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
+bgzip plink.vcf 
+tabix plink.vcf.gz
+
+#renaming vcf with sample names, filtering again on MAF, and then pruning, selecting random SNP
+
+module load bcftools/1.13
+
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N random > outputs/108/pruned.vcf
+```
+
+Locally
+```{sh, eval=FALSE}
+# Convert to phylip 
+conda activate py2;
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-01.vcf 
+conda deactivate;
+```
+
+Try SVDQuartets. Confirmed P. macrolepidotus ID.     
+
+
+
 
