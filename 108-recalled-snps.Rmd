@@ -44,7 +44,7 @@ clst2
 
 ```{r}
 clst2 %>% dplyr::ungroup() %>% dplyr::select(Sample) %>% write_tsv(file="meta/544.names", col_names=FALSE)
-clst2 %>% dplyr::ungroup() %>% dplyr::select(Path2) %>% write_tsv(file="meta/544.bamlist", col_names=FALSE)
+clst2 %>% dplyr::ungroup() %>% dplyr::select(Path2) %>% write_tsv(file="bamlists/544.bamlist", col_names=FALSE)
 ```
 
 95% thresh, 544*.95
