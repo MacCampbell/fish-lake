@@ -1,0 +1,51 @@
+---
+title: "109-obesus"
+output: html_document
+date: "2024-05-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+Can pull in the larger obesus lineage, including mohavensis.    
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+library(ggpubr)
+```
+
+
+Get mohavensis.  
+
+```{r}
+moh<-read_csv("meta/phylo-582.csv") %>% filter(Species=="mohavensis")
+moh
+```
+
+```{r}
+obesus<-read_csv("meta/obesus-500k-meta.csv") %>% bind_rows(moh) %>% select(-Path2)
+obesus %>% group_by(Vicinity) %>% summarize(Count=n())
+```
+
+525 inds. 
+
+doIbs cov
+
+```{r}
+obesus %>% select(Path) %>% write_tsv("bamlists/525.bamlist", col_names = FALSE)
+```
+
+75% thresh doIbs  
+
+```{sh, eval=FALSE}
+srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/525.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 394 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
+-out outputs/109/obs-ibs-90 >outputs/109/obs-ibs-90.out 2> outputs/109/obs-ibs-90.err &
+
+```
+

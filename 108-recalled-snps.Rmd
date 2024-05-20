@@ -10,7 +10,10 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 ```{r}
 library(tidyverse)
+library(phangorn)
 library(ggtree)
+library(ape)
+library(tanggle)
 ```
 
 
@@ -55,7 +58,17 @@ srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-
 -out outputs/108/snps-544-01  \
 -minMaf 0.01 -minMapQ 10 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/108/snps-544-01.out 2> outputs/108/snps-544-01.err &
+
+#90 thresh
+srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 24 \
+-minInd 490 -bam bamlists/544.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-out outputs/108/snps-544-01-90  \
+-minMaf 0.01 -minMapQ 10 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/108/snps-544-01-90.out 2> outputs/108/snps-544-01-90.err &
+
 ```
+
+	[ALL done] walltime used =  28519.00 sec
 
 
 Should be able root at Pogonichthys and run a SVDquartets analysis.
@@ -63,6 +76,11 @@ Should be able root at Pogonichthys and run a SVDquartets analysis.
 Subsequently, we can filter and run a treemix analysis (filter means removing Gila orcuttii and Pognonichthys and filtering with BCFTools)
 
 Convert to VCF and prune
+
+250506 variants
+
+It seems like the initial snp Calling has a lot to do with how things turn out, no matter how the MAF is manipulated. 
+
 
 ```{sh, eval=FALSE}
 plink --tped snps-544-01.tped --tfam snps-544-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
@@ -74,19 +92,158 @@ tabix plink.vcf.gz
 
 module load bcftools/1.13
 
-bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N random > outputs/108/pruned.vcf
+#Basically, pruning before was like this: bcftools +prune -l 0.20 -w 10000
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 > outputs/108/pruned-02.vcf
+#73002 snps
+
+
+
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/108/pruned.vcf
+# 11038 snps
+
+#Making a high MAF
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.3:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/108/pruned-maf03.vcf
+#3207 SNPS, but still seems to have a good structure, reticulations present between mohavensis nad the others. So, I think we can test something like this in treemix. 
+
+
+
+#drop -n 1 -n rand? Expand window size?
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/108/pruned-m2.vcf
+# 87259 after dropping -n 1 -n rand that's a lot more snps!!
+# n 1 -N maxAF, 11038 snps again, but, hopefully more poly
+
+
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.3 -w 1000bp -n 1 -N maxAF > outputs/108/pruned-m3.vcf
+#[default 100000kb]
+#gives 79,993 snps at default windo
+# givs 12,501 snps at -w1000bp -n 1 -N maxAF
+
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 100000bp -n 1 -N maxAF > outputs/108/pruned-100K.vcf
+#554 5761
+
+
+bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.10:minor | bcftools +prune -m 0.3 -w 10000bp -n 1 -N rand > outputs/108/pruned-maf10.vcf
+#m2 554 6508
+#m3 554 6854
 ```
 
 Locally
 ```{sh, eval=FALSE}
 # Convert to phylip 
 conda activate py2;
-~/github/mccloud-rrt/vcf2phylip.py -i pruned-01.vcf 
+~/github/mccloud-rrt/vcf2phylip.py -i pruned.vcf 
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-maf10.vcf 
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-100K.vcf 
+
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-m2.vcf 
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-m3.vcf 
+
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-maf03.vcf 
+
 conda deactivate;
 ```
 
 Try SVDQuartets. Confirmed P. macrolepidotus ID.     
+        dimensions ntax = 554 nchar = 11038;
+
+```{r}
+m544<-clst2 %>% mutate(SVDQ=paste0(Sample,"T"))
+m544 %>% select(SVDQ) %>%  summarize(Inds=paste0(SVDQ, collapse="\t"))  %>% write_tsv("outputs/108/block.tsv")
+```
+
+
+Create tree meta
+
+```{r}
+speciesm<-m544 %>% select(Cluster, Species, Subspecies, Vicinity, `Tributary/Collection Location`)
+speciesm
+
+```
+
+
+```{r}
+s<-read.nexus("outputs/108/svdq.tre")
+s<-consensus(s, p=0.5)
+s<-root(s, c("P._macrolepidotus_Cowhead_Lake"))
+
+ggtree(s, branch.length = 'none') %<+% speciesm +
+  geom_tippoint(aes(shape=Species, fill=Subspecies, size=Count)) + 
+  geom_nodelab() + 
+  geom_tiplab(size=4, offset = 0.5) +
+  xlim(0,20) +
+  scale_fill_viridis_d(option="magma", na.value="grey50") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  scale_shape_manual(values=c(25,23,25,23,24,22,21,23,25))
 
 
 
+ggsave("outputs/108/svdq-test.pdf", width=11, height = 8.5)
+
+```
+
+# ML analysis
+```{sh,eval=FALSE}
+iqtree2 -s pruned.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+iqtree2 -s pruned.min4.phy.varsites.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+
+iqtree2 -s pruned-maf03.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+iqtree2 -s pruned-maf03.min4.phy.varsites.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+
+iqtree2 -s pruned-02.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+iqtree2 -s pruned-02.min4.phy.varsites.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+# Only 45836 sites considered variant by iqtree
+```
+
+
+
+## What about a network?
+
+```{r}
+dat<-read.dna(file="outputs/108/pruned.min4.phy")
+write.nexus.data(dat, file="outputs/108/pruned.min4.nexus")
+
+dat<-read.dna(file="outputs/108/pruned-maf10.min4.phy")
+write.nexus.data(dat, file="outputs/108/pruned-maf10.min4.nexus")
+
+dat<-read.dna(file="outputs/108/pruned-100K.min4.phy")
+write.nexus.data(dat, file="outputs/108/pruned-100K.min4.nexus")
+
+dat<-read.dna(file="outputs/108/pruned-maf03.min4.phy")
+write.nexus.data(dat, file="outputs/108/pruned-maf03.min4.nexus")
+
+dat<-read.dna(file="outputs/108/iqtree/pruned-02.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/108/iqtree/pruned-02.nexus")
+
+
+```
+
+Made a network in SplitsTree
+
+```{r}
+net<-read.nexus.networx("outputs/108/pruned-03.network")
+```
+
+
+```{r}
+g<-ggsplitnet(net)  
+g$data<-left_join(g$data, m544, by=c("label"="Sample")) 
+
+n<-g + 
+  geom_tippoint(aes(fill=Species), cex=5, pch=21, alpha=1.0) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22)))
+
+n
+
+```
+
+
+#NJ
+
+```{r}
+nj<-read.nexus("outputs/108/iqtree/pruned-02.nj.tre")
+nj<-midpoint(nj)
+ggtree(nj) %<+% relocate(m544,Sample) +
+    geom_tippoint(aes(fill=Species), pch=21)
+```
 
