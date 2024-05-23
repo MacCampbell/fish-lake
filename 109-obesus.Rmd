@@ -57,7 +57,9 @@ srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -li
 srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/109/obs-ibs-90.beagle.gz -K 3 -minMaf 0.01 -o outputs/109/obs-K3 &
 srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/109/obs-ibs-90.beagle.gz -K 4 -minMaf 0.01 -o outputs/109/obs-K4 &
 srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/109/obs-ibs-90.beagle.gz -K 5 -minMaf 0.01 -o outputs/109/obs-K5 &
-srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/109/obs-ibs-90.beagle.gz -K 6 -minMaf 0.01 -o outputs/109/obs-K6 &
+srun -p high -t 6:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/109/obs-ibs-90.beagle.gz -K 6 -minMaf 0.01 -o outputs/109/obs-K6 &
+
+
 ```
 
 
@@ -93,6 +95,24 @@ ggplot(covs) +
 
 ggsave("outputs/109/pcs12.pdf")
 ```
+```{r}
+sub12<-covs %>% filter(Taxon=="obesus") %>% group_by(`Tributary/Collection Location`) %>% summarize(x=mean(V1), y=mean(V2))
+
+ggplot(covs %>% filter(Taxon=="obesus")) +
+  geom_point(aes(x=V1, y=V2, fill=Taxon), pch=21, cex=3, alpha=0.75) +
+  geom_text_repel(data=sub12, aes(x=x, y=y, label=`Tributary/Collection Location`), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of obesus Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+
+
 ```{r}
 ggplot(covs) +
   geom_point(aes(x=V1, y=V2, fill=Taxon), pch=21, cex=3, alpha=0.75) +
@@ -149,7 +169,7 @@ colnames(q)<-mynames
 q<-q[1:length(colnames(q))-1]
 
 #Bind met and arrange 
-df<-bind_cols(q, meta) %>% mutate(Region=Vicinity) %>% arrange(Region) %>% mutate(Index=1:n())
+df<-bind_cols(q, meta) %>% mutate(Region=`Tributary/Collection Location`) %>% mutate(Taxon=Species) %>% arrange(Taxon,Vicinity) %>% mutate(Index=1:n())
 #df$Region<-factor(df$Region, levels=unique(df$Region))
 
 rdf<-df %>% dplyr::select(Region, Index, colnames(q) ) %>% gather(key=Ancestry, value=Q, 3:(3+length(colnames(q))-1))
@@ -180,12 +200,86 @@ ggplot(rdf) +
   theme(axis.text.x = element_text(angle=45, hjust=1)) +
   #theme(axis.text.x=element_blank()) +
   scale_fill_viridis_d(option="viridis") +
-  theme(axis.ticks.x = element_blank())
+  theme(axis.ticks.x = element_blank()) 
 
 }
 ```
 
 
 ```{r}
-PlotAdmix("outputs/109/", mt2)
+PlotAdmix("outputs/109/obs-K2.qopt", obesus)
+```
+
+
+```{r}
+PlotAdmix("outputs/109/obs-K3.qopt", obesus)
+```
+
+color PCA based on admixture
+
+```{r}
+q<-read_delim("outputs/109/obs-K2.qopt", delim=" ", col_names=FALSE)
+#Make generic colnames
+
+nums<-1:length(colnames(q))
+mynames<-paste0("Q",nums)
+
+qs<-length(colnames(q))-1
+
+colnames(q)<-mynames
+
+#Last col empty
+q<-q[1:length(colnames(q))-1]
+
+```
+
+```{r}
+ggplot(covs %>% cbind(q)) +
+  geom_point(aes(x=V1, y=V2, fill=Q2, shape=Taxon), cex=3, alpha=0.75) +
+  geom_text_repel(data=text12, aes(x=x, y=y, label=`Tributary/Collection Location`), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  scale_fill_viridis_c(option="viridis") +
+  scale_shape_manual(values=c(22,21,23,24)) +
+  ggtitle("Genome-Wide PCA of 544 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+
+ggsave("outputs/109/admixed-snyderi.jpeg")
+```
+
+
+The Charnock Ranch, Lower Twin Lakes fish are admixed with something. But, it looks like a clear Fish Lake Valley, Rail Road Valley, everybody else split.
+
+```{r}
+sub12<-covs %>% filter(Taxon=="obesus") %>% group_by(`Tributary/Collection Location`) %>% summarize(x=mean(V1), y=mean(V2))
+
+ggplot(covs %>% cbind(q) %>% filter(Taxon=="obesus")) +
+  geom_point(aes(x=V1, y=V2, fill=Q2), pch=21, cex=3, alpha=0.75) +
+  geom_text_repel(data=sub12, aes(x=x, y=y, label=`Tributary/Collection Location`), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  scale_fill_viridis_c(option="viridis") +
+  ggtitle("Genome-Wide PCA of obesus Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+
+More admixture.   
+
+
+```{r}
+PlotAdmix("outputs/109/obs-K4.qopt", obesus)
+```
+
+
+```{r}
+PlotAdmix("outputs/109/obs-K5.qopt", obesus)
+```
+
+```{r}
+PlotAdmix("outputs/109/obs-K6.qopt", obesus)
 ```
