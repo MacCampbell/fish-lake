@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 ```{r}
 library(tidyverse)
+library(ggrepel)
 library(poppr)
 library(vcfR)
 library(phytools)
@@ -98,10 +99,15 @@ Upper Humboldt
 Little Soda Lake
 
 ```{r}
-phylo<-bind_rows(gila, alvo, pogo, nodownsample,new,toikona, snyderi, fishlake, railroad, lahontan) %>% mutate(Sample=paste0(1:n(),"_",1))
+phylo<-bind_rows(gila, alvo, pogo, nodownsample,new,toikona, snyderi, fishlake, railroad, lahontan) %>% mutate(Sample2=Sample) %>% mutate(Sample=paste0(1:n(),"_",1))
 write_csv(phylo %>% select(Sample), file="outputs/107/438.names", col_names=FALSE)
+write_csv(phylo %>% select(Sample), file="meta/438.names", col_names=FALSE)
+
 write_tsv(phylo %>% select(Path2), file="bamlists/438.bamlist", col_names = FALSE)
 write_csv(phylo, file="meta/meta-438.csv")
+
+phylo %>% group_by(`Tributary/Collection Location`) %>% mutate(SVDQ=paste0(Sample,"T")) %>% select(SVDQ) %>%  summarize(Inds=paste0(SVDQ, collapse="\t"))  %>% write_tsv("outputs/107/block.tsv")
+
 ```
 
 Call snps at 95% threshold with a minMaf of 0.01.   
@@ -119,8 +125,12 @@ plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-c
 bgzip plink.vcf 
 tabix plink.vcf.gz
 
-#prune
+#prune (local)
 bcftools  view -S outputs/107/438.names outputs/107/plink.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/107/438-01.vcf
+
+#prune on farm
+bcftools reheader --samples meta/438.names outputs/107/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/pruned-farm.vcf
+
 
 #trial phylogeny
 
@@ -172,41 +182,42 @@ net<-read.nexus.networx("outputs/107/438-01.network")
 ```
 
 ```{r}
-g<-ggsplitnet(net)  
-g$data<-left_join(g$data, phylo, by=c("label"="Sample")) 
-
-n<-g + 
-  geom_tippoint(aes(fill=Species), cex=5, pch=21, alpha=1.0) +
-  scale_fill_viridis_d(option="H") +
-  guides(fill = guide_legend(override.aes = list(pch = 22)))
-
-n
-
-ggsave("outputs/107/438-network.pdf", width=12, height=10)
+nm<-read_csv("meta/meta-438-edited.csv")
+nm$Species<-factor(nm$Species, levels = c("P. macrolepidotus","G. orcuttii","alvordensis","thalassinus","bicolor","newarkensis","isolatus","snyderi","mohavensis","obesus"))
+nm<-nm %>% mutate(Taxon=Species)
 ```
 
 ```{r}
-g2<-ggsplitnet(net)  
-phylo2<-phylo
-phylo2$Species<-factor(phylo2$Species, levels=c("G. orcuttii","P. macrolepidotus","alvordensis","thalassinus","bicolor","isolatus","newarkensis","mohavensis","obesus"))
-g2$data<-left_join(g2$data, phylo2, by=c("label"="Sample")) 
+g<-ggsplitnet(net, color="grey50")  
+g$data<-left_join(g$data, nm, by=c("label"="Sample")) 
 
-n2<-g2 + 
-  geom_tippoint(aes(shape=Species, fill=Subspecies), cex=5, alpha=1.0) +
-  scale_fill_viridis_d(option="magma", na.value="grey50") +
-  guides(fill = guide_legend(override.aes = list(pch = 22))) +
-  scale_shape_manual(values=c(24,24,24,24,22,22,22,22,21))
+labels<-g$data %>% filter(isTip==TRUE) %>% group_by(Species) %>% summarize(x=mean(x), y=mean(y)) %>% filter(Species !="obesus")
+labels2<-g$data %>% filter(isTip==TRUE) %>% group_by(Species, `Tributary/Collection Location`) %>% summarize(x=mean(x), y=mean(y)) %>% filter(Species !="obesus")
 
-n2
-
-ggsave("outputs/107/438-obesus-subs-network.pdf", width=12, height=10)
+olabels<-g$data %>% filter(isTip==TRUE) %>% group_by(Vicinity, `Tributary/Collection Location`, Species) %>% summarize(x=mean(x), y=mean(y)) %>% filter(Species =="obesus") %>% 
+  filter(`Tributary/Collection Location`!="Flowing Well #7")
 
 ```
 
-## Explicit Network
-Being done separately
+```{r}
+n<-g + 
+  geom_tippoint(aes(fill=Taxon, shape=Taxon), cex=5, alpha=1.0) +
+  geom_text_repel(data=olabels, aes(x=x, y=y, label=`Tributary/Collection Location`)) +
+  geom_text_repel(data=labels, aes(x=x, y=y, label= Species)) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  scale_shape_manual(values=c(22,22,23,25,25,24,24,21,21,21))
 
-Downsampling 
+
+n
+
+ggsave("outputs/107/438-network.pdf", width=10, height=6)
+```
+
+
+# SVDQuartets tree
+
+# Treemix
 
 
 

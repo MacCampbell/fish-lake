@@ -43,6 +43,8 @@ obesus %>% write_csv("meta/525.csv", col_names = TRUE)
 
 75% thresh doIbs  
 
+264642 GLs
+
 ```{sh, eval=FALSE}
 srun -p bigmemh -t 36:00:00 --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
 -bam bamlists/525.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
@@ -282,4 +284,6 @@ PlotAdmix("outputs/109/obs-K5.qopt", obesus)
 
 ```{r}
 PlotAdmix("outputs/109/obs-K6.qopt", obesus)
+
+ggsave("outputs/109/obesus-mohavensis-snyderi-k6.jpeg", width=11, height=6)
 ```
