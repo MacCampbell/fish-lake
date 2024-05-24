@@ -117,6 +117,7 @@ bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +
 
 
 
+
 bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/108/pruned.vcf
 # 11038 snps
 
@@ -153,11 +154,25 @@ bcftools reheader --samples meta/544.names outputs/108/plink.vcf.gz | bcftools +
 #Coming to terms with the static results....
 bcftools reheader --samples meta/544.names outputs/108/plink-q.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor | bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/108/pruned-q-maf01.vcf
 
+#Pruning a bit more widely
+bcftools  reheader --samples meta/544.names outputs/108/plink-q.vcf.gz| bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/108/plink-q-01.vcf
 
 ```
 
 Locally
 ```{sh, eval=FALSE}
+#prune (local)
+bcftools reheader --samples meta/544.names outputs/108/plink-q.vcf.gz  | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/108/plink-q-local.vcf
+
+bcftools reheader --samples meta/544.names outputs/108/plink-q.vcf.gz  | bcftools +fill-tags | bcftools view -q 0.10:minor | bcftools +prune -m 0.20 -w 10000 > outputs/108/plink-q-local-10.vcf
+
+conda activate py2;
+~/github/mccloud-rrt/vcf2phylip.py -i plink-q-local.vcf;
+~/github/mccloud-rrt/vcf2phylip.py -i plink-q-local-10.vcf;
+
+conda deactivate;
+
+
 # Convert to phylip 
 conda activate py2;
 ~/github/mccloud-rrt/vcf2phylip.py -i pruned.vcf 
@@ -228,6 +243,17 @@ iqtree2 -s pruned-02.min4.phy.varsites.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 
 iqtree2 -s pruned-q-maf01.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
 iqtree2 -s pruned-q-maf01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
 
+iqtree2 -s plink-q-local.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+iqtree2 -s plink-q-local.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+
+#Alignment has 554 sequences with 11755 columns, 11754 distinct patterns
+#8872 parsimony-informative, 2883 singleton sites, 0 constant sites
+
+iqtree2 -s plink-q-local-10.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+iqtree2 -s plink-q-local-10.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
+#Alignment has 554 sequences with 3458 columns, 3458 distinct patterns
+#3285 parsimony-informative, 173 singleton sites, 0 constant sites
+
 ```
 
 
@@ -259,6 +285,12 @@ write.nexus.data(dat, file="outputs/108/pruned-90-maf01.min4.nexus")
 dat<-read.dna(file="outputs/108/iqtree/pruned-q-maf01.min4.phy.varsites.phy")
 write.nexus.data(dat, file="outputs/108/pruned-q-maf01.min4.phy.varsites.nexus")
 
+dat<-read.dna(file="outputs/108/plink-q-local.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/108/plink-q-local.nexus")
+
+dat<-read.dna(file="outputs/108/plink-q-local-10.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/108/plink-q-local-10.nexus")
+
 ```
 
 Made a network in SplitsTree
@@ -267,7 +299,7 @@ Made a network in SplitsTree
 #net<-read.nexus.networx("outputs/108/pruned-90-maf03.network")
 #net<-read.nexus.networx("outputs/108/pruned-90-maf01.network")
 
-net<-read.nexus.networx("outputs/108/pruned-90-maf01.network")
+net<-read.nexus.networx("outputs/108/plink-q-local-10.network")
 
 ```
 
@@ -405,3 +437,4 @@ iqtree2 -s pruned-386-maf01.min4.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 20
 iqtree2 -s pruned-386-maf01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 10000 -nm 2000 -bcor 0.9 --redo
 #  sites
 ```
+
