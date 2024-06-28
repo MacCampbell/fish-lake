@@ -129,13 +129,24 @@ e <- e[e$label < 90,]
 e <- e[e$label >= 75,]
 ```
 
+
+create my colors, need 6 based on viridis H for 10
+
+```{r}
+cols<-viridis(10, option="H")
+
+
+```
+
+
+
 ```{r}
 v + geom_point(aes(color=Subset), x=0.14, pch=15) +
   geom_point(data=e,  fill="white", cex=2, alpha=1, pch=21) +
   geom_point(data=d,  fill="grey50", cex=2, alpha=1, pch=21) +
   geom_tiplab(data=v$data %>% filter(Species != "bicolor"), aes(x=x+0.001,label=Fish), size=2) +
-  scale_colour_viridis_d(option="H") +
   theme(legend.position = "none") +
+  scale_color_manual(values=c(cols[9],cols[10],cols[7],cols[6],cols[5],cols[4]), na.value = NA) +
   xlim(0, 0.25)
 
 ggsave("outputs/106/cyt-b-tree-with-delimitations-no-tips.pdf", width=8.5, height=8)

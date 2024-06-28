@@ -230,7 +230,54 @@ net<-read.nexus.networx("outputs/107/438-01.network")
 nm<-read_csv("meta/meta-438-edited.csv")
 nm$Species<-factor(nm$Species, levels = c("P. macrolepidotus","G. orcuttii","alvordensis","thalassinus","bicolor","newarkensis","isolatus","snyderi","mohavensis","obesus"))
 nm<-nm %>% mutate(Taxon=Species)
+
+nm2<-read_csv("meta/meta-438-edited-06272024.csv")
+nm2$Species<-factor(nm2$Species, levels = c("P. macrolepidotus","G. orcuttii","alvordensis","thalassinus","bicolor","newarkensis","isolatus","snyderi","mohavensis","obesus"))
+nm2<-nm2 %>% mutate(Taxon=Species)
+
+nm2 %>% group_by(Taxon, Vicinity, `Tributary/Collection Location`) %>% summarize(MedianReadCount=round(median(Dedup),0), SampleSize=n())  %>% write_csv("meta/438-sample-table.csv")
 ```
+
+
+
+replotting tree
+```{r}
+
+v<-ggtree(t) %<+% (nm %>% relocate(Sample)) 
+
+  
+t<-v
+d <- t$data
+d <- d[!d$isTip,]
+d$label <- as.numeric(d$label)
+d <- d[d$label >= 90,]
+
+e <- t$data
+e <- e[!e$isTip,]
+e$label <- as.numeric(e$label)
+e <- e[e$label < 90,]
+e <- e[e$label >= 75,]
+```
+
+
+```{r}
+  v+
+  geom_point(data=e,  fill="white", cex=2, alpha=1, pch=21) +
+  geom_point(data=d,  fill="grey50", cex=2, alpha=1, pch=21) +
+  geom_tippoint(aes(fill=Taxon, shape=Taxon, x=x+0.001), cex=3) +
+ # geom_tiplab(aes(label=paste0(Species," ",Vicinity," ",`Tributary/Collection Location`), x=.4), size=.75) +
+  scale_fill_viridis_d(option="H") +
+  guides(fill = guide_legend(override.aes = list(pch = 22))) +
+  geom_treescale() +
+  scale_shape_manual(values=c(22,22,23,25,25,24,24,21,21,21)) +
+
+ # geom_nodelab() +
+  xlim(0,.4) +
+  ylim(0, max(v$data$y))
+
+ggsave("outputs/107/438-ml-tree-05.pdf", height=12, width=8.5)
+```
+
 
 ```{r}
 g<-ggsplitnet(net, color="grey50")  
@@ -264,9 +311,17 @@ ggsave("outputs/107/438-network.pdf", width=10, height=6)
 
 maf05 and maf10
 
+Running maf05 /github/fish-lake/outputs/107/svdq-05-nomin.txt for 100 boostraps in backgroun
 
 ```{r}
-s<-read.nexus("outputs/107/svdq-05-nomin.tre")
+st<-read_tsv("meta/species-tree-labels")
+st$Taxon<-factor(st$Taxon, levels = c("P. macrolepidotus","G. orcuttii","alvordensis","thalassinus","bicolor","newarkensis","isolatus","snyderi","mohavensis","obesus"))
+
+st
+```
+
+```{r}
+s<-read.nexus("outputs/107/svdq-boot-05-nomin.tre")
 s<-consensus(s, p=0.5) # p can't be less than .5
 
 #s<-read.nexus("outputs/107/svdq-boot-10.tre")
@@ -274,22 +329,23 @@ s<-root(s, c("P_macrolepidotus"))
 
 #ggtree(s, branch.length = 'none') %<+% block +
  # geom_tippoint(aes(shape=Species, fill=Subspecies, size=Count)) + 
-ggtree(s, branch.length = "none") +  
-  geom_nodelab() + 
+ggtree(s, branch.length = "none") %<+% st +  
+  geom_tippoint(aes(fill=Taxon, shape=Taxon), cex=4) + 
   geom_tiplab(size=4, offset = 0.5) +
   xlim(0,20) +
-  scale_fill_viridis_d(option="magma", na.value="grey50") +
+  scale_fill_viridis_d(option="H") +
   guides(fill = guide_legend(override.aes = list(pch = 22))) +
-  scale_shape_manual(values=c(25,23,25,23,24,22,21,23,25))
+  scale_shape_manual(values=c(22,22,23,25,25,24,24,21,21,21)) 
 
 
 
 ggsave("outputs/107/svdq-maf05.pdf", width=11, height = 8.5)
+ggsave("outputs/107/svdq-maf05.jpeg", width=11, height = 8.5)
 
 ```
 
 ```{r}
-s<-read.nexus("outputs/107/svdq-10.tre")
+s<-read.nexus("outputs/107/svdq-boot-10.tre")
 s<-consensus(s, p=0.5) # p can't be less than .5
 
 #s<-read.nexus("outputs/107/svdq-boot-10.tre")

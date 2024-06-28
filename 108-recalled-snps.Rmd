@@ -393,12 +393,12 @@ ggtree(nj) %<+% relocate(m429,Sample) +
 ggsave("outputs/108/nj.tre.pdf", width=14, height=20)
 ```
 ```{r}
-ml<-read.tree("outputs/108/pruned-429-maf01.min4.phy.varsites.phy.contree")
-ml<-midpoint(ml)
-ggtree(ml) %<+% relocate(m429,Sample) +
+ml<-read.tree("outputs/108/plink-q-local-10.min4.phy.varsites.phy.contree")
+ml<-midpoint.root(ml)
+ggtree(ml) %<+% relocate(m544,Sample) +
     geom_tippoint(aes(fill=Species), pch=21) +
   geom_tiplab(align = TRUE, size=1, aes(label=`Tributary/Collection Location`))
-ggsave("outputs/108/ml-429.tree.pdf", width=14, height=20)
+ggsave("outputs/108/ml-544-local-pruned.pdf", width=14, height=20)
 ```
 # Downsample snyderi
 
