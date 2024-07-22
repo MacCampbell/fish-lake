@@ -141,6 +141,8 @@ ones
 twos
 ```
 
+Alkali liake stuff is weird. 
+
 ```{r}
 ggplot(covs %>% filter(Species %in% c("obesus")) %>% filter(!SampleName %in% c(ones$SampleName, twos$SampleName))) +
   geom_point(aes(x=V1, y=V2, fill=Vicinity), pch=21, cex=3, alpha=0.75) +

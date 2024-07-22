@@ -74,9 +74,19 @@ meta<-read_tsv("outputs/106/annotations-with-extas.tsv")
 meta<-meta %>% separate(Fish, into=c("Genus","Species", "subspecies","ID"), remove = FALSE)
 
 bicolor<-meta %>% filter(Species=="bicolor")
+write_csv(bicolor,"meta/cytb-meta.csv")
 ogs<-meta %>% filter(Species!="bicolor")
 ```
+```{r}
+bicolor<-read_csv("meta/cytb-meta-edited.csv")
+bicolor$NewLocation<-gsub("Nevada","NV",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("California","CA",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("Oregon","OR",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("County","Co.",bicolor$NewLocation)
 
+bicolor %>% select(-Location)
+bicolor$Location<-bicolor$NewLocation
+```
 
 https://bioinfo.mnhn.fr/abi/public/asap/asapweb.html
 
@@ -103,18 +113,11 @@ v
 ```
 
 ```{r}
-tips<-v$data %>% filter(isTip==TRUE)
-write_csv(tips, file="outputs/106/tips.csv")
-v + 
-  geom_text(data=v$data, aes(x=.2, y=y, label=Location, color=Subset), size=2) +
-
-  geom_tiplab(aes(label=Fish), size=2) +
-  xlim(0,.25) +
-  scale_colour_viridis_d(option="H") +
-  theme(legend.position = "none")
-
-ggsave("outputs/106/cyt-b-tree-with-delimitations.pdf", width=8.5, height=11)
+tips<-v$data %>% filter(isTip==TRUE) %>% left_join(bicolor, by=c("label"="Tip"))
+tips
 ```
+##write_csv(tips, file="outputs/106/tips.csv")
+
 ```{r}
 t<-v
 d <- t$data
@@ -129,14 +132,29 @@ e <- e[e$label < 90,]
 e <- e[e$label >= 75,]
 ```
 
-
-create my colors, need 6 based on viridis H for 10
-
 ```{r}
 cols<-viridis(10, option="H")
 
 
 ```
+
+```{r}
+v    %<+% bicolor +
+  geom_point(data=e,  fill="white", cex=2, alpha=1, pch=21) +
+  geom_point(data=d,  fill="grey50", cex=2, alpha=1, pch=21) +
+  geom_tiplab(data=tips, aes(x=.15, y=y, label=NewLocation, color=Subset), size=2) +
+  geom_tiplab(size=2) +
+  xlim(0,.25) +
+  scale_colour_viridis_d(option="H") +
+  theme(legend.position = "none") +
+  scale_color_manual(values=c(cols[9],cols[10],cols[7],cols[6],cols[5],cols[4]), na.value = NA) 
+
+
+ggsave("outputs/106/cyt-b-tree-with-delimitations.pdf", width=8.5, height=11)
+```
+create my colors, need 6 based on viridis H for 10
+
+
 
 
 

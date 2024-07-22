@@ -483,3 +483,18 @@ ggsave("outputs/107/svdq-maf05-boot1000.pdf", width=10, height = 8.5)
 ggsave("outputs/107/svdq-maf05-boot1000.jpeg", width=10, height = 8.5)
 
 ```
+
+
+## Access meta and filter
+
+```{r}
+mall<-read_csv("meta/05012024.csv")
+colls<-read_csv("meta/tui-chub-georeferenced-edited.csv")
+counts<-mall %>% filter(Vicinity %in% phylo$Vicinity) %>% group_by(Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n()) %>% left_join(colls, by=c(`Tributary/Collection Location`="Name"))
+counts
+
+view(counts)
+```
+
+
+
