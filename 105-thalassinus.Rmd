@@ -22,6 +22,8 @@ mt2<-mt %>% filter(Dedup > 2e5)
 mt2 %>% group_by(Species, Subspecies, Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n(), medianDedup=median(Dedup), meanDedup=mean(Dedup))
 mt2 %>% select(Path2) %>% write_csv(col_names = FALSE, "bamlists/thal2.bamlist")
 mt2$Vicinity<-factor(mt2$Vicinity, levels=c("Sheldon Wildlife Refuge","Harney County","Modoc County", "Warner Spring","Goose Lake","Rising River Preserve","Pit River","Valley Falls"))
+
+mt2 %>% write_csv("meta/thalassinus.csv")
 ```
 
 
