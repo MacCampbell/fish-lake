@@ -1,0 +1,49 @@
+---
+title: "104.1-broader-net"
+output: html_document
+date: "2024-08-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+
+Including Summer Lake Basin fish, that is Alkali Lake, to see wtf these are.
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+library(ggpubr)
+```
+
+Meta
+
+Downsampled Paths are at 2e6.   
+
+```{r}
+m2k<-read_csv("meta/obesus-200k-meta.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam")) %>% 
+  mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
+                     Path)) %>% mutate(Taxon=Species) 
+
+m2k %>% group_by(Species, Vicinity) %>% summarize(Count=n())
+
+m2k %>% select(Path2) %>% write_csv("bamlists/m2k-downsample.bamlist", col_names = FALSE)
+
+```
+
+
+This should give us a broad net (815 samples)
+
+```{sh, eval=FALSE}
+
+srun -p high -t 10:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/mo5-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 733 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
+-out outputs/104/m2k-ibs-90 >outputs/104/m2k-ibs-90.out 2> outputs/104/m2k-ibs-90.err &
+
+```
+
+

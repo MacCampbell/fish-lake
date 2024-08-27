@@ -421,9 +421,44 @@ toikona<-df %>% filter(Region=="Owens River") %>% filter(Q4 > 0.99)
 snyderi<-df %>% filter(Region=="Owens River") %>% filter(Q5 > 0.99)
 
 candidate<-bind_rows(snyderi,toikona)
-write_csv(candidate, file="outputs/104/candiate-mtDNA.csv")
+write_csv(candidate, file="meta/candiate-mtDNA.csv")
 ```
 
 Extract mtDNA....
 
+First a candidate toikona:
+
+samtools view -F 4 -b data/align-mtdna/plate-11-GGCGAACTTATGCAGG.fastq.sort.bam | samtools fasta > outputs/104/plate-11-GGCGAACTTATGCAGG.fasta
+
+[M::bam2fq_mainloop] discarded 0 singletons
+[M::bam2fq_mainloop] processed 63 reads
+
+blastn -query outputs/104/plate-11-GGCGAACTTATGCAGG.fasta -db /home/maccamp/genomes/siphateles-mtdna/siphateles.mtdna -outfmt 6
+
+NC_066943.1 Siphateles bicolor mitochondrion, complete genome is siphateles.mtdna
+
+Comparing to 
+AF237753.1	Siphateles bicolor obesa	Siphateles	bicolor	obesa	NA	Nevada, Churchill County, Toulon Drain
+AF237752.1	Siphateles bicolor obesa	Siphateles	bicolor	obesa	NA	Nevada, Elko County, South Fork Humboldt River
+
+blastn -query outputs/104/plate-11-GGCGAACTTATGCAGG.fasta -db /home/maccamp/genomes/siphateles-mtdna/s-obesa.mtdna -outfmt 6
+
+let's try a snyderi
+data/align/plate-11-GGAGTGGTCATGCAGG.sort.flt.bam
+
+samtools view -F 4 -b data/align-mtdna/plate-11-GGAGTGGTCATGCAGG.fastq.sort.flt.bam | samtools fasta > outputs/104/plate-11-GGAGTGGTCATGCAGG.fasta
+
+nomtdna
+
+samtools view -F 4 -b data/align-mtdna/plate-11-GGCTGGCATATGCAGG.fastq.sort.flt.bam | samtools fasta > outputs/104/plate-11-GGCTGGCATATGCAGG.fasta
+
+nomtdna
+samtools view -F 4 data/align-mtdna/plate-11-GGCCAGTTCATGCAGG.fastq.sort.flt.bam
+
+
+Get all the reads:
+ cat meta/candiate-mtDNA.csv  | cut -f 25 -d ',' | perl -pe 's/.sort/.fastq.sort/g' | perl -pe 's/.flt//g' | perl -pe 's/align/align-mtdna/g' | while read line; do samtools view -F 4 -b $line | samtools fasta >> outputs/104/test.mtdna ; done;
+
+
+looks to be a winner
 

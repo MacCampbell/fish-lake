@@ -47,6 +47,8 @@ m
 m5<-m %>% filter(Dedup>5e5)
 m5 %>% select(Path) %>% write_tsv("bamlists/test1124.bamlist", col_names = FALSE)
 m5 %>% group_by(Species) %>% summarize(Count=n())
+
+m2k <-m %>% filter(Dedup>2e5)
 ```
 
 We should be able to sort these rapidly into
@@ -162,6 +164,22 @@ May have to split into regions and separate jobs here for SNP calling.
 obesus<-m5 %>% filter(Species %in% c("obesus","toikona","snyderi")) %>% filter(!SampleName %in% c(ones$SampleName, twos$SampleName))
 write_csv(obesus, file="meta/obesus-500k-meta.csv")
 ```
+
+
+Let's create a lower coverage obesus data set
+
+```{r}
+mall<-read_csv("meta/05012024.csv")
+m2k<-filter(mall, Dedup > 2e5) 
+m2sub<-m2k %>% filter(`Tributary/Collection Location` %in% c("NN4","NV12","Tui Slough", "Camp Cady")) %>% filter(Ind != "plate-4-GGTAGGATGATGCAGG") # this is 237_1
+
+obesus2K<-m2k %>% filter(!Species %in% c("G. orcuttii","P. macrolepidotus", "mohavensis","newarkensis","alvordensis")) %>% bind_rows(m2sub)
+obesus2K %>% group_by(Species, Vicinity) %>% summarize(Count=n())
+
+write_csv(obesus2K, file="meta/obesus-200k-meta.csv")
+
+```
+
 
 ```{r}
 m<-read_csv("meta/04032023-edited.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam"))

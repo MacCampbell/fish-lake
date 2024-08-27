@@ -22,6 +22,8 @@ mt<-read_csv("meta/04152023.csv") %>% mutate(Path=paste0("data/align/",Ind,".sor
 
 mt2<-mt %>% filter(Dedup > 2e5)
 mt2 %>% group_by(Species, Subspecies, Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n(), medianDedup=median(Dedup), meanDedup=mean(Dedup))
+
+mt2 %>% group_by(Species, Subspecies, Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n(), medianDedup=median(Dedup), meanDedup=mean(Dedup)) %>% write_csv("outputs/105/thal-meta.csv")
 mt2 %>% select(Path2) %>% write_csv(col_names = FALSE, "bamlists/thal2.bamlist")
 mt2$Vicinity<-factor(mt2$Vicinity, levels=c("Sheldon Wildlife Refuge","Harney County","Modoc County", "Warner Spring","Goose Lake","Rising River Preserve","Pit River","Valley Falls"))
 
@@ -127,7 +129,7 @@ scree<-ggplot(vardf, aes(x=PC, y=`Percent Variance`)) +
   theme(panel.grid = element_blank()) +
   scale_x_continuous(breaks = seq(1:6)) +
   theme(axis.text = element_text(size=10)) +
-  theme(axis.title = element_text(size=14, face="bold")) +
+  theme(axis.title = element_text(size=14)) +
   ggtitle("C") +
   theme(plot.title = element_text(hjust=0, size=16))
 
@@ -137,9 +139,9 @@ scree
 
 ```{r}
 ggarrange(pc12 + theme(legend.position = 'none'), 
-          pc13, ncol = 2, widths = c(1,1.4))
+          pc13, scree, ncol = 2, nrow=2, widths = c(1,1.4))
 
-ggsave("outputs/105/thal-pcs.pdf", width = 11, height = 8.5/2)
+ggsave("outputs/105/thal-pcs.pdf", width = 11, height = 8.5)
 ```
 
 ## K plots
@@ -214,6 +216,8 @@ PlotAdmix("outputs/105/mt2-K4.qopt", mt2)
 
 ```{r}
 PlotAdmix("outputs/105/mt2-K5.qopt", mt2)
+
+ggsave("outputs/105/Kplot-5.pdf")
 ```
 
 ```{r}
