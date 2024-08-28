@@ -22,10 +22,11 @@ Meta
 Downsampled Paths are at 2e6.   
 
 ```{r}
-m2k<-read_csv("meta/obesus-200k-meta.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam")) %>% 
+m2k<-read_csv("meta/obesus-200k-meta-edited.csv") %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam")) %>% 
   mutate(Path2=ifelse(Dedup > 2e6, paste0("data/downsample/",Ind,".reduced.bam"),
                      Path)) %>% mutate(Taxon=Species) 
 
+m2k$Species<-factor(m2k$Species, levels=c("newarkensis","isolatus","bicolor","thalassinus","mohavensis","snyderi","obesus"))
 m2k %>% group_by(Species, Vicinity) %>% summarize(Count=n())
 
 m2k %>% select(Path2) %>% write_csv("bamlists/m2k-downsample.bamlist", col_names = FALSE)
@@ -36,14 +37,200 @@ m2k %>% select(Path2) %>% write_csv("bamlists/m2k-downsample.bamlist", col_names
 This should give us a broad net (815 samples)
 
 ```{sh, eval=FALSE}
-
-srun -p high -t 10:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
--bam bamlists/mo5-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+srun -p high -t 22:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/m2k-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
 -minInd 733 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
 -out outputs/104/m2k-ibs-90 >outputs/104/m2k-ibs-90.out 2> outputs/104/m2k-ibs-90.err &
 
+srun -p high -t 22:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/m2k-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-r JAPDVR010000001.1 -minInd 733 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
+-out outputs/104/m2k-ibs-90-sub >outputs/104/m2k-ibs-90-sub.out 2> outputs/104/m2k-ibs-90-sub.err &
+
+
+srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90-sub.beagle.gz -K 2 -minMaf 0.01 -o outputs/104/m2k-K2 &
+srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90-sub.beagle.gz -K 3 -minMaf 0.01 -o outputs/104/m2k-K3 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90-sub.beagle.gz -K 4 -minMaf 0.01 -o outputs/104/m2k-K4 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90-sub.beagle.gz -K 5 -minMaf 0.01 -o outputs/104/m2k-K5 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90-sub.beagle.gz -K 6 -minMaf 0.01 -o outputs/104/m2k-K6 &
+
+
+srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90.beagle.gz -K 2 -minMaf 0.01 -o outputs/104/m2k-K2 &
+srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90.beagle.gz -K 3 -minMaf 0.01 -o outputs/104/m2k-K3 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90.beagle.gz -K 4 -minMaf 0.01 -o outputs/104/m2k-K4 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90.beagle.gz -K 5 -minMaf 0.01 -o outputs/104/m2k-K5 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/m2k-ibs-90.beagle.gz -K 6 -minMaf 0.01 -o outputs/104/m2k-K6 &
+
+
+```
+
+first contig 	-> Number of sites retained after filtering: 6299 
+
+
+```{r}
+m <- as.matrix(read.table("outputs/104/m2k-ibs-90-sub.covMat"))
+eig <- eigen(m)
+var<-eig$values/sum(eig$values)
+cumvar<-cumsum(eig$values)/sum(eig$values)
+
+head(var)
+head(cumvar)
 ```
 
 
+```{r}
+covs<-eig$vectors[,1:3] %>% as_tibble() %>% bind_cols(m2k)
+#text1
+
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V2, fill=Species), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 815 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+
+
+```{r}
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V3, fill=Species), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[3]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 815 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+```{r}
+ggplot(covs %>% filter(Species=="obesus")) +
+  geom_point(aes(x=V1, y=V2, fill=Vicinity), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 815 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+
+
+
+```{r, echo=FALSE}
+PlotAdmix<- function(file, meta) {
+
+q<-read_delim(file, delim=" ", col_names=FALSE)
+#Make generic colnames
+
+nums<-1:length(colnames(q))
+mynames<-paste0("Q",nums)
+
+qs<-length(colnames(q))-1
+
+colnames(q)<-mynames
+
+#Last col empty
+q<-q[1:length(colnames(q))-1]
+
+#Bind met and arrange 
+df<-bind_cols(q, meta) %>% mutate(Region=Vicinity) %>% arrange(Species, Region) %>% mutate(Index=1:n())
+df$Region<-factor(df$Region, levels=unique(df$Region))
+
+rdf<-df %>% dplyr::select(Species, Region, Index, colnames(q) ) %>% gather(key=Ancestry, value=Q, 4:(4+length(colnames(q))-1))
+
+#Make names for structure-like plot
+labels<-rdf %>% group_by(Species,Region) %>% mutate(Start=min(Index), Stop=max(Index)) %>% 
+  select(Region,Start,Stop) %>% unique() %>% 
+  mutate(Position=round((Start+Stop)/2)) %>% ungroup() %>% unique()
+
+#Plot
+ggplot(rdf) + 
+  geom_col(aes(x=Index,y=Q, fill=Ancestry), color="NA", size = 0, width = 1) +
+  geom_segment(data=labels, x = labels$Start - 0.5, y=0, xend = labels$Start-0.5, yend=1, alpha=0.9, size=0.25) +
+  geom_segment(data=labels, x = labels$Stop[length(labels$Stop)]  + 0.5, y=0, 
+               xend= labels$Stop[length(labels$Stop)] + 0.5, yend=1,  alpha=0.9,
+               size=0.25) +
+  geom_segment(x=0+0.5, xend= labels$Stop[length(labels$Stop)]+0.5, y=1, yend=1, alpha=0.9, size=0.25) +
+  geom_segment(x=0+0.5, xend= labels$Stop[length(labels$Stop)]+0.5, y=0, yend=0, alpha=0.9, size=0.25) +
+  ylim(-0.1,1.01) +
+  xlim(-0.1, labels$Stop[length(labels$Stop)]+1) +
+  theme(panel.background = element_blank()) +
+  xlab("") +
+  ylab("Q\n") +
+  theme(legend.position = "") +
+  theme(axis.text = element_text(size=10, face="bold")) +
+  theme(axis.title.y=element_text(size=14, face="bold")) +
+  scale_x_continuous(breaks=labels$Position, labels=labels$Region) +
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+  #theme(axis.text.x=element_blank()) +
+  scale_fill_viridis_d(option="viridis") +
+  theme(axis.ticks.x = element_blank()) +
+  facet_grid(.~Species, scales = "free_x", space="free")
+
+}
+```
+
+
+```{r}
+PlotAdmix("outputs/104/m2k-K2.qopt", m2k)
+
+ggsave("outputs/104/siphateles-admix-k2.pdf", width=14)
+```
+
+```{r}
+PlotAdmix("outputs/104/m2k-K3.qopt", m2k)
+
+ggsave("outputs/104/siphateles-admix-k3.pdf", width=14)
+```
+
+
+```{r}
+PlotAdmix("outputs/104/m2k-K4.qopt", m2k)
+
+ggsave("outputs/104/siphateles-admix-k4.pdf", width=14)
+```
+
+```{r}
+PlotAdmix("outputs/104/m2k-K5.qopt", m2k)
+
+ggsave("outputs/104/siphateles-admix-k5.pdf", width=14)
+```
+
+```{r}
+PlotAdmix("outputs/104/m2k-K6.qopt", m2k)
+
+ggsave("outputs/104/siphateles-admix-k6.pdf", width=14)
+```
+
+
+## Focus on mohavensis, snyderi and obesus
+
+```{r}
+ob<-m2k %>% filter(Species %in% c("mohavensis","snyderi","obesus")) %>% filter(Vicinity != "Alkali Lake")
+ob %>% select(Path2) %>% write_csv("bamlists/610-downsample.bamlist", col_names = FALSE)
+```
+
+```{sh, eval=FALSE}
+srun -p high -t 22:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/610-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-r JAPDVR010000001.1 -minInd 549 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
+-out outputs/104/610-ibs-90-sub >outputs/104/610-ibs-90-sub.out 2> outputs/104/610-ibs-90-sub.err &
+```
