@@ -231,6 +231,167 @@ srun -p high -t 22:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task
 -bam bamlists/610-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
 -r JAPDVR010000001.1 -minInd 549 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
--doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.05 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
 -out outputs/104/610-ibs-90-sub >outputs/104/610-ibs-90-sub.out 2> outputs/104/610-ibs-90-sub.err &
+
+srun -p high -t 22:00:00 --mem=64G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12  $HOME/angsd/angsd -P 12  \
+-bam bamlists/610-downsample.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-minInd 549 -minMapQ 10 -minQ 20 -GL 2 -doGLF 2 \
+-doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -minMaf 0.01 \
+-out outputs/104/610-ibs-90 >outputs/104/610-ibs-90.out 2> outputs/104/610-ibs-90.err &
+
+srun -p high -t 04:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/610-ibs-90-sub.beagle.gz -K 2 -minMaf 0.01 -o outputs/104/610-K2 &
+srun -p high -t 05:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/610-ibs-90-sub.beagle.gz -K 3 -minMaf 0.01 -o outputs/104/610-K3 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/610-ibs-90-sub.beagle.gz -K 4 -minMaf 0.01 -o outputs/104/610-K4 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/610-ibs-90-sub.beagle.gz -K 5 -minMaf 0.01 -o outputs/104/610-K5 &
+srun -p high -t 06:00:00 --mem=32G --nodes=1 $HOME/angsd/misc/NGSadmix -P 12 -likes outputs/104/610-ibs-90-sub.beagle.gz -K 6 -minMaf 0.01 -o outputs/104/610-K6 &
+
+```
+	-> Number of sites retained after filtering: 5848 
+
+
+
+
+```{r}
+m <- as.matrix(read.table("outputs/104/610-ibs-90-sub.covMat"))
+eig <- eigen(m)
+var<-eig$values/sum(eig$values)
+cumvar<-cumsum(eig$values)/sum(eig$values)
+
+head(var)
+head(cumvar)
+```
+
+
+```{r}
+covs<-eig$vectors[,1:3] %>% as_tibble() %>% bind_cols(ob)
+#text1
+
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V2, fill=Species), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 815 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+
+
+```{r}
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V3, fill=Species), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[3]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 815 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold")) 
+```
+
+
+```{r}
+PlotAdmix("outputs/104/610-K2.qopt", ob)
+
+ggsave("outputs/104/obesus-admix-k2.pdf", width=14)
+```
+
+```{r}
+PlotAdmix("outputs/104/610-K3.qopt", ob)
+
+ggsave("outputs/104/obesus-admix-k3.pdf", width=14)
+```
+
+
+```{r}
+PlotAdmix("outputs/104/610-K4.qopt", ob)
+
+ggsave("outputs/104/obesus-admix-k4.pdf", width=14)
+```
+
+```{r}
+PlotAdmix("outputs/104/610-K5.qopt", ob)
+
+ggsave("outputs/104/obesus-admix-k5.pdf", width=14)
+```
+
+```{r}
+PlotAdmix("outputs/104/610-K6.qopt", ob)
+
+ggsave("outputs/104/obesus-admix-k6.pdf", width=14)
+```
+
+
+```{r, eval=TRUE}
+file<-"~/github/fish-lake/outputs/104/610-K5.qopt"
+
+q<-read_delim(file, delim=" ", col_names=FALSE)   
+
+meta<-ob
+#Make generic colnames
+
+nums<-1:length(colnames(q))
+mynames<-paste0("Q",nums)
+
+qs<-length(colnames(q))-1
+
+colnames(q)<-mynames
+
+#Last col empty
+q<-q[1:length(colnames(q))-1]
+
+#Bind met and arrange 
+df<-bind_cols(q, meta) %>% mutate(Region=Vicinity) %>% arrange(Region) %>% mutate(Index=1:n())
+df$Region<-factor(df$Region, levels=unique(df$Region))
+
+rdf<-df %>% dplyr::select(Region, Index, colnames(q) ) %>% gather(key=Ancestry, value=Q, 3:(3+length(colnames(q))-1)) %>% filter(Region %in% c("Mammoth Mountain","Owens River", "Newark Valley"))
+
+#Make names for structure-like plot
+labels<-rdf %>% group_by(Region) %>% mutate(Start=min(Index), Stop=max(Index)) %>% 
+  select(Region,Start,Stop) %>% unique() %>% 
+  mutate(Position=round((Start+Stop)/2)) %>% ungroup() %>% unique()
+
+#Plot
+ggplot(rdf) + 
+  geom_col(aes(x=Index,y=Q, fill=Ancestry), color="NA", size = 0, width = 1) +
+  geom_segment(data=labels, x = labels$Start - 0.5, y=0, xend = labels$Start-0.5, yend=1, alpha=0.9, size=0.25) +
+  geom_segment(data=labels, x = labels$Stop[length(labels$Stop)]  + 0.5, y=0, 
+               xend= labels$Stop[length(labels$Stop)] + 0.5, yend=1,  alpha=0.9,
+               size=0.25) +
+  geom_segment(x=0+0.5, xend= labels$Stop[length(labels$Stop)]+0.5, y=1, yend=1, alpha=0.9, size=0.25) +
+  geom_segment(x=0+0.5, xend= labels$Stop[length(labels$Stop)]+0.5, y=0, yend=0, alpha=0.9, size=0.25) +
+  ylim(-0.1,1.01) +
+  xlim(-0.1, labels$Stop[length(labels$Stop)]+1) +
+  theme(panel.background = element_blank()) +
+  xlab("") +
+  ylab("Q\n") +
+ # theme(legend.position = "") +
+  theme(axis.text = element_text(size=10, face="bold")) +
+  theme(axis.title.y=element_text(size=14, face="bold")) +
+  scale_x_continuous(breaks=labels$Position, labels=labels$Region) +
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+  #theme(axis.text.x=element_blank()) +
+  scale_fill_viridis_d(option="viridis") +
+  theme(axis.ticks.x = element_blank())
+
+```
+
+```{r}
+toikona<-df %>% filter(Region=="Owens River") %>% filter(Q5 > 0.99) 
+snyderi<-df %>% filter(Region=="Owens River") %>% filter(Q3 > 0.99)
+
+candidate<-bind_rows(snyderi,toikona)
+write_csv(candidate, file="meta/610-candiate-mtDNA.csv")
+```
+
+```{r}
+candidate %>% dplyr::select(Q4, Q5, GVL_Code, Vicinity, `Tributary/Collection Location`, Species)
 ```

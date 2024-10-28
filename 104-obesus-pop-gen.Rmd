@@ -424,6 +424,9 @@ candidate<-bind_rows(snyderi,toikona)
 write_csv(candidate, file="meta/candiate-mtDNA.csv")
 ```
 
+```{r}
+candidate %>% dplyr::select(Q4, Q5, GVL_Code, Vicinity, `Tributary/Collection Location`, Species)
+```
 Extract mtDNA....
 
 First a candidate toikona:
