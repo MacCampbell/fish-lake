@@ -12,6 +12,9 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 library(tidyverse)
 library(ggpubr)
 library(ggrepel)
+library(phytools)
+library(snpR)
+library(ggtree)
 ```
 
 ```{r}
@@ -28,7 +31,7 @@ mt2 %>% select(Path2) %>% write_csv(col_names = FALSE, "bamlists/thal2.bamlist")
 mt2$Vicinity<-factor(mt2$Vicinity, levels=c("Sheldon Wildlife Refuge","Harney County","Modoc County", "Warner Spring","Goose Lake","Rising River Preserve","Pit River","Valley Falls"))
 
 mt2 %>% write_csv("meta/thalassinus.csv")
-mt %>% select(SampleName) %>% write_tsv("meta/thalassinus-names.tsv", col_names = FALSE)
+mt2 %>% select(SampleName) %>% write_tsv("meta/thalassinus-names.tsv", col_names = FALSE)
 ```
 
 
@@ -236,6 +239,8 @@ srun -t 12:00:00 -p high --mem=32G --nodes=1 --ntasks-per-node=1 --cpus-per-task
 -minMaf 0.01 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
 -doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/105/snps-100-01.out 2> outputs/105/snps-100-01.err &
 
+#82905 sites
+
 #convert to .vcf
 plink --tped snps-100-01.tped --tfam snps-100-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
 plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
@@ -243,11 +248,29 @@ bgzip plink.vcf
 tabix plink.vcf.gz
 
 #prune (local)
-bcftools  view -S outputs/105/100.names outputs/107/plink.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/107/438-01.vcf
+bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/105/100-01.vcf
+
+conda activate py2;
+~/github/mccloud-rrt/vcf2phylip.py -i 100-01.vcf;
+conda deactivate;
+
+iqtree2 -s 100-01.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s 100-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
+#prune on farm
+
+bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/105/pruned-farm.vcf
 
 ```
 
+1078 variable sites accoding to iqtree
 
+```{r}
+t<-read.tree("outputs/105/100-01.min4.phy.varsites.phy.contree")
+u<-midpoint_root(t)
+ggtree(u) +
+  geom_tiplab()
+```
 
 ## Lower expectations
 Sample sizes
