@@ -28,6 +28,7 @@ mt2 %>% select(Path2) %>% write_csv(col_names = FALSE, "bamlists/thal2.bamlist")
 mt2$Vicinity<-factor(mt2$Vicinity, levels=c("Sheldon Wildlife Refuge","Harney County","Modoc County", "Warner Spring","Goose Lake","Rising River Preserve","Pit River","Valley Falls"))
 
 mt2 %>% write_csv("meta/thalassinus.csv")
+mt %>% select(SampleName) %>% write_tsv("meta/thalassinus-names.tsv", col_names = FALSE)
 ```
 
 
@@ -223,6 +224,30 @@ ggsave("outputs/105/Kplot-5.pdf")
 ```{r}
 PlotAdmix("outputs/105/mt2-K6.qopt", mt2)
 ```
+
+## Calls
+
+We can place Rising River Preserve phylogenetically and get some metrics with calls (Fst, Pi). Hmm..
+
+```{sh, eval=FALSE}
+srun -t 12:00:00 -p high --mem=32G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 12 \
+-minInd 90 -bam bamlists/thal2.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-out outputs/105/snps-100-01  \
+-minMaf 0.01 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/105/snps-100-01.out 2> outputs/105/snps-100-01.err &
+
+#convert to .vcf
+plink --tped snps-100-01.tped --tfam snps-100-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
+plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
+bgzip plink.vcf 
+tabix plink.vcf.gz
+
+#prune (local)
+bcftools  view -S outputs/105/100.names outputs/107/plink.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/107/438-01.vcf
+
+```
+
+
 
 ## Lower expectations
 Sample sizes
