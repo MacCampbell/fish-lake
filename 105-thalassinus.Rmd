@@ -15,6 +15,9 @@ library(ggrepel)
 library(phytools)
 library(snpR)
 library(ggtree)
+library(ape)
+library(phangorn)
+library(tanggle)
 ```
 
 ```{r}
@@ -250,6 +253,8 @@ tabix plink.vcf.gz
 #prune (local)
 bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/105/100-01.vcf
 
+bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags | bcftools view -q 0.01:minor | bcftools +prune -m 0.20 -w 10000 > outputs/105/100-01.vcf
+
 conda activate py2;
 ~/github/mccloud-rrt/vcf2phylip.py -i 100-01.vcf;
 conda deactivate;
@@ -258,20 +263,76 @@ iqtree2 -s 100-01.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
 iqtree2 -s 100-01.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
 
 #prune on farm
+module load bcftools
+bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.3 -w 10000bp -n 1 -N maxAF > outputs/105/pruned-farm.vcf
 
-bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/105/pruned-farm.vcf
+bcftools reheader --samples meta/thalassinus-names.tsv outputs/105/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.10:minor |  bcftools +prune -m 0.3 -w 10000bp -n 1 -N maxAF > outputs/105/pruned10-farm.vcf
+
+conda activate py2;
+~/github/mccloud-rrt/vcf2phylip.py -i pruned-farm.vcf;
+~/github/mccloud-rrt/vcf2phylip.py -i pruned10-farm.vcf;
+
+conda deactivate;
+
+iqtree2 -s pruned-farm.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s pruned-farm.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
+iqtree2 -s pruned10-farm.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s pruned10-farm.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
 
 ```
 
-1078 variable sites accoding to iqtree
+1078 variable sites accoding to iqtree with local prune
+4797 variable sites according to iqutree with prune on farm
+3190 with MAF .10
 
 ```{r}
-t<-read.tree("outputs/105/100-01.min4.phy.varsites.phy.contree")
-u<-midpoint_root(t)
-ggtree(u) +
-  geom_tiplab()
+bis<-mt2 %>% filter(Species=="bicolor")
+t<-read.tree("outputs/105/pruned-farm.min4.phy.varsites.phy.contree")
+t<-root(t, bis$SampleName)
+#t<-as.polytomy(t, feature='node.label', fun=function(x) as.numeric(x) < 50)
+
+u<-ggtree(t) %<+% (mt2 %>% relocate(SampleName)) 
+
+u +  geom_tippoint(aes(fill=Vicinity), pch=21) +
+  scale_fill_viridis_d(option="H")
+
+ggsave("outputs/105/tree.pdf")
 ```
 
+```{r}
+dat<-read.dna("outputs/105/pruned-farm.min4.phy")
+write.nexus.data(dat, file="outputs/105/pruned-farm.nex")
+
+dat<-read.dna("outputs/105/pruned10-farm.min4.phy")
+write.nexus.data(dat, file="outputs/105/pruned10-farm.nex")
+
+```
+
+```{r}
+net<-read.nexus.networx("outputs/105/farm.network")
+net<-read.nexus.networx("outputs/105/farm-pruned10.network")
+
+```
+
+```{r}
+g<-ggsplitnet(net, color="grey50")  
+
+g$data<-left_join(g$data, mt2, by=c("label"="SampleName")) 
+
+```
+
+
+```{r}
+n<-g + 
+  geom_tippoint(aes(fill=Vicinity), pch=21, cex=5, alpha=1.0) +
+  scale_fill_viridis_d(option="H") 
+
+
+n
+ggsave("outputs/105/thal-network.pdf", width=8.5, height=11)
+
+```
 ## Lower expectations
 Sample sizes
 
