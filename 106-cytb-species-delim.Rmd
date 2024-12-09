@@ -185,6 +185,29 @@ S. obesus (what we have genomic data for)
   Includes "oregonensis" from Abert Lake (XL Springs) OS 16774, "snyderi" from Owens Basin, Owens River (OS15747), "pectinifer" BB48,49 from Lahontan Basin
 
 
+## Some new seqs
+
+```{r}
+#tree<-midpoint.root(read.tree("outputs/106/accessions-with-extras.afas.contree"))
+tree<-read.tree("/Users/mac/Dropbox/ucdavis/tui-chub/TuiChubSanger_FiveSuccessfulSamples_FASTA/adding-to-existing/comb-trim.afas.contree")
+tree<-midpoint.root(tree)
+u<-as.polytomy(tree, feature='node.label', fun=function(x) as.numeric(x) < 50)
+
+v<-ggtree(u) %<+% m2 
+
+v 
+```
+
+```{r}
+v    %<+% bicolor +
+  geom_tiplab(size=2) +
+  geom_tiplab(aes(x=.15, y=y, label=NewLocation), size=2) +
+
+  xlim(0,.25) 
+
+ggsave("outputs/106/trial-new-cytb-649chars.pdf", width=8.5, height=11)
+
+```
 # RAG1
 
  perl ~/Dropbox/bin/shortenNamesMac.pl revised-western-clade.fas > revised-western-clade-renamed.fas
