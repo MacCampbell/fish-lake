@@ -1,0 +1,155 @@
+---
+title: "201-snyderi-cytb"
+output: html_document
+date: "2025-01-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(ape)
+library(pegas)
+library(ggtree)
+library(phytools)
+library(phylotools)
+library(viridis)
+```
+
+Have new cytb from Grace. 
+
+Here are the Tui Chub cytb sequences - thanks for your patience! We got sufficient data for the following seven samples:
+
+CWP10_56    toikona
+CWP10_58*   toikona
+NEP17_01    snyderi
+NEP17_03    snyderi
+NEP17_04*   snyderi
+SWP22_13    snyderi
+SWP22_15    snyderi
+
+*sequence contains gaps
+
+
+Overall, the Sanger sequencing went well - it looks like snyderi sequenced a bit better than toikona. I submitted 12 samples (7 toikona + 5 snyderi) for sequencing, but three toikona samples completely failed to sequence, and three toikona samples failed for primer set 1. I ended up using Serra's original primer set 1 data for CWP10_56 to get a solid toikona sequence without gaps. 
+
+For each primer set, I used the pairwise Geneious alignment to align FWD + REV reads. Then, I used the "Map to Reference" function in Geneious to align the Primer Set 1 & Primer Set 2 contigs to a reference sequence from NCBI (Siphaletes bicolor; accession: AY096010.1). I tried variations of the "Multiple Align" & "de novo Assemble" functions in Geneious as well, but mapping to a reference was the most effective.
+
+When sequences from all 7 individuals are aligned, we get a 1160bp alignment. The trimmed_fastas are separate fasta files for each individual, and each sequence is trimmed to exactly 1160bp. The untrimmed_fastas are pre-alignment and range from 1172 - 1215bp.
+
+CWP10_56
+CWP10_58
+NEP17_01
+NEP17_03
+NEP17_04
+SWP22_13
+SWP22_15
+
+I'm removing the pre-start codon bits TACAGGAACAATA and terminal tgcccta as well as _cytb_trim from names
+(base) ➜  201 git:(main) ✗ cat ../106/reduced-ogs.fas trimmed.fasta > snyderi.fas
+(base) ➜  201 git:(main) ✗ mafft snyderi.fas > snyderi.afas
+(base) ➜  meta git:(main) ✗ cp cytb-meta-edited.csv cytb-meta-snyderi.csv
+`iqtree2 -T AUTO -m MFP -s snyderi.afas -bb 10000 -redo`
+
+```{r}
+meta<-read_tsv("outputs/201/annotations-with-extas.tsv")
+
+meta<-meta %>% separate(Fish, into=c("Genus","Species", "subspecies","ID"), remove = FALSE)
+
+ogs<-meta %>% filter(Species!="bicolor")
+```
+
+```{r}
+bicolor<-read_csv("meta/cytb-meta-snyderi.csv")
+bicolor$NewLocation<-gsub("Nevada","NV",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("California","CA",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("Oregon","OR",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("County","Co.",bicolor$NewLocation)
+
+bicolor %>% select(-Location)
+bicolor$Location<-bicolor$NewLocation
+```
+
+Run asap species delim after removing outgroups. Using 2.0 transition/transversion ratio
+
+/Users/mac/github/fish-lake/cytb-species-delim
+(base) ➜  cytb-species-delim git:(main) ✗ cat extra-mohave.afas ../outputs/201/trimmed.fasta > with-snyderi.fas
+(base) ➜  cytb-species-delim git:(main) ✗ mafft with-snyderi.fas > with-snyderi.afas
+
+
+```{r}
+species<-read_csv("cytb-species-delim/with-snyderi.afas.Partition_1.csv",
+                  col_names = c("Tip","Subset"))
+m2<-left_join(meta, species)
+m2$Subset<-as.factor(m2$Subset)
+```
+
+```{r}
+tree<-read.tree("outputs/201/snyderi.afas.contree")
+tree<-midpoint.root(tree)
+u<-as.polytomy(tree, feature='node.label', fun=function(x) as.numeric(x) < 50)
+
+v<-ggtree(u) %<+% m2 
+
+v 
+```
+
+
+```{r}
+tips<-v$data %>% filter(isTip==TRUE) %>% left_join(bicolor, by=c("label"="Tip"))
+tips
+```
+
+```{r}
+t<-v
+d <- t$data
+d <- d[!d$isTip,]
+d$label <- as.numeric(d$label)
+d <- d[d$label >= 90,]
+
+e <- t$data
+e <- e[!e$isTip,]
+e$label <- as.numeric(e$label)
+e <- e[e$label < 90,]
+e <- e[e$label >= 75,]
+```
+
+```{r}
+cols<-viridis(10, option="H")
+```
+
+```{r}
+v    %<+% bicolor +
+  geom_point(data=e,  fill="white", cex=2, alpha=1, pch=21) +
+  geom_point(data=d,  fill="grey50", cex=2, alpha=1, pch=21) +
+  geom_tiplab(data=tips, aes(x=.15, y=y, label=NewLocation, color=Subset), size=2) +
+  geom_tiplab(size=2) +
+  xlim(0,.25) +
+  scale_colour_viridis_d(option="H") +
+  theme(legend.position = "none") +
+  scale_color_manual(values=c(cols[9],cols[10],cols[7],cols[6],cols[5],cols[4]), na.value = NA) 
+
+
+ggsave("outputs/201/cyt-b-tree-with-delimitations.pdf", width=8.5, height=11)
+```
+create my colors, need 6 based on viridis H for 10
+
+
+
+
+
+```{r}
+v + geom_point(aes(color=Subset), x=0.14, pch=15) +
+  geom_point(data=e,  fill="white", cex=2, alpha=1, pch=21) +
+  geom_point(data=d,  fill="grey50", cex=2, alpha=1, pch=21) +
+  geom_tiplab(data=v$data %>% filter(Species != "bicolor"), aes(x=x+0.001,label=Fish), size=2) +
+  theme(legend.position = "none") +
+  scale_color_manual(values=c(cols[9],cols[10],cols[7],cols[6],cols[5],cols[4]), na.value = NA) +
+  xlim(0, 0.25)
+
+ggsave("outputs/201/cyt-b-tree-with-delimitations-no-tips.pdf", width=8.5, height=8)
+ggsave("outputs/201/cyt-b-tree-with-delimitations-no-tips.jpeg", width=8.5, height=8)
+
+```
