@@ -422,11 +422,81 @@ snyderi<-df %>% filter(Region=="Owens River") %>% filter(Q5 > 0.99)
 
 candidate<-bind_rows(snyderi,toikona)
 write_csv(candidate, file="meta/candiate-mtDNA.csv")
+
+
+owensdf<-df %>% filter(Region=="Owens River")
 ```
 
 ```{r}
 candidate %>% dplyr::select(Q4, Q5, GVL_Code, Vicinity, `Tributary/Collection Location`, Species)
 ```
+
+
+Filter a bit for coverage and id admixed fish
+
+```{R}
+owensdf %>% filter(Dedup > 5e5) 
+```
+
+
+```{r, eval=TRUE}
+file<-"~/github/fish-lake/outputs/104/obs5-K5.qopt"
+
+q<-read_delim(file, delim=" ", col_names=FALSE)   
+
+meta<-obs5
+#Make generic colnames
+
+nums<-1:length(colnames(q))
+mynames<-paste0("Q",nums)
+
+qs<-length(colnames(q))-1
+
+colnames(q)<-mynames
+
+#Last col empty
+q<-q[1:length(colnames(q))-1]
+
+#Bind met and arrange 
+df<-bind_cols(q, meta) %>% mutate(Region=Vicinity) %>% filter(Region %in% c("Mammoth Mountain","Owens River")) %>% filter(Dedup > 5e5) %>% arrange(Region, `Tributary/Collection Location`) %>% mutate(Index=1:n())
+df$Region<-factor(df$Region, levels=unique(df$Region))
+df %>% write_csv("meta/owens-samples-500K.csv")
+rdf<-df %>% dplyr::select(Region, `Tributary/Collection Location`, Index, colnames(q) ) %>% gather(key=Ancestry, value=Q, 4:(4+length(colnames(q))-1)) 
+
+#Make names for structure-like plot
+labels<-rdf %>% group_by(`Tributary/Collection Location`) %>% mutate(Start=min(Index), Stop=max(Index)) %>% 
+  select(`Tributary/Collection Location`,Start,Stop) %>% unique() %>% 
+  mutate(Position=round((Start+Stop)/2)) %>% ungroup() %>% unique()
+
+#Plot
+ggplot(rdf) + 
+  geom_col(aes(x=Index,y=Q, fill=Ancestry), color="NA", size = 0, width = 1) +
+  geom_segment(data=labels, x = labels$Start - 0.5, y=0, xend = labels$Start-0.5, yend=1, alpha=0.9, size=0.25) +
+  geom_segment(data=labels, x = labels$Stop[length(labels$Stop)]  + 0.5, y=0, 
+               xend= labels$Stop[length(labels$Stop)] + 0.5, yend=1,  alpha=0.9,
+               size=0.25) +
+  geom_segment(x=0+0.5, xend= labels$Stop[length(labels$Stop)]+0.5, y=1, yend=1, alpha=0.9, size=0.25) +
+  geom_segment(x=0+0.5, xend= labels$Stop[length(labels$Stop)]+0.5, y=0, yend=0, alpha=0.9, size=0.25) +
+  ylim(-0.1,1.01) +
+  xlim(-0.1, labels$Stop[length(labels$Stop)]+1) +
+  theme(panel.background = element_blank()) +
+  xlab("") +
+  ylab("Q\n") +
+ # theme(legend.position = "") +
+  theme(axis.text = element_text(size=10, face="bold")) +
+  theme(axis.title.y=element_text(size=14, face="bold")) +
+  scale_x_continuous(breaks=labels$Position, labels=labels$`Tributary/Collection Location`) +
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+  #theme(axis.text.x=element_blank()) +
+  scale_fill_viridis_d(option="viridis") +
+  theme(axis.ticks.x = element_blank())
+
+ggsave("outputs/104/owens-admix-k5.pdf", width=12, height=5)
+```
+
+
+Samples with issues
+
 Extract mtDNA....
 
 First a candidate toikona:

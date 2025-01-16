@@ -131,6 +131,22 @@ ggplot(covs) +
 
 ggsave("outputs/109/pca-544.pdf")
 ```
+
+```{r}
+ggplot(covs) +
+  geom_point(aes(x=V1, y=V2, fill=Taxon), pch=21, cex=3, alpha=0.75) +
+  #geom_text_repel(data=text12, aes(x=x, y=y, label=Region), max.overlaps = Inf) +
+  xlab(paste("PC1", " ", round((100*var[1]),2), "%", sep = "")) +
+  ylab(paste("PC2", " ", round((100*var[2]),2), "%", sep = "")) +
+  theme_bw() +
+  theme(panel.grid=element_blank()) +
+  #scale_fill_viridis_c() +
+  scale_fill_viridis_d(option="turbo") +
+  ggtitle("Genome-Wide PCA of 544 Samples") +
+  theme(plot.title = element_text(hjust=0.5, face="bold"))  
+ggsave("outputs/109/pca-544-unwrapped.pdf")
+```
+
 Mostly seems to sort out.
 ```{r}
 text13<-covs %>% filter(Vicinity=="Fish Lake Valley") %>% group_by(`Tributary/Collection Location`) %>% summarize(x=mean(V1), y=mean(V3))

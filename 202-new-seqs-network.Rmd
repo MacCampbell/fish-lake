@@ -1,0 +1,75 @@
+---
+title: "202-new-seqs-network"
+output: html_document
+date: "2025-01-16"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(ape)
+library(pegas)
+library(ggtree)
+library(phytools)
+library(phylotools)
+library(viridis)
+```
+
+
+
+```{r}
+dna<-read.dna(file="outputs/202/obesa-locs-subclade-newseqs.afasta", format="fasta")
+haps<- haplotype(dna)
+
+net <- haploNet(haps)
+
+ind.hap<-with(
+  utils::stack(setNames(attr(haps, "index"), rownames(haps))),
+  table(hap=ind, individuals=rownames(dna)[values])
+ )
+
+
+plot(net, size=attr(net,"freq"), fast=FALSE)
+```
+
+
+````{r}
+pdf("outputs/202/network-colored-subclade.pdf", width=20, height=10)
+
+plot(net, size=attr(net, "freq"), scale.ratio = .5, cex = 6, pie=ind.hap, labels = FALSE,
+     bg = viridis(n=length(colnames(ind.hap)), option="H"))
+legend("topright",colnames(ind.hap),text.col = viridis(n=length(colnames(ind.hap)), option="H"))
+
+dev.off()
+```
+
+
+```{r}
+dna<-read.dna(file="outputs/202/subset.afasta", format="fasta")
+haps<- haplotype(dna)
+
+net <- haploNet(haps)
+
+ind.hap<-with(
+  utils::stack(setNames(attr(haps, "index"), rownames(haps))),
+  table(hap=ind, individuals=rownames(dna)[values])
+ )
+
+
+plot(net, size=attr(net,"freq"), fast=FALSE)
+```
+
+
+````{r}
+pdf("outputs/202/owens-smoky-network.pdf", width=20, height=10)
+
+plot(net, size=attr(net, "freq"), scale.ratio = .5, cex = 6, pie=ind.hap, labels = FALSE,
+     bg = viridis(n=length(colnames(ind.hap)), option="H"))
+legend("topright",colnames(ind.hap),text.col = viridis(n=length(colnames(ind.hap)), option="H"))
+
+dev.off()
+```
