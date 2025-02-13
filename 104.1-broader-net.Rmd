@@ -349,14 +349,14 @@ colnames(q)<-mynames
 q<-q[1:length(colnames(q))-1]
 
 #Bind met and arrange 
-df<-bind_cols(q, meta) %>% mutate(Region=Vicinity) %>% arrange(Region) %>% mutate(Index=1:n())
+df<-bind_cols(q, meta) %>% filter(Vicinity %in% c("Mammoth Mountain","Owens River", "June Lake")) %>% mutate(Region=Vicinity) %>% arrange(Region, `Tributary/Collection Location`) %>% mutate(Index=1:n())
 df$Region<-factor(df$Region, levels=unique(df$Region))
 
-rdf<-df %>% dplyr::select(Region, Index, colnames(q) ) %>% gather(key=Ancestry, value=Q, 3:(3+length(colnames(q))-1)) %>% filter(Region %in% c("Mammoth Mountain","Owens River", "Newark Valley"))
+rdf<-df %>% dplyr::select(Region, `Tributary/Collection Location`, Index, colnames(q) ) %>% gather(key=Ancestry, value=Q, 4:(4+length(colnames(q))-1)) 
 
 #Make names for structure-like plot
-labels<-rdf %>% group_by(Region) %>% mutate(Start=min(Index), Stop=max(Index)) %>% 
-  select(Region,Start,Stop) %>% unique() %>% 
+labels<-rdf %>% group_by(`Tributary/Collection Location`) %>% mutate(Start=min(Index), Stop=max(Index)) %>% 
+  select(`Tributary/Collection Location`,Start,Stop) %>% unique() %>% 
   mutate(Position=round((Start+Stop)/2)) %>% ungroup() %>% unique()
 
 #Plot
@@ -376,7 +376,7 @@ ggplot(rdf) +
  # theme(legend.position = "") +
   theme(axis.text = element_text(size=10, face="bold")) +
   theme(axis.title.y=element_text(size=14, face="bold")) +
-  scale_x_continuous(breaks=labels$Position, labels=labels$Region) +
+  scale_x_continuous(breaks=labels$Position, labels=labels$`Tributary/Collection Location`) +
   theme(axis.text.x = element_text(angle=45, hjust=1)) +
   #theme(axis.text.x=element_blank()) +
   scale_fill_viridis_d(option="viridis") +

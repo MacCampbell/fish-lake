@@ -344,7 +344,7 @@ s<-read.nexus("outputs/107/svdq-boot-05-nomin.tre")
 s<-consensus(s, p=0.5) # p can't be less than .5
 
 #s<-read.nexus("outputs/107/svdq-boot-10.tre")
-s<-root(s, c("P_macrolepidotus"))
+s<-root(s, c("P_macrolepidotus","G_orcuttii","E_alvordensis"))
 
 #ggtree(s, branch.length = 'none') %<+% block +
  # geom_tippoint(aes(shape=Species, fill=Subspecies, size=Count)) + 

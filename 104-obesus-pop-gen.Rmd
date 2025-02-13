@@ -495,6 +495,14 @@ ggsave("outputs/104/owens-admix-k5.pdf", width=12, height=5)
 ```
 
 
+```{r}
+obs5 %>% filter(Vicinity %in% c("Mammoth Mountain","Owens River")) %>% select(GVL_Code, SampleName, Vicinity, `Tributary/Collection Location`) %>% write_csv("meta/owens-working-samples.csv")
+```
+
+```{r}
+obs5 %>% filter(Vicinity %in% c("Mammoth Mountain","Owens River")) %>% group_by(Vicinity, `Tributary/Collection Location`) %>% summarize(Count=n())
+```
+
 Samples with issues
 
 Extract mtDNA....

@@ -4,6 +4,8 @@ XHow different are mtDNA seqs?
 
 XIs another mtDNA locus viable? COI?
 
+10
+
 XPull out snyderi/toikona and check admixture status.
 
 Virginia Creek - movement of fish into Mono Basin? Lake Russel area may have drained 
@@ -14,3 +16,22 @@ Hypotheses:
 (1) Ancient introgression from around Lake Russel?
 (2) Recent introgression from translocations?
 (3) Not true -> ability to generate data from these markers
+
+
+Meeting 02/12/2024
+
+_1_ Big Question Upper Owens Gorge
+
+_a_ provenance
+_b_ reliability of admixture
+
+
+NE Pond - gorge rescue n=24 founders (1997 upper owens gorge)
+Cottonwood Pond/Mule Spring - shared descent. Mule Spring goes extinct every few years
+
+
+Sampling, some key locations?
+
+Crowley Lake has hybrid Chub
+Owen's Gorge - one location
+
