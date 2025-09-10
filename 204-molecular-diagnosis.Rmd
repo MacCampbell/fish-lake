@@ -1,0 +1,124 @@
+---
+title: "204-molecular-diagnosis"
+output: html_document
+date: "2025-05-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ape)
+library(pegas)
+library(ggtree)
+library(phytools)
+library(phylotools)
+library(viridis)
+```
+
+## Align and identify unique mutations
+https://groups.google.com/g/raxml/c/e9_nB-yJNZk
+
+
+
+in outputs/204
+mafft snyderi-epizon-siphateles > snyderi-epizon-siphateles.afas
+iqtree2 -T AUTO -m MFP -s snyderi-epizon-siphateles.afas -bb 1000 -redo 
+iqtree2 -T AUTO -m MFP+ASC -s snyderi-epizon-siphateles.afas -bb 1000 -redo 
+
+ERROR: For your convenience alignment with variable sites printed to snyderi-epizon-siphateles.afas.varsites.phy
+ERROR: Invalid use of +ASC because of 857 invariant sites in the alignment
+
+
+from 201
+
+
+
+
+
+
+
+```{r}
+meta<-read_tsv("outputs/201/annotations-with-extas.tsv")
+
+meta<-meta %>% separate(Fish, into=c("Genus","Species", "subspecies","ID"), remove = FALSE)
+
+ogs<-meta %>% filter(Species!="bicolor")
+```
+
+```{r}
+bicolor<-read_csv("meta/cytb-meta-snyderi.csv")
+bicolor$NewLocation<-gsub("Nevada","NV",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("California","CA",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("Oregon","OR",bicolor$NewLocation)
+bicolor$NewLocation<-gsub("County","Co.",bicolor$NewLocation)
+
+bicolor %>% select(-Location)
+bicolor$Location<-bicolor$NewLocation
+```
+
+Run asap species delim after removing outgroups. Using 2.0 transition/transversion ratio
+
+/Users/mac/github/fish-lake/cytb-species-delim
+(base) ➜  cytb-species-delim git:(main) ✗ cat extra-mohave.afas ../outputs/201/trimmed.fasta > with-snyderi.fas
+(base) ➜  cytb-species-delim git:(main) ✗ mafft with-snyderi.fas > with-snyderi.afas
+
+
+```{r}
+species<-read_csv("cytb-species-delim/with-snyderi.afas.Partition_1.csv",
+                  col_names = c("Tip","Subset"))
+m2<-left_join(meta, species)
+m2$Subset<-as.factor(m2$Subset)
+```
+
+
+
+We should be able to make a network now
+
+
+```{r}
+dna<-read.dna(file="outputs/204/snyderi-epizon-siphateles.afas", format="fasta")
+haps<- haplotype(dna)
+
+net <- haploNet(haps)
+
+ind.hap<-with(
+  utils::stack(setNames(attr(haps, "index"), rownames(haps))),
+  table(hap=ind, individuals=rownames(dna)[values])
+ )
+
+pdf("outputs/204/network.pdf", width=20, height=10)
+
+plot(net, size=attr(net,"freq"), fast=FALSE)
+
+dev.off()
+
+```
+```{r}
+plot(net, size=attr(net, "freq"), scale.ratio = .5, cex = 6, pie=ind.hap, labels = FALSE,
+     bg = viridis(n=length(colnames(ind.hap)), option="H"))
+
+```
+
+```{r, eval=FALSE}
+mutations(net)
+```
+```{r}
+tree<-read.tree("outputs/201/snyderi.afas.contree")
+tree<-midpoint.root(tree)
+u<-as.polytomy(tree, feature='node.label', fun=function(x) as.numeric(x) < 50)
+
+v<-ggtree(u) %<+% m2 
+
+v 
+```
+
+Filter alignment
+iqtree2 -T AUTO -m MFP+ASC -s snyderi.afas -bb 1000 -redo 
+~/Dropbox/bin/seqConverter.pl -dsnyderi.afas.varsites.phy -of
+
+```{r}
+msaplot(p=v, fasta="outputs/204/snyderi.afas.varsites.fasta")
+```

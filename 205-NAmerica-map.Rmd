@@ -1,0 +1,37 @@
+---
+title: "205-NAmerica-map"
+output: html_document
+date: "2025-05-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Make a map of N. Am and then bound
+
+```{r}
+library(tidyverse)
+library(raster)
+library(mapdata)
+library(ggrepel)
+```
+
+```{r}
+map<-map_data("world") %>% filter(region %in% c("USA","Canada","Mexico"))
+```
+
+````{r}
+ggplot(map) +
+  geom_polygon(aes(x=long, y=lat, group=group), fill="grey50") +
+  coord_fixed(1.3, xlim = c(-150, -55), ylim=c(20,70)) +
+  #theme_bw() +
+  theme(panel.grid = element_blank()) +
+  geom_rect(xmin=-123.5324, xmax=-114.6332, ymin=33.5, ymax=43,color="black", alpha=0) +
+  theme(axis.title = element_blank()) +
+  theme(axis.text = element_blank()) +
+  theme(axis.ticks = element_blank()) +
+  theme(panel.border = element_rect(colour = "black", fill=NA, linewidth=3))
+
+ggsave("outputs/205/inset.pdf")
+```
