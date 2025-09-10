@@ -131,10 +131,8 @@ px <- read_csv("meta/05012024.csv") %>% mutate(Path=paste0("data/align/",Ind,".s
 
 ```
 ```{R}
-bind_rows(mx,px) %>% arrange(Species,Vicinity, `Tributary/Collection Location`) %>% 
-  
-
-#  write_csv("genbank/sequences-to-submit-09102025.csv")
+bind_rows(mx,px) %>% arrange(Species,Vicinity, `Tributary/Collection Location`) %>% separate(Ind, sep="-", into=c("Plate","PlateNo","Barcode")) %>% mutate(Forward=paste0(Plate,"-",PlateNo,"_RA_",Barcode,".fastq")) %>%
+  mutate(Reverse=paste0(Plate,"-",PlateNo,"_RB_",Barcode,".fastq")) %>% write_csv("genbank/sequences-to-submit-09102025.csv")
 ```
 
 data of the form plate-1_RA_GGGTCGTAGATGCAGG.fastq		
