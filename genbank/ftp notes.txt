@@ -1,0 +1,35 @@
+for some reason lftp was stalling out, did it this way
+
+(base) maccamp@farm:~/fish-lake/data/genbank$ ftp ftp-private.ncbi.nlm.nih.gov
+Trying 130.14.250.6:21 ...
+Connected to ftp-private.wip.ncbi.nlm.nih.gov.
+220-
+ This warning banner provides privacy and security notices consistent with 
+ applicable federal laws, directives, and other federal guidance for accessing 
+ this Government system, which includes all devices/storage media attached to 
+ this system. This system is provided for Government-authorized use only. 
+ Unauthorized or improper use of this system is prohibited and may result in 
+ disciplinary action and/or civil and criminal penalties. At any time, and for 
+ any lawful Government purpose, the government may monitor, record, and audit 
+ your system usage and/or intercept, search and seize any communication or data 
+ transiting or stored on this system. Therefore, you have no reasonable 
+ expectation of privacy. Any communication or data transiting or stored on this 
+ system may be disclosed or used for any lawful Government purpose.
+220 FTP Server ready.
+Name (ftp-private.ncbi.nlm.nih.gov:maccamp): subftp
+331 Password required for subftp
+Password: 
+230 User subftp logged in
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> cd uploads/drmaccampbell_gmail.com_S63YgRdQ
+250 CWD command successful
+ftp> 
+ftp> 
+ftp> mkdir tui
+257 "/uploads/drmaccampbell_gmail.com_S63YgRdQ/tui" - Directory successfully created
+ftp> mput *fastq
+mput plate-10_RA_GGAACGTGATTGCAGG.fastq [anpqy?]? a
+Prompting off for duration of mput.
+229 Entering Extended Passive Mode (|||50119|)
+150 Opening BINARY mode data connection for plate-10_RA_GGAACGTGATTGCAGG.fastq

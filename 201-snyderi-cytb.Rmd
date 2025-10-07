@@ -70,6 +70,8 @@ bicolor$NewLocation<-gsub("County","Co.",bicolor$NewLocation)
 
 bicolor %>% select(-Location)
 bicolor$Location<-bicolor$NewLocation
+
+
 ```
 
 Run asap species delim after removing outgroups. Using 2.0 transition/transversion ratio
@@ -84,6 +86,10 @@ species<-read_csv("cytb-species-delim/with-snyderi.afas.Partition_1.csv",
                   col_names = c("Tip","Subset"))
 m2<-left_join(meta, species)
 m2$Subset<-as.factor(m2$Subset)
+
+speciesDelim<-left_join(bicolor, species)
+
+
 ```
 
 ```{r}
@@ -155,5 +161,13 @@ ggsave("outputs/201/cyt-b-tree-with-delimitations-no-tips.jpeg", width=8.5, heig
 ```
 
 
-Now we need a network.
+## Combining ASAP Scores
 
+```{r}
+species6<-read_csv("cytb-species-delim/with-snyderi.afas.Partition_4.csv",
+                  col_names = c("Tip","Five Cluster Delimitation"))
+
+speciesDelim %>% filter(Genus=="Siphateles") %>% left_join(species6) %>% rename("Six Cluster Delimitation"=Subset) %>% select(-ID) %>% arrange(`Six Cluster Delimitation`) %>% rename(`Genbank Accession`=Tip, `Sequence Label`= Fish) %>% select(-Genus, -Species, -subspecies) %>% select(-Location) %>%
+  rename(Location=NewLocation) %>% write_csv("outputs/201/asap-results-five-and-six-cluster.csv")
+
+```

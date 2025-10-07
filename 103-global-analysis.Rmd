@@ -51,6 +51,11 @@ m5 %>% group_by(Species) %>% summarize(Count=n())
 m2k <-m %>% filter(Dedup>2e5)
 ```
 
+On 10/1/2025, checking how many newarkensis we have.
+
+```{r}
+m5 %>% filter(Species %in% c("newarkensis", "isolatus")) %>% group_by(Vicinity, `Tributary/Collection Location`, Species) %>% summarize(Count=n())
+```
 We should be able to sort these rapidly into
 (1) Eremichthys
 (2) Siphateles 
