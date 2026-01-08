@@ -54,7 +54,12 @@ m2k <-m %>% filter(Dedup>2e5)
 On 10/1/2025, checking how many newarkensis we have.
 
 ```{r}
-m5 %>% filter(Species %in% c("newarkensis", "isolatus")) %>% group_by(Vicinity, `Tributary/Collection Location`, Species) %>% summarize(Count=n())
+m5 %>% filter(Species %in% c("newarkensis", "isolatus")) %>% group_by(Vicinity, `Tributary/Collection Location`, Species) %>% summarize(Count=n(), Mean=mean(Dedup), Median=median(Dedup)) %>% write_csv("meta/newarkensis-isolatus.csv")
+
+m5 %>% filter(Species %in% c("newarkensis", "isolatus")) %>% group_by(Vicinity, `Tributary/Collection Location`, Species) %>% summarize(Count=n(), Mean=mean(Dedup), Median=median(Dedup)) %>% ungroup() %>% group_by(Species) %>% summarize(TotalSpecies=sum(Count))
+
+m5 %>% filter(Species %in% c("newarkensis", "isolatus")) %>% write_csv("meta/newarkensis-isolatus-500k-meta.csv")
+
 ```
 We should be able to sort these rapidly into
 (1) Eremichthys

@@ -1,0 +1,36 @@
+---
+title: "300-newarkensis-isolatus"
+output: html_document
+date: "2026-01-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+Is there any phylogenetic structure to S. newarkensis?
+
+```{r}
+meta<-read_csv("meta/newarkensis-isolatus-500K-meta.csv")
+meta %>% select(Pamlist) %>% write_tsv("bamlists/341.bamlist", col_names = FALSE)
+meta %>% select(GVL_Code) %>% write_tsv("bamlists/341.names", col_names = FALSE)
+```
+Call snps at 95% threshold with a minMaf of 0.01.   
+
+```{sh, eval=FALSE}
+srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 24 \
+-minInd 324 -bam bamlists/341.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
+-out outputs/300/snps-341-01  \
+-minMaf 0.01 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
+-doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/300/snps-341-01.out 2> outputs/300/snps-341-01.err &
+
+#convert to .vcf
+plink --tped snps-341-01.tped --tfam snps-431-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
+plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
+bgzip plink.vcf 
+tabix plink.vcf.gz
+```
