@@ -10,19 +10,25 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 ```{r}
 library(tidyverse)
+library(ggtree)
 ```
 
 Is there any phylogenetic structure to S. newarkensis?
 
 ```{r}
 meta<-read_csv("meta/newarkensis-isolatus-500K-meta.csv")
-meta %>% select(Pamlist) %>% write_tsv("bamlists/341.bamlist", col_names = FALSE)
+meta %>% select(Path) %>% write_tsv("bamlists/341.bamlist", col_names = FALSE)
 meta %>% select(GVL_Code) %>% write_tsv("bamlists/341.names", col_names = FALSE)
+
+nmeta<-meta %>% filter(Species !="isolatus")
+nmeta %>% select(Path) %>% write_tsv("bamlists/321.bamlist", col_names = FALSE)
+nmeta %>% select(GVL_Code) %>% write_tsv("bamlists/321.names", col_names = FALSE)
 ```
 Call snps at 95% threshold with a minMaf of 0.01.   
 
+sinfo needed
 ```{sh, eval=FALSE}
-srun -t 36:00:00 -p bigmemh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 24 \
+srun -t 36:00:00 -p bmh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task=12 $HOME/angsd/angsd -nthreads 24 \
 -minInd 324 -bam bamlists/341.bamlist -ref /home/maccamp/genomes/gila-orcutti/GCA_026230005.1_fGilOrc1.0.hap1_genomic.fna.gz \
 -out outputs/300/snps-341-01  \
 -minMaf 0.01 -minMapQ 20 -minQ 20 -GL 1 -doMajorMinor 1 -doMaf 1 -SNP_pval 1e-6 \
@@ -33,4 +39,43 @@ plink --tped snps-341-01.tped --tfam snps-431-01.tfam  --out plink-binary --reco
 plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
 bgzip plink.vcf 
 tabix plink.vcf.gz
+
+bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz  > outputs/300/renamed.vcf
+bgzip outputs/300/renamed.vcf
+tabix outputs/300/renamed.vcf.gz
+
+bcftools view -S bamlists/321.names > outputs/300/newarkensis.vcf
+
+#prune on farm
+module load bcftools
+bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/pruned01-max.vcf
+
+bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/107/pruned01-rand.vcf
+
+bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/pruned05-max.vcf
+
+bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/107/pruned05-rand.vcf
+
+# get newarkensis
+bcftools +fill-tags -t MAF outputs/300/newarkensis.vcf |  bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/107/newarkensis-pruned05-rand.vcf
+
+bcftools +fill-tags -t MAF outputs/300/newarkensis.vcf |  bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/newarkensis-pruned05-max.vcf
+
+#trial phylogeny, locally in outputs/300/phylo
+
+conda activate py2
+~/github/mccloud-rrt/vcf2phylip.py -i pruned05-max.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i pruned05-rand.vcf
+conda deactivate
+
+iqtree2 -s pruned05-max.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s pruned05-max.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
+iqtree2 -s pruned05-rand.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s pruned05-rand.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
 ```
+
+How about a network?
+
+Note: Should drop isolatus and 
