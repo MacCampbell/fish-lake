@@ -1,0 +1,59 @@
+---
+title: "301-newarkensis"
+output: html_document
+date: "2026-01-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+```
+
+Little Smoky - Newark Valley is HUC-8: 16060006 
+HUC 10 Newark Valley 1606000606
+```{r}
+summary<-read_csv("meta/newarkensis-isolatus-georeference.csv") %>% filter(Species=="newarkensis")
+```
+
+```{r}
+ggplot() +
+  geom_point(data=summary,aes(x=Longitude, y=Latitude, size=Count),fill="black", alpha=0.5, pch=21) +
+  geom_text_repel(data=summary, aes(x=Longitude, y=Latitude, label=`Tributary/Collection Location`), max.overlaps = Inf) +
+  theme_bw()
+
+ggsave("outputs/301/newark-distribution.jpeg")
+```
+
+Satellite imagery tutorial:
+https://daviddhofmann.github.io/post/satelliteimagery/
+
+
+q's
+How different are the springs? 
+Are there any missing locations?
+
+438
+496 samples??
+# Wrangling data for joe
+```{r}
+m<-read_csv("meta/05012024.csv") 
+mn<-m %>% filter(Species %in% c("newarkensis", "isolatus","bicolor","thalassinus")) %>% mutate(Path=paste0("data/align/",Ind,".sort.flt.bam"))
+
+#which have NCBI accessions???
+sra<-read_csv("outputs/301/SraRunInfo.csv") %>% select(SampleName, BioProject, BioSample,Experiment)
+
+mn %>% left_join(sra) %>% write_csv(file="outputs/301/meta01222025.csv")
+```
+
+
+
+Whoo!
+
+Ok, now we need to find the new reference genome, it is also scaffolded with 258 scaffolds and 1.1 GB assembled
+https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_042767315.1/
+
+Our Gila assembly actually has 179 scaffolds and 1.3GB assembled

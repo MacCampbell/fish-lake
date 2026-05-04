@@ -49,6 +49,8 @@ m5 %>% select(Path) %>% write_tsv("bamlists/test1124.bamlist", col_names = FALSE
 m5 %>% group_by(Species) %>% summarize(Count=n())
 
 m2k <-m %>% filter(Dedup>2e5)
+
+write_csv(m, file="meta/full-meta.csv" )
 ```
 
 On 10/1/2025, checking how many newarkensis we have.

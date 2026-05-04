@@ -10,6 +10,11 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 ```{r}
 library(tidyverse)
+library(pcadapt)
+library(ape)
+library(grid)
+library(ggpubr)
+library(ggrepel)
 library(ggtree)
 ```
 
@@ -24,7 +29,10 @@ nmeta<-meta %>% filter(Species !="isolatus")
 nmeta %>% select(Path) %>% write_tsv("bamlists/321.bamlist", col_names = FALSE)
 nmeta %>% select(GVL_Code) %>% write_tsv("bamlists/321.names", col_names = FALSE)
 ```
+
 Call snps at 95% threshold with a minMaf of 0.01.   
+	-> Number of sites retained after filtering: 76144 
+
 
 sinfo needed
 ```{sh, eval=FALSE}
@@ -35,37 +43,50 @@ srun -t 36:00:00 -p bmh --mem=128G --nodes=1 --ntasks-per-node=1 --cpus-per-task
 -doGeno 2 -doPost 1 -postCutoff 0.95 -doPlink 2  > outputs/300/snps-341-01.out 2> outputs/300/snps-341-01.err &
 
 #convert to .vcf
-plink --tped snps-341-01.tped --tfam snps-431-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
+plink --tped snps-341-01.tped --tfam snps-341-01.tfam  --out plink-binary --recode --allow-extra-chr --noweb
 plink --ped plink-binary.ped --map plink-binary.map --recode vcf --allow-extra-chr -out plink
 bgzip plink.vcf 
 tabix plink.vcf.gz
 
-bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz  > outputs/300/renamed.vcf
-bgzip outputs/300/renamed.vcf
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz  > outputs/300/renamed.vcf.gz
 tabix outputs/300/renamed.vcf.gz
 
-bcftools view -S bamlists/321.names > outputs/300/newarkensis.vcf
+bcftools view -S bamlists/321.names outputs/300/renamed.vcf.gz > outputs/300/newarkensis.vcf
 
 #prune on farm
 module load bcftools
-bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/pruned01-max.vcf
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/300/pruned01-max.vcf
 
-bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/107/pruned01-rand.vcf
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.01:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/300/pruned01-rand.vcf
 
-bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/pruned05-max.vcf
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/300/pruned05-max.vcf
 
-bcftools reheader --samples meta/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/107/pruned05-rand.vcf
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/300/pruned05-rand.vcf
+
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.10:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/300/pruned10-max.vcf
+
+bcftools reheader --samples bamlists/341.names outputs/300/plink.vcf.gz | bcftools +fill-tags -- -t MAF | bcftools view -q 0.10:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/300/pruned10-rand.vcf
 
 # get newarkensis
-bcftools +fill-tags -t MAF outputs/300/newarkensis.vcf |  bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/107/newarkensis-pruned05-rand.vcf
+bcftools +fill-tags outputs/300/newarkensis.vcf -- -t MAF |  bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/300/newarkensis-pruned05-rand.vcf 
 
-bcftools +fill-tags -t MAF outputs/300/newarkensis.vcf |  bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/107/newarkensis-pruned05-max.vcf
+bcftools +fill-tags outputs/300/newarkensis.vcf -- -t MAF |  bcftools view -q 0.05:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/300/newarkensis-pruned05-max.vcf
+
+bcftools +fill-tags outputs/300/newarkensis.vcf -- -t MAF |  bcftools view -q 0.10:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N rand > outputs/300/newarkensis-pruned10-rand.vcf 
+
+bcftools +fill-tags outputs/300/newarkensis.vcf -- -t MAF |  bcftools view -q 0.10:minor |  bcftools +prune -m 0.2 -w 10000bp -n 1 -N maxAF > outputs/300/newarkensis-pruned10-max.vcf
 
 #trial phylogeny, locally in outputs/300/phylo
 
 conda activate py2
+~/github/mccloud-rrt/vcf2phylip.py -i pruned01-max.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i pruned01-rand.vcf
+
 ~/github/mccloud-rrt/vcf2phylip.py -i pruned05-max.vcf
 ~/github/mccloud-rrt/vcf2phylip.py -i pruned05-rand.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i pruned10-max.vcf
+~/github/mccloud-rrt/vcf2phylip.py -i pruned10-rand.vcf
+
 conda deactivate
 
 iqtree2 -s pruned05-max.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
@@ -74,8 +95,293 @@ iqtree2 -s pruned05-max.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 100
 iqtree2 -s pruned05-rand.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
 iqtree2 -s pruned05-rand.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
 
+iqtree2 -s pruned10-max.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s pruned10-max.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
+iqtree2 -s pruned10-rand.min4.phy -T AUTO -st DNA -m MFP+ASC -bb 10000 --redo
+iqtree2 -s pruned10-rand.min4.phy.varsites.phy -T AUTO -st DNA -m GTR+ASC -bb 1000 -nm 2000 -bcor 0.9 --redo
+
+```
+
+
+```{r}
+
+dat<-read.dna(file="outputs/300/pruned01-max.min4.phy")
+write.nexus.data(dat, file="outputs/300/pruned01-max.nex")
+
+dat<-read.dna(file="outputs/300/pruned01-rand.min4.phy")
+write.nexus.data(dat, file="outputs/300/pruned01-rand.nex")
+
+dat<-read.dna(file="outputs/300/phylo/pruned10-rand.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/300/pruned-10-rand.nex")
+
+dat<-read.dna(file="outputs/300/phylo/pruned10-max.min4.phy.varsites.phy")
+write.nexus.data(dat, file="outputs/300/pruned-10-max.nex")
+
+```
+
+Checking for excessive missingness
+```{sh, eval=FALSE}
+paste \
+<(bcftools query -f '[%SAMPLE\t]\n' erebi-filtered.vcf.gz | head -1 | tr '\t' '\n') \
+<(bcftools query -f '[%GT\t]\n' erebi-filtered.vcf.gz | awk -v OFS="\t" '{for (i=1;i<=NF;i++) if ($i == "./.") sum[i]+=1 } END {for (i in sum) print i, sum[i] / NR }' | sort -k1,1n | cut -f 2) > missingness.stats
+ cat missingness.stats | sort -k 2 -n | tail
+```
+
+
+# PCA
+```{r}
+path_to_file <- "outputs/300/pruned01-rand.vcf"
+
+filename <- read.pcadapt(path_to_file, type = "vcf")
+
+```
+
+
+_1_ choose a K   
+
+```{r}
+x <- pcadapt(input = filename, K = 10) 
+```
+
+```{r}
+var<-round(x$singular.values^2*100,2)
+var
+```
+
+```{r}
+#plot(x, option = "screeplot")
+panela<-plot(x, option = "screeplot", K = 10) + ggtitle("A") +
+  theme_bw() +
+  theme(plot.title = element_text(size=14, face="bold")) +
+  theme(panel.grid = element_blank(), panel.background = element_blank()) +
+  scale_x_continuous(breaks=seq(1,10,1), labels=seq(1,10,1)) +
+  ylab("Proportion of Explained Variance\n") +
+  xlab("\nPrincipal Component") +
+  theme(axis.title=element_text(size=12, face="bold"))
+panela
+
+ggsave("outputs/105/scree-plot.jpeg", width=4, height=4)
+```
+
+
+```{r}
+plot(x, option = "scores")
+```
+
+
+```{r}
+m<-meta
+```
+
+```{r}
+pcadata<-x$scores[,1:5] %>% as_tibble()
+pcadata<-pcadata %>% bind_cols(m)
+
+```
+
+```{r}
+p1<-ggplot(pcadata) +
+  geom_point(aes(x=V1, y=V2, fill=`Tributary/Collection Location`), pch=21, alpha=0.75, cex=2) +
+  theme_bw() +
+ # theme(legend.position = "top") +
+  theme(panel.grid = element_blank()) +
+  xlab("PC 1") +
+  ylab("PC 2") +
+  scale_fill_viridis_d(option="H") +
+  xlab(paste0("PC1 ",var[1],"%")) +
+  ylab(paste0("PC2 ",var[2],"%")) +
+  theme(axis.title=element_text(size=12, face="bold"))
+
+
+p1
+
+```
+
+# PCA
+```{r}
+path_to_file <- "outputs/300/newarkensis-pruned05-max.vcf"
+
+filename <- read.pcadapt(path_to_file, type = "vcf")
+
+```
+
+
+_1_ choose a K   
+
+```{r}
+x <- pcadapt(input = filename, K = 10) 
+```
+
+```{r}
+var<-round(x$singular.values^2*100,2)
+var
+```
+
+```{r}
+#plot(x, option = "screeplot")
+panela<-plot(x, option = "screeplot", K = 10) + ggtitle("A") +
+  theme_bw() +
+  theme(plot.title = element_text(size=14, face="bold")) +
+  theme(panel.grid = element_blank(), panel.background = element_blank()) +
+  scale_x_continuous(breaks=seq(1,10,1), labels=seq(1,10,1)) +
+  ylab("Proportion of Explained Variance\n") +
+  xlab("\nPrincipal Component") +
+  theme(axis.title=element_text(size=12, face="bold"))
+panela
+
+ggsave("outputs/105/scree-plot.jpeg", width=4, height=4)
+```
+
+
+```{r}
+plot(x, option = "scores")
+```
+
+
+```{r}
+m<-nmeta
+```
+
+```{r}
+pcadata<-x$scores[,1:5] %>% as_tibble()
+pcadata<-pcadata %>% bind_cols(m)
+labels12<-pcadata %>% select(`Tributary/Collection Location`, V1, V2) %>% group_by(`Tributary/Collection Location`) %>% summarize(X=mean(V1), Y=mean(V2)) %>% filter(`Tributary/Collection Location` %in% c("NV19","NV18","NV17","NV12"))
+
+labels13<-pcadata %>% select(`Tributary/Collection Location`, V1, V3) %>% group_by(`Tributary/Collection Location`) %>% summarize(X=mean(V1), Y=mean(V3)) %>% filter(`Tributary/Collection Location` %in% c("NV19","NV18","NV17","NV12","Cold Creek Reservoir"))
+labels13
+```
+
+```{r}
+p1<-ggplot(pcadata) +
+  geom_point(aes(x=V1, y=V2, fill=`Tributary/Collection Location`), pch=21, alpha=0.75, cex=2) +
+  geom_label_repel(data=labels12, aes(x=X, y=Y, label=`Tributary/Collection Location`), alpha=0.75) +
+  theme_bw() +
+ # theme(legend.position = "top") +
+  theme(panel.grid = element_blank()) +
+  xlab("PC 1") +
+  ylab("PC 2") +
+  scale_fill_viridis_d(option="H") +
+  xlab(paste0("PC1 ",var[1],"%")) +
+  ylab(paste0("PC2 ",var[2],"%")) +
+  theme(axis.title=element_text(size=12, face="bold"))
+
+
+p1 + facet_wrap(.~`Tributary/Collection Location`)
+
+```
+
+
+```{r}
+p2<-ggplot(pcadata) +
+  geom_point(aes(x=V1, y=V3, fill=`Tributary/Collection Location`), pch=21, alpha=0.75, cex=2) +
+  geom_label_repel(data=labels13, aes(x=X, y=Y, label=`Tributary/Collection Location`), alpha=0.75) +
+  theme_bw() +
+  #theme(legend.position = "none") +
+  theme(panel.grid = element_blank()) +
+  scale_fill_viridis_d(option="H") +
+  xlab(paste0("PC1 ",var[1],"%")) +
+  ylab(paste0("PC3 ",var[3],"%")) + 
+  guides(fill=guide_legend(override.aes=list(shape=21))) +
+    theme(axis.title=element_text(size=12, face="bold"))
+
+
+p2
+```
+
+```{r}
+ggplot(pcadata) +
+  geom_point(aes(x=V1, y=V4, fill=`Tributary/Collection Location`), pch=21, alpha=0.75, cex=2) +
+  theme_bw() +
+  #theme(legend.position = "none") +
+  theme(panel.grid = element_blank()) +
+  scale_fill_viridis_d(option="H") +
+  xlab(paste0("PC1 ",var[1],"%")) +
+  ylab(paste0("PC4 ",var[4],"%")) + 
+  guides(fill=guide_legend(override.aes=list(shape=21))) +
+    theme(axis.title=element_text(size=12, face="bold"))
+```
+
+```{r}
+ggarrange(p1+theme(legend.position = "none"),p2, widths=c(1,1.6))
+
+ggsave("outputs/300/newarkensis-pca.jpeg", width=10, height=4)
+```
+
+## Let's pull out outliers on PC1 and see what they are
+
+
+```{r}
+x <- pcadapt(filename, K = 4)
+summary(x)
+```
+
+```{r}
+plot(x , option = "manhattan")
+```
+
+```{r}
+plot(x, option = "qqplot")
+```
+
+```{r}
+hist(x$pvalues, xlab = "p-values", main = NULL, breaks = 50, col = "orange")
+```
+
+```{r}
+plot(x, option = "stat.distribution")
+```
+
+
+```{R}
+par(mfrow = c(2, 2))
+for (i in 1:4)
+  plot(x$loadings[, i], pch = 19, cex = .3, ylab = paste0("Loadings PC", i))
+```    
+```{r}
+plot(x)
+```
+
+```{r}
+padj <- p.adjust(x$pvalues,method="bonferroni")
+alpha <- 0.05
+outliers <- which(padj < alpha)
+length(outliers)
+
+snp_pc <- get.pc(x, outliers)
+snp_pc %>% group_by(PC) %>% summarize(Count=n())
+
+```
+
+```{r}
+padj <- p.adjust(x$pvalues,method="BH")
+alpha <- 0.05
+outliers <- which(padj < alpha)
+length(outliers)
+
+snp_pc <- get.pc(x, outliers)
+snp_pc %>% group_by(PC) %>% summarize(Count=n())
+
+```
+
+get snps `gunzip -c outputs/105/pruned-05-max.vcf.gz| grep -v "^#" | cut -f1-3 | awk '{print $0"\t"NR}' > outputs/105/pruned-05-max-snp-numbers.tsv`
+
+
+```{r}
+snp_pc1<-snp_pc %>% filter(PC==1)
+labels<-read_tsv("meta/lates-lgs-named.txt") %>% rename(Name=Chrom, Chrom=Chromosome)
+labels
+```
+
+
+```{r}
+snpnumbers<-read_tsv("outputs/105/pruned-05-max-snp-numbers.tsv", col_names = c("Chrom","Pos","Marker","SNP"))
+snps<-left_join(as_tibble(snp_pc1), snpnumbers) 
+
+snps %>% group_by(PC, Chrom) %>% summarize(Count=n()) %>% arrange(-Count)
+
+snps %>% left_join(labels) 
 ```
 
 How about a network?
 
-Note: Should drop isolatus and 
